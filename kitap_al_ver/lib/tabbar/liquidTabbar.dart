@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/configuration/core/pageCon.dart';
 import 'package:kitap_al_ver/configuration/costant/constat.dart';
+import 'package:kitap_al_ver/screnn/widget/bookcatagory.dart';
 import 'package:kitap_al_ver/tabbar/bgcirclewidget.dart';
 import 'package:kitap_al_ver/tabbar/bottomLiquidWidget.dart';
 import 'package:kitap_al_ver/tabbar/screen/drawerDemo_Screen.dart';
@@ -10,10 +11,9 @@ import 'package:kitap_al_ver/tabbar/tBiconData.dart';
 import 'package:kitap_al_ver/tabbar/tbicon.dart';
 
 List<Widget> screens = [
- 
-  DrawerDemoScreen(), // hepsi fairbesten çazğrıcaz 
+  DrawerDemoScreen(), // hepsi fairbesten çazğrıcaz
   // HomePage (), //çet
-  //BookCategoryOverview(), //satış için--satış
+  BookCategoryOverview(), //satış için--satış
   // ignore: prefer_const_constructorzzzs
   //const Favorite(), //boş--fovori
   //ProfileScreen(), //boş--profil
