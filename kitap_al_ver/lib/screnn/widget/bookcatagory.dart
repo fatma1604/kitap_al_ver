@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/configuration/costant/color.dart';
 import 'package:kitap_al_ver/model/kategorymodel.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class BookCategoryOverview extends StatefulWidget {
   @override
@@ -10,11 +11,29 @@ class BookCategoryOverview extends StatefulWidget {
 
 class _BookCategoryOverviewState extends State<BookCategoryOverview> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  bool _isCoder = false; // Indicates if the user is a coder
 
   @override
   void initState() {
     super.initState();
+    _checkUserRole();
     _checkAndSendDataToFirestore();
+  }
+
+  Future<void> _checkUserRole() async {
+    try {
+      User? user = _auth.currentUser;
+      if (user != null) {
+        DocumentSnapshot userDoc =
+            await _firestore.collection('users').doc(user.uid).get();
+        setState(() {
+          _isCoder = userDoc['role'] == 'coder'; // Assuming role field exists
+        });
+      }
+    } catch (e) {
+      print('Error fetching user role: $e');
+    }
   }
 
   Future<void> _checkAndSendDataToFirestore() async {
@@ -28,8 +47,10 @@ class _BookCategoryOverviewState extends State<BookCategoryOverview> {
           await docRef.set({
             'category_name': category.categoryname,
             'category_uid': docRef.id,
-            'image_url':
-                'URL_TO_CATEGORY_IMAGE', // Resim URL'sini buraya ekleyin
+            'image_url': category.images,
+            'colors': category.colors
+                .map((color) => color.value)
+                .toList(), // Renkleri integer olarak saklayın
           });
         }
       }
@@ -55,6 +76,19 @@ class _BookCategoryOverviewState extends State<BookCategoryOverview> {
               child: Column(
                 children: [
                   const SizedBox(height: 80),
+                  if (_isCoder) // Conditionally show the button
+                    ElevatedButton(
+                      onPressed: () {
+                        _checkAndSendDataToFirestore();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue,
+                      ),
+                      child: const Text(
+                        'Veriyi Gönder',
+                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      ),
+                    ),
                 ],
               ),
             ),
@@ -98,9 +132,13 @@ class _BookCategoryOverviewState extends State<BookCategoryOverview> {
                         final title =
                             categoryData['category_name'] ?? 'No Title';
                         final imageUrl = categoryData['image_url'] ??
-                            'assets/images/default.png';
-                        final color =
-                            Colors.primaries[index % Colors.primaries.length];
+                            'assets/images/profile.png';
+                        final colorValues = List<int>.from(
+                            categoryData['colors'] ??
+                                [Colors.grey.value]); // Varsayılan renk
+                        final color = Color(colorValues.isNotEmpty
+                            ? colorValues[0]
+                            : Colors.grey.value);
 
                         return itemDashboard(
                           title,
@@ -143,7 +181,7 @@ class _BookCategoryOverviewState extends State<BookCategoryOverview> {
               color: background,
               shape: BoxShape.circle,
             ),
-            child: Image.network(
+            child: Image.asset(
               imagePath,
               color: Colors.white,
               fit: BoxFit.cover,
