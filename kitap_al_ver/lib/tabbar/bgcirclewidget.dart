@@ -1,11 +1,7 @@
 // ignore: depend_on_referenced_packages
 
-
-
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/tabbar/topLiquidPainter.dart';
-
-
 
 class BGCircleWidget extends StatelessWidget {
   final int currentIndex;
@@ -39,14 +35,14 @@ class BGCircleWidget extends StatelessWidget {
       offset: Offset(0, index == currentIndex ? bGCircleTransAni.value : 5),
       // ignore: sized_box_for_whitespace
       child: Container(
-        width: 50,
-        height: 75,
+        width: 40,
+        height: 65,
         child: Stack(
           alignment: Alignment.topCenter,
           children: [
             Container(
-              width: 50 * oneToZeroAnim.value,
-              height: 50,
+              width: 40 * oneToZeroAnim.value,
+              height: 40,
               decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 color: Colors.white,

@@ -1,93 +1,122 @@
-// ignore_for_file: file_names
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/configuration/costant/color.dart';
+import 'package:kitap_al_ver/model/kategorymodel.dart';
 
-// ignore: use_key_in_widget_constructors
-
-// ignore: use_key_in_widget_constructors
 class BookCategoryOverview extends StatefulWidget {
-  // İsim değiştirildi
   @override
-  State<BookCategoryOverview> createState() =>
-      _BookCategoryOverviewState(); // İsim değiştirildi
+  State<BookCategoryOverview> createState() => _BookCategoryOverviewState();
 }
 
 class _BookCategoryOverviewState extends State<BookCategoryOverview> {
-  // İsim değiştirildi
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkAndSendDataToFirestore();
+  }
+
+  Future<void> _checkAndSendDataToFirestore() async {
+    try {
+      final categoryCollection = _firestore.collection('categories');
+      final querySnapshot = await categoryCollection.get();
+
+      if (querySnapshot.docs.isEmpty) {
+        for (var category in kategory) {
+          DocumentReference docRef = categoryCollection.doc();
+          await docRef.set({
+            'category_name': category.categoryname,
+            'category_uid': docRef.id,
+            'image_url':
+                'URL_TO_CATEGORY_IMAGE', // Resim URL'sini buraya ekleyin
+          });
+        }
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.screenlight1,
-      body: ListView(
-        padding: EdgeInsets.zero,
-        children: [
-          Container(
-            decoration: const BoxDecoration(
-              color: AppColor.screenlight1,
-              borderRadius: BorderRadius.only(
-                bottomRight: Radius.circular(50),
-              ),
-            ),
-            child: const Column(
-              children: [
-                SizedBox(height: 110),
-              ],
-            ),
-          ),
-          Container(
-            color: AppColor.screenlight1,
+      body: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
               decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius:
-                      BorderRadius.only(topLeft: Radius.circular(200))),
-              child: GridView.count(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                crossAxisCount: 2,
-                crossAxisSpacing: 40,
-                mainAxisSpacing: 30,
+                color: AppColor.screenlight1,
+                borderRadius: BorderRadius.only(
+                  bottomRight: Radius.circular(60),
+                ),
+              ),
+              child: Column(
                 children: [
-                  itemDashboard('TYT-KİTAP', 'assets/images/profile.png',
-                      Colors.deepOrange, () {
-                    Navigator.of(context).pushNamed('/tababrhome');
-                  }),
-                  itemDashboard(
-                      'AYT-KİTAP', 'assets/images/profile.png', Colors.green,
-                      () {
-                    Navigator.of(context).pushNamed('/tababrhome');
-                  }),
-                  itemDashboard(
-                      'LGS-KİTAP', 'assets/images/profile.png', Colors.purple,
-                      () {
-                    Navigator.of(context).pushNamed('/tababrhome');
-                  }),
-                  itemDashboard(
-                      'KPPS-KİTAP', 'assets/images/profile.png', Colors.brown,
-                      () {
-                    Navigator.of(context).pushNamed('/tababrhome');
-                  }),
-                  itemDashboard(
-                      'ALES-KİTAP', 'assets/images/profile.png', Colors.indigo,
-                      () {
-                    Navigator.of(context).pushNamed('/tababrhome');
-                  }),
-                  itemDashboard(
-                      'TUS-KİTAP', 'assets/images/profile.png', Colors.teal,
-                      () {
-                    Navigator.of(context).pushNamed('/tababrhome');
-                  }),
-                  itemDashboard('YDS', 'assets/images/profile.png', Colors.blue,
-                      () {
-                    Navigator.of(context).pushNamed('/tababrhome');
-                  }),
+                  const SizedBox(height: 80),
                 ],
               ),
             ),
           ),
-          const SizedBox(height: 20)
+          SliverFillRemaining(
+            child: Container(
+              color: AppColor.screenlight1,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius:
+                      BorderRadius.only(topLeft: Radius.circular(200)),
+                ),
+                child: StreamBuilder<QuerySnapshot>(
+                  stream: _firestore.collection('categories').snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+
+                    if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                      return const Center(
+                          child: Text('Kategoriler bulunamadı.'));
+                    }
+
+                    final categories = snapshot.data!.docs;
+
+                    return GridView.builder(
+                      padding: const EdgeInsets.all(16),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 16,
+                        mainAxisSpacing: 16,
+                      ),
+                      itemCount: categories.length,
+                      itemBuilder: (context, index) {
+                        final categoryData =
+                            categories[index].data() as Map<String, dynamic>;
+                        final title =
+                            categoryData['category_name'] ?? 'No Title';
+                        final imageUrl = categoryData['image_url'] ??
+                            'assets/images/default.png';
+                        final color =
+                            Colors.primaries[index % Colors.primaries.length];
+
+                        return itemDashboard(
+                          title,
+                          imageUrl,
+                          color,
+                          () {
+                            Navigator.of(context).pushNamed('/tababrhome');
+                          },
+                        );
+                      },
+                    );
+                  },
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -114,7 +143,7 @@ class _BookCategoryOverviewState extends State<BookCategoryOverview> {
               color: background,
               shape: BoxShape.circle,
             ),
-            child: Image.asset(
+            child: Image.network(
               imagePath,
               color: Colors.white,
               fit: BoxFit.cover,
@@ -123,7 +152,7 @@ class _BookCategoryOverviewState extends State<BookCategoryOverview> {
           const SizedBox(height: 8),
           Text(
             title.toUpperCase(),
-            style: TextStyle(color: Colors.amber),
+            style: const TextStyle(color: Colors.black),
           ),
         ],
       ),

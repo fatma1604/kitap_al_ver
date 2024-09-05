@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:kitap_al_ver/newpage.dart';
 import 'package:kitap_al_ver/pages/onbording/onbording_screen.dart';
 
 
@@ -37,9 +38,11 @@ final class AppRoute {
   static const String admin = "/admin";
   static const String exam = "/exam";
   static const String tabbarhome = "/tababrhome";
+    static const String fatma = "/tababrhome";
 
   static Map<String, AppRouteMapFunction> routes = {
 onboard:(context) =>const  OnboardingScreen(),
+fatma:(context) =>const  Newpage(),
 
    // tabbarhome: (context) =>const BooksCategoryScreen(),
    /* login: (context) => LoginPage(),
