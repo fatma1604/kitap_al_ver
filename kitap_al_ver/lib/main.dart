@@ -12,6 +12,7 @@ import 'package:kitap_al_ver/provider/favorite_provider.dart';
 import 'package:provider/provider.dart';
 
 
+
 //istedim gibi çalışan 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

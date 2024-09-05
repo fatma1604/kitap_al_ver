@@ -1,6 +1,5 @@
-
 import 'package:flutter/material.dart';
-import 'package:kitap_al_ver/pages/add_screen.dart';
+import 'package:kitap_al_ver/pages/widget/loginorregister/add_screen.dart';
 
 class Mykonum extends StatelessWidget {
   @override
@@ -23,8 +22,8 @@ class Mykonumbut extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => AddScreen()));
+       /* Navigator.push(
+            context, MaterialPageRoute(builder: (context) => AddScreen()));*/
         print('Butona tıklandı!');
       },
       child: Text('Butona Tıkla'),
