@@ -1,12 +1,6 @@
-
-
 import 'package:flutter/material.dart';
-import 'package:kitap_al_ver/newpage.dart';
 import 'package:kitap_al_ver/pages/onbording/onbording_screen.dart';
-
-
-
-
+import 'package:kitap_al_ver/widget/%C4%B1nformation.dart';
 
 typedef AppRouteMapFunction = Widget Function(BuildContext context);
 
@@ -38,14 +32,14 @@ final class AppRoute {
   static const String admin = "/admin";
   static const String exam = "/exam";
   static const String tabbarhome = "/tababrhome";
-    static const String fatma = "/tababrhome";
+  static const String information = "/tababrhome";
 
   static Map<String, AppRouteMapFunction> routes = {
-onboard:(context) =>const  OnboardingScreen(),
-fatma:(context) =>const  Newpage(),
+    onboard: (context) => const OnboardingScreen(),
+    information: (context) => InformationFormScreen(),
 
-   // tabbarhome: (context) =>const BooksCategoryScreen(),
-   /* login: (context) => LoginPage(),
+    // tabbarhome: (context) =>const BooksCategoryScreen(),
+    /* login: (context) => LoginPage(),
     home: (context) => const HomePage(),
     onboard: (context) => OnboardingAnimation(),
     profile: (context) => const ProfilePage(),

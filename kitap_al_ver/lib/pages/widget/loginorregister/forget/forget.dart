@@ -7,7 +7,7 @@ import 'package:kitap_al_ver/configuration/core/my_tex.dart';
 import 'package:kitap_al_ver/configuration/costant/color.dart';
 import 'package:kitap_al_ver/configuration/costant/images.dart';
 import 'package:kitap_al_ver/configuration/costant/theme/text.dart';
-import 'package:kitap_al_ver/pages/firebes_auth.dart';
+import 'package:kitap_al_ver/pages/data/firebes_auth.dart';
 
 
 class Forget extends StatefulWidget {
