@@ -30,6 +30,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
   Uint8List? imageGallery;
 
   late TextEditingController usernameController;
+  
 
   imagePickerTypeBottomSheet() {
     return showModalBottomSheet(

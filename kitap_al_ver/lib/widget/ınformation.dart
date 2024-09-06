@@ -1,10 +1,8 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:kitap_al_ver/mykonum.dart';
-import 'package:uuid/uuid.dart';
+import 'package:kitap_al_ver/model/bilgi_model.dart';
 
 class InformationFormScreen extends StatefulWidget {
   @override
@@ -17,49 +15,21 @@ class _InformationFormScreenState extends State<InformationFormScreen> {
   String? _selectedUsageStatus;
   String? _selectedType;
   String? _selectedSubject;
-  String _title = '';
-  String _additionalInfo = '';
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  late String _uniqueId;  // UUID'yi tutmak için bir değişken
-
-  @override
-  void initState() {
-    super.initState();
-    // UUID oluştur
-    var uuid = Uuid();
-    _uniqueId = uuid.v4();
-  }
-
-  Future<void> _submitForm() async {
-    if (_formKey.currentState!.validate()) {
-      try {
-        // Firestore'da bir belge oluştur ve verileri kaydet
-        await FirebaseFirestore.instance.collection('ilanlar').doc(_uniqueId).set({
-          'title': _title.isNotEmpty ? _title : 'Başlık Yok',
-          'class': _selectedClass,
-          'usageStatus': _selectedUsageStatus,
-          'type': _selectedType,
-          'subject': _selectedSubject,
-          'additionalInfo': _additionalInfo.isNotEmpty ? _additionalInfo : 'Ek Bilgi Yok',
-          'createdAt': FieldValue.serverTimestamp(),
-          'uid': _uniqueId,
-          'user_uid':_auth.currentUser!.uid,
+  bool _isCoder = false; // Indicates if the user is a code
+  Future<void> _checkUserRole() async {
+    try {
+      User? user = _auth.currentUser;
+      if (user != null) {
+        DocumentSnapshot userDoc =
+            await _firestore.collection('users').doc(user.uid).get();
+        setState(() {
+          _isCoder = userDoc['role'] == 'coder'; // Assuming role field exists
         });
-
-        // Başarılı olduğunda bir mesaj göster
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Bilgiler başarıyla kaydedildi!')),
-        );
-
-        // Bir sonraki ekrana git
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) =>  Mykonum ()));
-      } catch (e) {
-        print('Error saving information: $e');
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Bilgileri kaydederken bir hata oluştu!')),
-        );
       }
+    } catch (e) {
+      print('Error fetching user role: $e');
     }
   }
 
@@ -93,9 +63,9 @@ class _InformationFormScreenState extends State<InformationFormScreen> {
                   }
                   return null;
                 },
-                onChanged: (value) {
+                /* onChanged: (value) {
                   _title = value;
-                },
+                },*/
               ),
               SizedBox(height: 16.h),
               DropdownButtonFormField<String>(
@@ -104,7 +74,8 @@ class _InformationFormScreenState extends State<InformationFormScreen> {
                   border: OutlineInputBorder(),
                 ),
                 value: _selectedClass,
-                items: ['Sınıf 9', 'Sınıf 10'].map((classItem) {
+                items: ['Sınıf 9', 'Sınıf 10', 'Sınıf 11', 'Sınıf 12']
+                    .map((classItem) {
                   return DropdownMenuItem(
                     value: classItem,
                     child: Text(classItem),
@@ -216,18 +187,171 @@ class _InformationFormScreenState extends State<InformationFormScreen> {
                 ),
                 maxLines: 3,
                 onChanged: (value) {
-                  _additionalInfo = value;
+                  /*   _additionalInfo = value;*/
                 },
               ),
               SizedBox(height: 32.h),
-              ElevatedButton(
-                onPressed: _submitForm,
+              /*  ElevatedButton(
+                onPressed: _class(),
                 child: Text('Devam Et'),
-              ),
+              ),*/
+
+              ElevatedButton(onPressed: _lesson, child: Text("veriat"))
             ],
           ),
         ),
       ),
     );
+  }
+
+  Future<void> _class() async {
+    try {
+      final categoryCollection = _firestore.collection('Class');
+      final querySnapshot = await categoryCollection.get();
+
+      if (querySnapshot.docs.isEmpty) {
+        // Iterate through the 'bilgi' list (assuming it's a predefined list)
+        for (var information in bilgi) {
+          // Assuming 'information.sinif' is a list and 'sinif' is a function to transform or map the items
+          List<dynamic> categoryNames =
+              information.sinif.map((sinif) => sinif).toList();
+
+          // Create a new document in Firestore
+          DocumentReference docRef = categoryCollection.doc();
+          await docRef.set({
+            'category_name': categoryNames,
+            'category_uid': docRef.id,
+          });
+        }
+      }
+    } catch (e) {
+      // Print the error for debugging purposes
+      print('Error: $e');
+      // Optionally, you can also show an error message to the user
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Bir hata oluştu: $e')),
+      );
+    }
+  }
+
+  Future<void> _case() async {
+    try {
+      final categoryCollection = _firestore.collection('Case');
+      final querySnapshot = await categoryCollection.get();
+
+      // Check if the collection is empty
+      if (querySnapshot.docs.isEmpty) {
+        // Iterate through the 'bilgi' list (assuming it's a predefined list)
+        for (var caseItem in bilgi) {
+          // Assuming 'caseItem.durum' is a list that you want to store
+          List<String> durumList =
+              caseItem.durum.map((durum) => durum).toList();
+
+          // Create a new document in Firestore
+          DocumentReference docRef = categoryCollection.doc();
+          await docRef.set({
+            'durum': durumList,
+            'durum_uid': docRef.id,
+          });
+        }
+
+        // Notify success
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Veriler başarıyla eklendi.')),
+        );
+      } else {
+        // Notify if the collection is not empty
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Koleksiyon zaten dolu.')),
+        );
+      }
+    } catch (e) {
+      // Print the error for debugging purposes
+      print('Error: $e');
+      // Optionally, you can also show an error message to the user
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Bir hata oluştu: $e')),
+      );
+    }
+  }
+
+  Future<void> _type() async {
+    try {
+      final categoryCollection = _firestore.collection('Type');
+      final querySnapshot = await categoryCollection.get();
+
+      // Check if the collection is empty
+      if (querySnapshot.docs.isEmpty) {
+        // Iterate through the 'bilgi' list (assuming it's a predefined list)
+        for (var type in bilgi) {
+          // Assuming 'caseItem.durum' is a list that you want to store
+          List<String> turlist = type.tur.map((tur) => tur).toList();
+
+          // Create a new document in Firestore
+          DocumentReference docRef = categoryCollection.doc();
+          await docRef.set({
+            'type': turlist,
+            'type_uid': docRef.id,
+          });
+        }
+
+        // Notify success
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Veriler başarıyla eklendi.')),
+        );
+      } else {
+        // Notify if the collection is not empty
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Koleksiyon zaten dolu.')),
+        );
+      }
+    } catch (e) {
+      // Print the error for debugging purposes
+      print('Error: $e');
+      // Optionally, you can also show an error message to the user
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Bir hata oluştu: $e')),
+      );
+    }
+  }
+
+  Future<void> _lesson() async {
+    try {
+      final categoryCollection = _firestore.collection('lesson');
+      final querySnapshot = await categoryCollection.get();
+
+      // Check if the collection is empty
+      if (querySnapshot.docs.isEmpty) {
+        // Iterate through the 'bilgi' list (assuming it's a predefined list)
+        for (var lessons in bilgi) {
+          // Assuming 'caseItem.durum' is a list that you want to store
+          List<String> lessonsList = lessons.durum.map((ders) => ders).toList();
+
+          // Create a new document in Firestore
+          DocumentReference docRef = categoryCollection.doc();
+          await docRef.set({
+            'lesons': lessonsList,
+            'type_uid': docRef.id,
+          });
+        }
+
+        // Notify success
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Veriler başarıyla eklendi.')),
+        );
+      } else {
+        // Notify if the collection is not empty
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Koleksiyon zaten dolu.')),
+        );
+      }
+    } catch (e) {
+      // Print the error for debugging purposes
+      print('Error: $e');
+      // Optionally, you can also show an error message to the user
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Bir hata oluştu: $e')),
+      );
+    }
   }
 }
