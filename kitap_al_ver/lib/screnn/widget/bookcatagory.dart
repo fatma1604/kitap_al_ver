@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/configuration/costant/color.dart';
 import 'package:kitap_al_ver/model/kategorymodel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:kitap_al_ver/widget/%C4%B1nformation.dart';
 
 class BookCategoryOverview extends StatefulWidget {
   @override
@@ -145,7 +146,10 @@ class _BookCategoryOverviewState extends State<BookCategoryOverview> {
                           imageUrl,
                           color,
                           () {
-                            Navigator.of(context).pushNamed('/tababrhome');
+                            Navigator.pushReplacement(
+        context,
+       MaterialPageRoute(builder: (context) =>  InformationFormScreen()),
+      );
                           },
                         );
                       },

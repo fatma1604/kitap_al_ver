@@ -32,11 +32,11 @@ final class AppRoute {
   static const String admin = "/admin";
   static const String exam = "/exam";
   static const String tabbarhome = "/tababrhome";
-  static const String information = "/tababrhome";
+
 
   static Map<String, AppRouteMapFunction> routes = {
     onboard: (context) => const OnboardingScreen(),
-    information: (context) => InformationFormScreen(),
+
 
     // tabbarhome: (context) =>const BooksCategoryScreen(),
     /* login: (context) => LoginPage(),

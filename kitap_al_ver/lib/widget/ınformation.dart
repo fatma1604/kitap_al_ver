@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kitap_al_ver/model/bilgi_model.dart';
 import 'package:kitap_al_ver/mykonum.dart';
+import 'package:kitap_al_ver/pages/data/firebes_post.dart';
+import 'package:uuid/uuid.dart';
 
 class InformationFormScreen extends StatefulWidget {
   @override
@@ -11,16 +13,21 @@ class InformationFormScreen extends StatefulWidget {
 }
 
 class _InformationFormScreenState extends State<InformationFormScreen> {
+  bool islooding = false;
+
   final _formKey = GlobalKey<FormState>();
   String? _selectedClass;
   String? _selectedUsageStatus;
   String? _selectedType;
   String? _selectedSubjec;
+   String? _selectedSubject;
   List<String> _classes = [];
   List<String> _usageStatuses = [];
   List<String> _types = [];
   List<String> _subjects = [];
-
+  var uid = Uuid().v4();
+  String _title = '';
+  String _additionalInfo = '';
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   bool _isCoder = false; // Indicates if the user is a coder
@@ -29,9 +36,42 @@ class _InformationFormScreenState extends State<InformationFormScreen> {
   void initState() {
     super.initState();
     _fetchData(); // Fetch data when the screen is initialized
-    _checkUserRole(); // Check user role if necessary
+    _checkUserRole();
+     // UUID oluştur
   }
+Future<void> _submitForm() async {
+    if (_formKey.currentState!.validate()) {
+      try {
+        
+        // Firestore'da bir belge oluştur ve verileri kaydet
+        await FirebaseFirestore.instance.collection('post').doc(uid).set({
+          'title': _title.isNotEmpty ? _title : 'Başlık Yok',
+          'class': _selectedClass,
+          'usageStatus': _selectedUsageStatus,
+          'type': _selectedType,
+          'subject': _selectedSubjec,
+          'additionalInfo': _additionalInfo.isNotEmpty ? _additionalInfo : 'Ek Bilgi Yok',
+          'createdAt': FieldValue.serverTimestamp(),
+          'user_uid': _auth.currentUser!.uid,
+          'post_uid': uid, // UUID'yi veriye dahil et
+        });
 
+        // Başarılı olduğunda bir mesaj göster
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Bilgiler başarıyla kaydedildi!')),
+        );
+
+        // Bir sonraki ekrana git
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => Mykonum()));
+      } catch (e) {
+        print('Error saving information: $e');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Bilgileri kaydederken bir hata oluştu!')),
+        );
+      }
+    }
+  }
   Future<void> _checkUserRole() async {
     try {
       User? user = _auth.currentUser;
@@ -47,52 +87,52 @@ class _InformationFormScreenState extends State<InformationFormScreen> {
     }
   }
 
- Future<void> _fetchData() async {
-  try {
-    final classSnapshot = await _firestore.collection('Class').get();
-    print('Classes: ${classSnapshot.docs.map((doc) => doc.data()).toList()}');
-    setState(() {
-      _classes = classSnapshot.docs
-          .expand((doc) => (doc['category_name'] as List<dynamic>)
-              .map((e) => e.toString()))
-          .toList();
-    });
+  Future<void> _fetchData() async {
+    try {
+      final classSnapshot = await _firestore.collection('Class').get();
+      print('Classes: ${classSnapshot.docs.map((doc) => doc.data()).toList()}');
+      setState(() {
+        _classes = classSnapshot.docs
+            .expand((doc) => (doc['category_name'] as List<dynamic>)
+                .map((e) => e.toString()))
+            .toList();
+      });
 
-    final usageStatusSnapshot = await _firestore.collection('Case').get();
-    print(
-        'Usage Statuses: ${usageStatusSnapshot.docs.map((doc) => doc.data()).toList()}');
-    setState(() {
-      _usageStatuses = usageStatusSnapshot.docs
-          .expand((doc) =>
-              (doc['durum'] as List<dynamic>).map((e) => e.toString()))
-          .toList();
-    });
+      final usageStatusSnapshot = await _firestore.collection('Case').get();
+      print(
+          'Usage Statuses: ${usageStatusSnapshot.docs.map((doc) => doc.data()).toList()}');
+      setState(() {
+        _usageStatuses = usageStatusSnapshot.docs
+            .expand((doc) =>
+                (doc['durum'] as List<dynamic>).map((e) => e.toString()))
+            .toList();
+      });
 
-    final typeSnapshot = await _firestore.collection('Type').get();
-    print('Types: ${typeSnapshot.docs.map((doc) => doc.data()).toList()}');
-    setState(() {
-      _types = typeSnapshot.docs
-          .expand((doc) =>
-              (doc['type'] as List<dynamic>).map((e) => e.toString()))
-          .toList();
-    });
+      final typeSnapshot = await _firestore.collection('Type').get();
+      print('Types: ${typeSnapshot.docs.map((doc) => doc.data()).toList()}');
+      setState(() {
+        _types = typeSnapshot.docs
+            .expand((doc) =>
+                (doc['type'] as List<dynamic>).map((e) => e.toString()))
+            .toList();
+      });
 
-    final subjectSnapshot = await _firestore.collection('Lesson').get();
-    print('Subjects: ${subjectSnapshot.docs.map((doc) => doc.data()).toList()}');
-    setState(() {
-      _subjects = subjectSnapshot.docs
-          .expand((doc) =>
-              (doc['lesons'] as List<dynamic>).map((e) => e.toString())) // Adjust field name here
-          .toList();
-    });
-  } catch (e) {
-    print('Error fetching data: $e');
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Bir hata oluştu: ${e.toString()}')),
-    );
+      final subjectSnapshot = await _firestore.collection('Lesson').get();
+      print(
+          'Subjects: ${subjectSnapshot.docs.map((doc) => doc.data()).toList()}');
+      setState(() {
+        _subjects = subjectSnapshot.docs
+            .expand((doc) => (doc['lesons'] as List<dynamic>)
+                .map((e) => e.toString())) // Adjust field name here
+            .toList();
+      });
+    } catch (e) {
+      print('Error fetching data: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Bir hata oluştu: ${e.toString()}')),
+      );
+    }
   }
-}
-
 
   @override
   Widget build(BuildContext context) {
@@ -113,19 +153,25 @@ class _InformationFormScreenState extends State<InformationFormScreen> {
           key: _formKey,
           child: ListView(
             children: [
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'İlan Başlığı',
-                  border: OutlineInputBorder(),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Bu alan zorunludur';
-                  }
-                  return null;
-                },
+               TextFormField(
+              decoration: InputDecoration(
+                labelText: 'İlan Başlığı',
+                border: OutlineInputBorder(),
               ),
-              SizedBox(height: 16.h),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Bu alan zorunludur';
+                }
+                return null;
+              },
+              onChanged: (value) {
+                setState(() {
+                  _title = value;
+                });
+              },
+            ),
+            SizedBox(height: 16.h),
+           
               DropdownButtonFormField<String>(
                 decoration: InputDecoration(
                   labelText: 'Sınıf Seçimi',
@@ -226,30 +272,30 @@ class _InformationFormScreenState extends State<InformationFormScreen> {
                 },
               ),
               SizedBox(height: 16.h),
-              TextFormField(
+               TextFormField(
                 decoration: InputDecoration(
                   labelText: 'Ek Bilgi',
                   border: OutlineInputBorder(),
                 ),
                 maxLines: 3,
                 onChanged: (value) {
-                  // Handle additional info here
+                  _additionalInfo = value;
                 },
               ),
               SizedBox(height: 32.h),
               ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => Mykonum()));
-                  },
-                  child: Text("Veriat"))
+                onPressed:  _submitForm,
+                child: Text('Devam Et'),
+               
+              )
             ],
           ),
         ),
       ),
     );
   }
- Future<void> _class() async {
+
+  Future<void> _class() async {
     try {
       final categoryCollection = _firestore.collection('Class');
       final querySnapshot = await categoryCollection.get();
@@ -377,4 +423,3 @@ class _InformationFormScreenState extends State<InformationFormScreen> {
     }
   }
 }
-

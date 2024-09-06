@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kitap_al_ver/pages/widget/loginorregister/add_screen.dart';
+
 
 class Mykonum extends StatelessWidget {
   @override
