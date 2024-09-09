@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kitap_al_ver/post/post_denme.dart';
 
 
 class Mykonum extends StatelessWidget {
@@ -22,8 +23,8 @@ class Mykonumbut extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-       /* Navigator.push(
-            context, MaterialPageRoute(builder: (context) => AddScreen()));*/
+       Navigator.push(
+            context, MaterialPageRoute(builder: (context) => AddScreen()));
         print('Butona tıklandı!');
       },
       child: Text('Butona Tıkla'),
