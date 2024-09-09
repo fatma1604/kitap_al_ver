@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/configuration/core/pageCon.dart';
 import 'package:kitap_al_ver/configuration/costant/constat.dart';
+import 'package:kitap_al_ver/post/post_denme.dart';
 import 'package:kitap_al_ver/screnn/widget/bookcatagory.dart';
 import 'package:kitap_al_ver/tabbar/bgcirclewidget.dart';
 import 'package:kitap_al_ver/tabbar/bottomLiquidWidget.dart';
@@ -14,6 +15,7 @@ List<Widget> screens = [
   DrawerDemoScreen(), // hepsi fairbesten çazğrıcaz
   // HomePage (), //çet
   BookCategoryOverview(), //satış için--satış
+  //AddScreen()
   // ignore: prefer_const_constructorzzzs
   //const Favorite(), //boş--fovori
   //ProfileScreen(), //boş--profil

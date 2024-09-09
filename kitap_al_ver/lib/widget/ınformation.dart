@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kitap_al_ver/model/bilgi_model.dart';
 import 'package:kitap_al_ver/mykonum.dart';
 import 'package:kitap_al_ver/pages/data/firebes_post.dart';
+import 'package:kitap_al_ver/post/galleripage.dart';
 import 'package:uuid/uuid.dart';
 
 class InformationFormScreen extends StatefulWidget {
@@ -20,7 +21,8 @@ class _InformationFormScreenState extends State<InformationFormScreen> {
   String? _selectedUsageStatus;
   String? _selectedType;
   String? _selectedSubjec;
-   String? _selectedSubject;
+  String? _selectedSubject;
+    String? postImage;
   List<String> _classes = [];
   List<String> _usageStatuses = [];
   List<String> _types = [];
@@ -32,17 +34,18 @@ class _InformationFormScreenState extends State<InformationFormScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   bool _isCoder = false; // Indicates if the user is a coder
 
+
   @override
   void initState() {
     super.initState();
     _fetchData(); // Fetch data when the screen is initialized
     _checkUserRole();
-     // UUID oluştur
+    // UUID oluştur
   }
-Future<void> _submitForm() async {
+
+  Future<void> _submitForm() async {
     if (_formKey.currentState!.validate()) {
       try {
-        
         // Firestore'da bir belge oluştur ve verileri kaydet
         await FirebaseFirestore.instance.collection('post').doc(uid).set({
           'title': _title.isNotEmpty ? _title : 'Başlık Yok',
@@ -50,10 +53,12 @@ Future<void> _submitForm() async {
           'usageStatus': _selectedUsageStatus,
           'type': _selectedType,
           'subject': _selectedSubjec,
-          'additionalInfo': _additionalInfo.isNotEmpty ? _additionalInfo : 'Ek Bilgi Yok',
+          'additionalInfo':
+              _additionalInfo.isNotEmpty ? _additionalInfo : 'Ek Bilgi Yok',
           'createdAt': FieldValue.serverTimestamp(),
           'user_uid': _auth.currentUser!.uid,
           'post_uid': uid, // UUID'yi veriye dahil et
+          'postImage': postImage,
         });
 
         // Başarılı olduğunda bir mesaj göster
@@ -72,6 +77,23 @@ Future<void> _submitForm() async {
       }
     }
   }
+
+  Future<void> _navigateToGallery() async {
+    // Navigate to gallery and await result
+    final result = await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => Galleripage(initialImage: null),
+      ),
+    );
+
+    // Check if result is not null and is a list of image URLs
+    if (result != null && result is List<String>) {
+      setState(() {
+        postImage = result.isNotEmpty ? result.first : null;
+      });
+    }
+  }
+
   Future<void> _checkUserRole() async {
     try {
       User? user = _auth.currentUser;
@@ -136,7 +158,7 @@ Future<void> _submitForm() async {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return  Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(100.0),
         child: AppBar(
@@ -145,6 +167,12 @@ Future<void> _submitForm() async {
             'Bilgi Ekleme',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
           ),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.photo_library),
+              onPressed: _navigateToGallery, // Call gallery
+            ),
+          ],
         ),
       ),
       body: Padding(
@@ -153,25 +181,24 @@ Future<void> _submitForm() async {
           key: _formKey,
           child: ListView(
             children: [
-               TextFormField(
-              decoration: InputDecoration(
-                labelText: 'İlan Başlığı',
-                border: OutlineInputBorder(),
+              TextFormField(
+                decoration: InputDecoration(
+                  labelText: 'İlan Başlığı',
+                  border: OutlineInputBorder(),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Bu alan zorunludur';
+                  }
+                  return null;
+                },
+                onChanged: (value) {
+                  setState(() {
+                    _title = value;
+                  });
+                },
               ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Bu alan zorunludur';
-                }
-                return null;
-              },
-              onChanged: (value) {
-                setState(() {
-                  _title = value;
-                });
-              },
-            ),
-            SizedBox(height: 16.h),
-           
+              SizedBox(height: 16.h),
               DropdownButtonFormField<String>(
                 decoration: InputDecoration(
                   labelText: 'Sınıf Seçimi',
@@ -272,7 +299,7 @@ Future<void> _submitForm() async {
                 },
               ),
               SizedBox(height: 16.h),
-               TextFormField(
+              TextFormField(
                 decoration: InputDecoration(
                   labelText: 'Ek Bilgi',
                   border: OutlineInputBorder(),
@@ -284,9 +311,8 @@ Future<void> _submitForm() async {
               ),
               SizedBox(height: 32.h),
               ElevatedButton(
-                onPressed:  _submitForm,
+                onPressed: _submitForm,
                 child: Text('Devam Et'),
-               
               )
             ],
           ),

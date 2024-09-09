@@ -13,11 +13,10 @@ class AddScreen extends StatefulWidget {
   State<AddScreen> createState() => _AddScreenState();
 }
 
-int _currentIndex = 0;
-
 class _AddScreenState extends State<AddScreen> {
-   File? imageCamera;
+  File? imageCamera;
   Uint8List? imageGallery;
+  int _currentIndex = 0; // Define _currentIndex here
 
   late PageController pageController;
 
@@ -43,6 +42,19 @@ class _AddScreenState extends State<AddScreen> {
     pageController.jumpToPage(page);
   }
 
+  void _handleImageCaptured(File image) {
+    setState(() {
+      imageCamera = image;
+      // Pass imageCamera to Galleripage
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Galleripage(initialImage: imageCamera),
+        ),
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,12 +66,9 @@ class _AddScreenState extends State<AddScreen> {
             PageView(
               controller: pageController,
               onPageChanged: onPageChanged,
-              children: const [
-                CameraPage(),
-
-               Galleripage(
-                
-               )
+              children: [
+                SimpleCameraTest(),
+                Galleripage(initialImage: imageCamera), // Pass initial image
               ],
             ),
             AnimatedPositioned(
