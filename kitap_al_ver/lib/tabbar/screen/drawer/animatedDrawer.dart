@@ -2,8 +2,9 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:kitap_al_ver/configuration/core/my_searchWidget.dart';
+
 import 'package:kitap_al_ver/tabbar/screen/drawer/books_home.dart';
+import 'package:kitap_al_ver/tabbar/screen/drawer/buton.dart';
 
 
 class AnimatedDrawer extends StatefulWidget {
@@ -76,7 +77,7 @@ class _DrawerfState extends State<AnimatedDrawer> {
                         children: <Widget>[
                           Flexible(
                             flex: 1,
-                            child: SearchWidget(
+                            child: MySearchWidget(
                                 searchController: searchController),
                           ),
                           IconButton(
