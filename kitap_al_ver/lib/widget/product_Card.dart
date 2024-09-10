@@ -5,29 +5,18 @@
 
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/configuration/costant/color.dart';
-import 'package:kitap_al_ver/model/product_model.dart';
-import 'package:kitap_al_ver/provider/favorite_provider.dart';
-import 'package:kitap_al_ver/screnn/deail_screen.dart';
+
 
 
 class ProductCard extends StatelessWidget {
-  final Product product;
-  const ProductCard({super.key, required this.product});
+ 
+  const ProductCard({super.key, });
 
   @override
   Widget build(BuildContext context) {
-    final provider = FavoriteProvider.of(context);
+ 
 
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => DetailScreen(product: product),
-          ),
-        );
-      },
-      child: Stack(
+    return Stack(
         children: [
           Container(
             width: double.infinity,
@@ -40,18 +29,24 @@ class ProductCard extends StatelessWidget {
               children: [
                 const SizedBox(height: 5),
                 Center(
-                  child: Hero(
-                    tag: product.image,
+                  
                     child: Image.asset(
-                      product.image,
+                     "assets/images/slider.jpg",
                       width: 150,
                       height: 150,
                       fit: BoxFit.cover,
-                    ),
+                    
                   ),
                 ),
+              
                 const SizedBox(height: 10),
-                Padding(
+              ],
+
+            ),
+          ),
+        ]
+      
+             /*   Padding(
                   padding: const EdgeInsets.only(left: 10),
                   child: Text(
                     product.title,
@@ -120,6 +115,7 @@ class ProductCard extends StatelessWidget {
           ))
         ],
       ),
-    );
+    );*/
+            );
   }
 }

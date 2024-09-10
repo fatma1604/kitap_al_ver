@@ -1,10 +1,11 @@
-// ignore_for_file: file_names, library_private_types_in_public_api
-
 import 'dart:async';
 import 'package:flutter/material.dart';
 
-// ignore: use_key_in_widget_constructors
 class ImageCarousel extends StatefulWidget {
+  final List<String> imageUrls;
+
+  ImageCarousel({required this.imageUrls});
+
   @override
   _ImageCarouselState createState() => _ImageCarouselState();
 }
@@ -12,14 +13,6 @@ class ImageCarousel extends StatefulWidget {
 class _ImageCarouselState extends State<ImageCarousel> {
   final PageController _pageController = PageController();
   Timer? _timer;
-
-  // List of images
-  List<String> images = [
-    'assets/images/slider.jpg',
-    'assets/images/image1.png',
-    'assets/images/slider3.png',
-  ];
-
   int _currentPageIndex = 0;
 
   @override
@@ -39,7 +32,7 @@ class _ImageCarouselState extends State<ImageCarousel> {
   void _startSlideshow() {
     // Set up timer to change page every 5 seconds
     _timer = Timer.periodic(const Duration(seconds: 5), (Timer timer) {
-      if (_currentPageIndex < images.length - 1) {
+      if (_currentPageIndex < widget.imageUrls.length - 1) {
         _currentPageIndex++;
       } else {
         _currentPageIndex = 0;
@@ -59,10 +52,10 @@ class _ImageCarouselState extends State<ImageCarousel> {
         height: 130,
         child: PageView.builder(
           controller: _pageController,
-          itemCount: images.length,
+          itemCount: widget.imageUrls.length,
           itemBuilder: (context, index) {
-            return Image.asset(
-              images[index],
+            return Image.network(
+              widget.imageUrls[index],
               fit: BoxFit.cover,
             );
           },
