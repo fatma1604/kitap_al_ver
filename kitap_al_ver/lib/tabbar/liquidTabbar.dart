@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:kitap_al_ver/aramabut/explore.dart';
 import 'package:kitap_al_ver/configuration/core/pageCon.dart';
 import 'package:kitap_al_ver/configuration/costant/constat.dart';
 import 'package:kitap_al_ver/post/post_denme.dart';
@@ -15,6 +16,7 @@ List<Widget> screens = [
   DrawerDemoScreen(), // hepsi fairbesten çazğrıcaz
   // HomePage (), //çet
   BookCategoryOverview(), //satış için--satış
+  Explone(),
 
 
   

@@ -43,20 +43,6 @@ class MySearchWidget extends StatelessWidget {
       ),
     );
 
-    /*TextFormField(
-        controller: searchController,
-        textAlign: TextAlign.start, // Center-aligns the text horizontally
-        decoration: InputDecoration(
-          hintText: 'Search',
-          border: InputBorder.none,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 26.0,vertical: 20),
-          suffixIcon: IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () {
-              showSearch(context: context, delegate: DataSearch());
-            },
-          ),
-        ),
-      ),);*/
+   
   }
 }
