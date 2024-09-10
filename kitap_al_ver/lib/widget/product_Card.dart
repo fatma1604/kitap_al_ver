@@ -5,10 +5,14 @@ import 'package:kitap_al_ver/configuration/costant/color.dart';
 
 class ProductCard extends StatelessWidget {
   final String photoUrl;
+  final String title;
+  final String genre;
 
   const ProductCard({
     super.key,
     required this.photoUrl,
+    required this.title,
+    required this.genre,
   });
 
   @override
@@ -28,13 +32,33 @@ class ProductCard extends StatelessWidget {
               Center(
                 child: Image.network(
                   photoUrl,
-                  width: 150,
+                  width: double.infinity, // Genişliği tam yapalım
                   height: 150,
                   fit: BoxFit.cover,
                 ),
               ),
               const SizedBox(height: 10),
-              // Diğer widget'lar buraya eklenebilir.
+              Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: Text(
+                  title,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.only(left: 10, bottom: 10),
+                child: Text(
+                  genre,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 17,
+                  ),
+                ),
+              ),
             ],
           ),
         ),

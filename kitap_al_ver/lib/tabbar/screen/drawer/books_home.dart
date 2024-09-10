@@ -41,7 +41,7 @@ class _Books_HomeState extends State<Books_Home> {
     }
   }
 
-  Future<List<String>> getPhotoUrls() async {
+  Future<List<Map<String, dynamic>>> getPhotoUrls() async {
     try {
       final QuerySnapshot querySnapshot =
           await FirebaseFirestore.instance.collection('post').get();
@@ -50,10 +50,13 @@ class _Books_HomeState extends State<Books_Home> {
         return querySnapshot.docs.map((doc) {
           final data = doc.data() as Map<String, dynamic>;
           final url = data['postImage'] as String?;
-          if (url != null) {
-            return url;
+          final title = data['title'] as String?;
+          final type = data['type'] as String?;
+
+          if (url != null && title != null && type != null) {
+            return {'postImage': url, 'title': title, 'type': type};
           } else {
-            throw Exception('URL is null for a document');
+            throw Exception('Missing data in a document');
           }
         }).toList();
       } else {
@@ -77,7 +80,7 @@ class _Books_HomeState extends State<Books_Home> {
             ),
           ),
         ),
-        FutureBuilder<List<String>>(
+        FutureBuilder<List<Map<String, dynamic>>>(
           future: getPhotoUrls(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -89,15 +92,19 @@ class _Books_HomeState extends State<Books_Home> {
                 child: Center(child: Text('Error: ${snapshot.error}')),
               );
             } else if (snapshot.hasData) {
-              final photoUrls = snapshot.data!;
+              final photoDataList = snapshot.data!;
 
               return SliverGrid(
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
-                    final photoUrl = photoUrls[index];
-                    return ProductCard(photoUrl: photoUrl);
+                    final photoData = photoDataList[index];
+                    return ProductCard(
+                      photoUrl: photoData['postImage'],
+                      title: photoData['title'],
+                      genre: photoData['type'],
+                    );
                   },
-                  childCount: photoUrls.length,
+                  childCount: photoDataList.length,
                 ),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,

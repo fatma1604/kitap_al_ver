@@ -11,9 +11,8 @@ import 'package:kitap_al_ver/provider/add_to_cart_provider.dart';
 import 'package:kitap_al_ver/provider/favorite_provider.dart';
 import 'package:provider/provider.dart';
 
-
 //pushh
-//istedim gibi çalışan 
+//istedim gibi çalışan
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
@@ -23,7 +22,6 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => FavoriteProvider()),
         ChangeNotifierProvider(create: (_) => CartProvider()),
-       
       ],
       child: const MyApp(),
     ),
