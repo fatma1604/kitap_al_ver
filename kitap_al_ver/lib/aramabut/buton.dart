@@ -1,15 +1,9 @@
-// ignore_for_file: file_names
-
-
 import 'package:flutter/material.dart';
-import 'package:kitap_al_ver/configuration/core/dataSesrch.dart';
-// ignore: depend_on_referenced_packages
-
+import 'package:kitap_al_ver/aramabut/explore.dart'; // Eksik olan sayfa importu
 
 class MySearchWidget extends StatelessWidget {
   final TextEditingController searchController;
 
-  // ignore: use_key_in_widget_constructors
   const MySearchWidget({required this.searchController});
 
   @override
@@ -25,12 +19,17 @@ class MySearchWidget extends StatelessWidget {
         children: [
           IconButton(
             onPressed: () {
-              showSearch(context: context, delegate: DataSearch());
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Explone(),
+                ),
+              );
             },
             icon: const Icon(Icons.search, color: Color.fromARGB(255, 0, 0, 0)),
           ),
           const SizedBox(width: 10),
-          const Expanded(
+          Expanded(
             child: Text(
               'Search',
               style: TextStyle(
@@ -42,7 +41,5 @@ class MySearchWidget extends StatelessWidget {
         ],
       ),
     );
-
-   
   }
 }

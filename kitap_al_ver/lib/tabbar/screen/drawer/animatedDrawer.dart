@@ -1,17 +1,11 @@
-// ignore_for_file: file_names
-
-
+import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
-
+import 'package:kitap_al_ver/aramabut/explore.dart';
 import 'package:kitap_al_ver/tabbar/screen/drawer/books_home.dart';
-import 'package:kitap_al_ver/tabbar/screen/drawer/buton.dart';
-
+import 'package:kitap_al_ver/aramabut/buton.dart';
 
 class AnimatedDrawer extends StatefulWidget {
-  // ignore: use_super_parameters
-  const AnimatedDrawer({
-    Key? key,
-  }) : super(key: key);
+  const AnimatedDrawer({Key? key}) : super(key: key);
 
   @override
   State<AnimatedDrawer> createState() => _DrawerfState();
@@ -32,11 +26,10 @@ class _DrawerfState extends State<AnimatedDrawer> {
     return AnimatedContainer(
       transform: Matrix4.translationValues(xOffset, yOffset, 0)
         ..scale(isDrawerOpen ? 0.85 : 1.00)
-        ..rotateZ(isDrawerOpen ? -50 : 0),
+        ..rotateZ(isDrawerOpen ? -0.5 : 0),
       duration: const Duration(milliseconds: 200),
       decoration: BoxDecoration(
-        borderRadius:
-            isDrawerOpen ? BorderRadius.circular(40) : BorderRadius.circular(0),
+        borderRadius: BorderRadius.circular(isDrawerOpen ? 40 : 0),
       ),
       child: SizedBox(
         width: mWidth,
@@ -71,14 +64,13 @@ class _DrawerfState extends State<AnimatedDrawer> {
                           },
                         ),
                   Expanded(
-                    // ignore: avoid_unnecessary_containers
                     child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10.0),
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Flexible(
-                            flex: 1,
-                            child: MySearchWidget(
-                                searchController: searchController),
+                          Expanded(
+                            child: MySearchWidget(searchController: searchController,),
                           ),
                           IconButton(
                             icon: const Icon(Icons.filter_list),
@@ -95,12 +87,12 @@ class _DrawerfState extends State<AnimatedDrawer> {
                         ],
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
             const SizedBox(height: 40),
-          const  Expanded(
+            const Expanded(
               child: Books_Home(),
             ),
             const SizedBox(height: 40),

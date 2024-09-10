@@ -16,7 +16,7 @@ List<Widget> screens = [
   DrawerDemoScreen(), // hepsi fairbesten çazğrıcaz
   // HomePage (), //çet
   BookCategoryOverview(), //satış için--satış
-  Explone(),
+  Explone()
 
 
   
