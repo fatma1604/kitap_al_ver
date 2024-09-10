@@ -1,8 +1,5 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kitap_al_ver/model/bilgi_model.dart';
@@ -30,93 +27,58 @@ class _InformationFormScreenState extends State<InformationFormScreen> {
   List<String> _usageStatuses = [];
   List<String> _types = [];
   List<String> _subjects = [];
+    List<String> _like = [];
   var uid = Uuid().v4();
   String _title = '';
   String _additionalInfo = '';
-   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseStorage _storage = FirebaseStorage.instance;
   bool _isCoder = false; // Indicates if the user is a coder
 
 
-@override
-void initState() {
-  super.initState();
-  _fetchData(); // Fetch data when the screen is initialized
-  _checkUserRole();
-  _getProfileImage(); // Fetch profile image on initialization
-}
-
-Future<String?> _getProfileImage() async {
-  try {
-    final userDoc = await _firestore
-        .collection('Users')
-        .doc(_auth.currentUser!.uid)
-        .get();
-
-    if (!userDoc.exists) {
-      throw Exception('User document does not exist.');
-    }
-
-    final userData = userDoc.data()!;
-    final userProfile = userData['profile'] as String?;
-
-    return userProfile;
-  } catch (e) {
-    print('Error fetching profile image: $e');
-    return null;
+  @override
+  void initState() {
+    super.initState();
+    _fetchData(); // Fetch data when the screen is initialized
+    _checkUserRole();
+    // UUID oluştur
   }
-}
 
+  Future<void> _submitForm() async {
+    if (_formKey.currentState!.validate()) {
+      try {
+        // Firestore'da bir belge oluştur ve verileri kaydet
+        await FirebaseFirestore.instance.collection('post').doc(uid).set({
+          'title': _title.isNotEmpty ? _title : 'Başlık Yok',
+          'class': _selectedClass,
+          'usageStatus': _selectedUsageStatus,
+          'type': _selectedType,
+          'subject': _selectedSubjec,
+          'additionalInfo':
+              _additionalInfo.isNotEmpty ? _additionalInfo : 'Ek Bilgi Yok',
+          'createdAt': FieldValue.serverTimestamp(),
+          'user_uid': _auth.currentUser!.uid,
+          'post_uid': uid, // UUID'yi veriye dahil et
+          'postImage': postImage,
+          'link':_like,
+        });
 
+        // Başarılı olduğunda bir mesaj göster
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Bilgiler başarıyla kaydedildi!')),
+        );
 
- Future<void> _submitForm() async {
-  if (_formKey.currentState!.validate()) {
-    try {
-      // Profil fotoğrafını almak için metodu çağırın
-      final userProfile = await _getProfileImage();
-
-      if (userProfile == null) {
-        throw Exception('Profil fotoğrafı alınamadı.');
+        // Bir sonraki ekrana git
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => Mykonum()));
+      } catch (e) {
+        print('Error saving information: $e');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Bilgileri kaydederken bir hata oluştu!')),
+        );
       }
-
-      // Prepare data to be saved
-      final postData = {
-        'title': _title.isNotEmpty ? _title : 'Başlık Yok',
-        'class': _selectedClass,
-        'usageStatus': _selectedUsageStatus,
-        'type': _selectedType,
-        'subject': _selectedSubjec,
-        'additionalInfo': _additionalInfo.isNotEmpty ? _additionalInfo : 'Ek Bilgi Yok',
-        'createdAt': FieldValue.serverTimestamp(),
-        'user_uid': _auth.currentUser!.uid,
-        'post_uid': uid, // UUID
-        'postImage': postImage ?? '', // Handle null cases
-        'profileImage': userProfile, // Use the profile from Firestore
-      };
-
-      // Save data to Firestore
-      await FirebaseFirestore.instance.collection('post').doc(uid).set(postData);
-
-      // Show success message
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Bilgiler başarıyla kaydedildi!')),
-      );
-
-      // Navigate to the next screen
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) => Mykonum()));
-    } catch (e) {
-      // Print detailed error for debugging
-      print('Error saving information: $e');
-
-      // Show error message
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Bilgileri kaydederken bir hata oluştu: $e')),
-      );
     }
   }
-}
-
 
   Future<void> _navigateToGallery() async {
     // Navigate to gallery and await result

@@ -52,9 +52,15 @@ class _Books_HomeState extends State<Books_Home> {
           final url = data['postImage'] as String?;
           final title = data['title'] as String?;
           final type = data['type'] as String?;
+          final postUid = data['post_uid'] as String?;
 
-          if (url != null && title != null && type != null) {
-            return {'postImage': url, 'title': title, 'type': type};
+          if (url != null && title != null && type != null && postUid != null) {
+            return {
+              'postImage': url,
+              'title': title,
+              'type': type,
+              'postUid': postUid
+            };
           } else {
             throw Exception('Missing data in a document');
           }
@@ -99,10 +105,10 @@ class _Books_HomeState extends State<Books_Home> {
                   (context, index) {
                     final photoData = photoDataList[index];
                     return ProductCard(
-                      photoUrl: photoData['postImage'],
-                      title: photoData['title'],
-                      genre: photoData['type'],
-                    );
+                        photoUrl: photoData['postImage'],
+                        title: photoData['title'],
+                        genre: photoData['type'],
+                        postUid: photoData['postUid']);
                   },
                   childCount: photoDataList.length,
                 ),

@@ -1,5 +1,7 @@
 // ignore_for_file: file_names
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/configuration/costant/color.dart';
 
@@ -7,12 +9,14 @@ class ProductCard extends StatelessWidget {
   final String photoUrl;
   final String title;
   final String genre;
+  final String postUid;
 
   const ProductCard({
     super.key,
     required this.photoUrl,
     required this.title,
     required this.genre,
+    required this.postUid,
   });
 
   @override
@@ -77,7 +81,7 @@ class ProductCard extends StatelessWidget {
               ),
               child: GestureDetector(
                 onTap: () {
-                  // Favorilere ekleme işlemi buraya eklenebilir.
+                  addLikeToPost(postUid);
                 },
                 child: Icon(
                   Icons.favorite_border,
@@ -90,5 +94,28 @@ class ProductCard extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+Future<void> addLikeToPost(String postId) async {
+  try {
+    final postRef = FirebaseFirestore.instance.collection('post').doc(postId);
+
+    await postRef.update({
+      'like': FieldValue.arrayUnion([getCurrentUserId()]),
+    });
+
+    print('Like successfully added to the post.');
+  } catch (e) {
+    print('Error adding like: $e');
+  }
+}
+
+String? getCurrentUserId() {
+  final User? user = FirebaseAuth.instance.currentUser;
+  if (user != null) {
+    return user.uid; // Kullanıcının benzersiz ID'sini döndürür
+  } else {
+    return null; // Kullanıcı oturum açmamışsa null döner
   }
 }
