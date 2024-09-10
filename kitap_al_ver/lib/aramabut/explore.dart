@@ -5,7 +5,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:kitap_al_ver/aramabut/image_cached.dart';
 import 'package:kitap_al_ver/aramabut/profil_screen.dart';
 import 'package:kitap_al_ver/aramabut/searchisyory.dart';
- // Import the search history helper
+// Import the search history helper
 
 class Explone extends StatefulWidget {
   const Explone({Key? key}) : super(key: key);
@@ -60,12 +60,6 @@ class _ExploneState extends State<Explone> {
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {
                         final snap = documents[index];
-                        return Container(
-                       color: Colors.grey,
-                         child: CachedImage(
-                              snap['postImage'],//bundan dolayı hata veriyor
-                            ),
-                        );
                       },
                       childCount: documents.length,
                     ),
@@ -144,18 +138,19 @@ class _ExploneState extends State<Explone> {
                     children: [
                       Text(
                         'Recent Searches',
-                        style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 18.sp, fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: 10.h),
                       ..._searchHistory.map((term) => ListTile(
-                        title: Text(term),
-                        onTap: () {
-                          _searchController.text = term;
-                          setState(() {
-                            _showGrid = false;
-                          });
-                        },
-                      )),
+                            title: Text(term),
+                            onTap: () {
+                              _searchController.text = term;
+                              setState(() {
+                                _showGrid = false;
+                              });
+                            },
+                          )),
                     ],
                   ),
                 ),
