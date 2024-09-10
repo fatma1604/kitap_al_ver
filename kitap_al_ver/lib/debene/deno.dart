@@ -1,59 +1,63 @@
-/*import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
-import 'package:kitap_al_ver/widget/product_Card.dart';
+/*import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'product_card.dart'; // import the file where ProductCard is defined
 
-class PhotoGalleryScreen extends StatefulWidget {
-  @override
-  _PhotoGalleryScreenState createState() => _PhotoGalleryScreenState();
-}
+class ProductGrid extends StatelessWidget {
+  const ProductGrid({super.key});
 
-class _PhotoGalleryScreenState extends State<PhotoGalleryScreen> {
-  List<String> _imageUrls = [];
+  Future<List<String>> getPhotoUrls() async {
+    final QuerySnapshot querySnapshot =
+        await FirebaseFirestore.instance.collection('post').get();
 
-  @override
-  void initState() {
-    super.initState();
-    _loadImageUrls();
-  }
-
-  Future<void> _loadImageUrls() async {
-    try {
-      final ListResult result = await FirebaseStorage.instance.ref('your-folder').listAll();
-      final List<String> urls = [];
-
-      for (var ref in result.items) {
-        final String url = await ref.getDownloadURL();
-        urls.add(url);
-      }
-
-      setState(() {
-        _imageUrls = urls;
-      });
-    } catch (e) {
-      print('Error loading image URLs: $e');
+    if (querySnapshot.docs.isNotEmpty) {
+      return querySnapshot.docs.map((doc) {
+        final data = doc.data() as Map<String, dynamic>;
+        final url = data['url'] as String?;
+        if (url != null) {
+          return url;
+        } else {
+          throw Exception('URL is null for a document');
+        }
+      }).toList();
+    } else {
+      throw Exception('No documents found');
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Product Gallery'),
-      ),
-      body: _imageUrls.isEmpty
-          ? Center(child: CircularProgressIndicator())
-          : GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
+    return FutureBuilder<List<String>>(
+      future: getPhotoUrls(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        } else if (snapshot.hasData) {
+          final photoUrls = snapshot.data!;
+          return CustomScrollView(
+            slivers: [
+              SliverGrid(
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) {
+                    final photoUrl = photoUrls[index];
+                    return ProductCard(photoUrl: photoUrl);
+                  },
+                  childCount: photoUrls.length,
+                ),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.75,
+                  crossAxisSpacing: 20,
+                  mainAxisSpacing: 20,
+                ),
               ),
-              padding: const EdgeInsets.all(10),
-              itemCount: _imageUrls.length,
-              itemBuilder: (context, index) {
-                return ProductCard(post: _imageUrls[index]);
-              },
-            ),
+            ],
+          );
+        } else {
+          return Center(child: Text('No data found'));
+        }
+      },
     );
   }
 }
