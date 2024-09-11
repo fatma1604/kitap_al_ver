@@ -158,7 +158,6 @@ class _GalleripageState extends State<Galleripage> {
   }
 }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -22,12 +22,12 @@ class _InformationFormScreenState extends State<InformationFormScreen> {
   String? _selectedType;
   String? _selectedSubjec;
   String? _selectedSubject;
-    String? postImage;
+  List<String>? _postImages; // Changed from String? to List<String>?
   List<String> _classes = [];
   List<String> _usageStatuses = [];
   List<String> _types = [];
   List<String> _subjects = [];
-    List<String> _like = [];
+  List<String> _like = [];
   var uid = Uuid().v4();
   String _title = '';
   String _additionalInfo = '';
@@ -35,49 +35,12 @@ class _InformationFormScreenState extends State<InformationFormScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   bool _isCoder = false; // Indicates if the user is a coder
 
-
   @override
   void initState() {
     super.initState();
     _fetchData(); // Fetch data when the screen is initialized
     _checkUserRole();
     // UUID oluştur
-  }
-
-  Future<void> _submitForm() async {
-    if (_formKey.currentState!.validate()) {
-      try {
-        // Firestore'da bir belge oluştur ve verileri kaydet
-        await FirebaseFirestore.instance.collection('post').doc(uid).set({
-          'title': _title.isNotEmpty ? _title : 'Başlık Yok',
-          'class': _selectedClass,
-          'usageStatus': _selectedUsageStatus,
-          'type': _selectedType,
-          'subject': _selectedSubjec,
-          'additionalInfo':
-              _additionalInfo.isNotEmpty ? _additionalInfo : 'Ek Bilgi Yok',
-          'createdAt': FieldValue.serverTimestamp(),
-          'user_uid': _auth.currentUser!.uid,
-          'post_uid': uid, // UUID'yi veriye dahil et
-          'postImage': postImage,
-          'link':_like,
-        });
-
-        // Başarılı olduğunda bir mesaj göster
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Bilgiler başarıyla kaydedildi!')),
-        );
-
-        // Bir sonraki ekrana git
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => Mykonum()));
-      } catch (e) {
-        print('Error saving information: $e');
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Bilgileri kaydederken bir hata oluştu!')),
-        );
-      }
-    }
   }
 
   Future<void> _navigateToGallery() async {
@@ -91,10 +54,48 @@ class _InformationFormScreenState extends State<InformationFormScreen> {
     // Check if result is not null and is a list of image URLs
     if (result != null && result is List<String>) {
       setState(() {
-        postImage = result.isNotEmpty ? result.first : null;
+        _postImages = result; // Store the list of image URLs
       });
     }
   }
+
+  Future<void> _submitForm() async {
+    if (_formKey.currentState!.validate()) {
+      try {
+        // Firestore'da bir belge oluştur ve verileri kaydet
+        await FirebaseFirestore.instance.collection('post').doc(uid).set({
+          'title': _title.isNotEmpty ? _title : 'Başlık Yok',
+          'class': _selectedClass,
+          'usageStatus': _selectedUsageStatus,
+          'type': _selectedType,
+          'subject': _selectedSubjec,
+          'additionalInfo': _additionalInfo.isNotEmpty ? _additionalInfo : 'Ek Bilgi Yok',
+          'createdAt': FieldValue.serverTimestamp(),
+          'user_uid': _auth.currentUser!.uid,
+          'post_uid': uid, // UUID'yi veriye dahil et
+          'postImages': _postImages, // Save the list of image URLs
+          'link': _like,
+        });
+
+        // Başarılı olduğunda bir mesaj göster
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Bilgiler başarıyla kaydedildi!')),
+        );
+
+        // Bir sonraki ekrana git
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => Mykonum()));
+      } catch (e) {
+        print('Error saving information: $e');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Bilgileri kaydederken bir hata oluştu!')),
+        );
+      }
+    }
+  }
+
+  // Other methods and widget build implementation would go here...
+
+
 
   Future<void> _checkUserRole() async {
     try {
