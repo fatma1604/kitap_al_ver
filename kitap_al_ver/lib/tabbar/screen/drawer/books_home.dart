@@ -49,7 +49,12 @@ class _Books_HomeState extends State<Books_Home> {
       if (querySnapshot.docs.isNotEmpty) {
         return querySnapshot.docs.map((doc) {
           final data = doc.data() as Map<String, dynamic>;
-          final url = data['postImage'] as String?;
+          final postImages = data['postImages'] as List<dynamic>?;
+
+          // İlk resim URL'sini al (eğer liste boş değilse)
+          final url = postImages != null && postImages.isNotEmpty
+              ? postImages[0] as String?
+              : null;
           final title = data['title'] as String?;
           final type = data['type'] as String?;
           final postUid = data['post_uid'] as String?;

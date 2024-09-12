@@ -1,59 +1,48 @@
-
-
-
-
 import 'package:flutter/material.dart';
-import 'package:kitap_al_ver/model/product_model.dart';
-import 'package:kitap_al_ver/provider/favorite_provider.dart';
-
-
 
 class DetailAppBar extends StatelessWidget {
-  final Product product;
-  const DetailAppBar({super.key, required this.product});
+  const DetailAppBar({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final provider = FavoriteProvider.of(context);
     return Padding(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       child: Row(
         children: [
           IconButton(
-            style: IconButton.styleFrom(
-              backgroundColor: Colors.white,
-              padding: const EdgeInsets.all(15),
-            ),
+            icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: const Icon(Icons.arrow_back_ios),
+            padding: const EdgeInsets.all(10),
+            color: Colors.white,
+            splashColor: Colors.grey[300],
+            highlightColor: Colors.grey[200],
+            constraints: const BoxConstraints(),
           ),
           const Spacer(),
           IconButton(
-            style: IconButton.styleFrom(
-              backgroundColor: Colors.white,
-              padding: const EdgeInsets.all(15),
-            ),
-            onPressed: () {},
-            icon: const Icon(Icons.share_outlined),
+            icon: const Icon(Icons.share_outlined, color: Colors.black),
+            onPressed: () {
+              // Implement share functionality
+            },
+            padding: const EdgeInsets.all(10),
+            color: Colors.white,
+            splashColor: Colors.grey[300],
+            highlightColor: Colors.grey[200],
+            constraints: const BoxConstraints(),
           ),
           const SizedBox(width: 10),
           IconButton(
-            style: IconButton.styleFrom(
-              backgroundColor: Colors.white,
-              padding: const EdgeInsets.all(15),
-            ),
+            icon: const Icon(Icons.favorite_border, color: Colors.black), // Favori butonu için ikon
             onPressed: () {
-              provider.toggleFavorite(product);
+              // Implement favorite functionality
             },
-            icon: Icon(
-              provider.isExist(product)
-                  ? Icons.favorite
-                  : Icons.favorite_border,
-              color: Colors.black,
-              size: 25,
-            ),
+            padding: const EdgeInsets.all(10),
+            color: Colors.white,
+            splashColor: Colors.grey[300],
+            highlightColor: Colors.grey[200],
+            constraints: const BoxConstraints(),
           ),
         ],
       ),

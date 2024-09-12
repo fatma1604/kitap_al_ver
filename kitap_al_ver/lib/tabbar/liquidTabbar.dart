@@ -5,7 +5,8 @@ import 'package:kitap_al_ver/admin.dart';
 import 'package:kitap_al_ver/aramabut/explore.dart';
 import 'package:kitap_al_ver/configuration/core/pageCon.dart';
 import 'package:kitap_al_ver/configuration/costant/constat.dart';
-import 'package:kitap_al_ver/debene/deno.dart';
+import 'package:kitap_al_ver/favori/favorite.dart';
+
 import 'package:kitap_al_ver/post/post_denme.dart';
 import 'package:kitap_al_ver/screnn/widget/bookcatagory.dart';
 import 'package:kitap_al_ver/tabbar/bgcirclewidget.dart';
@@ -18,11 +19,8 @@ List<Widget> screens = [
   DrawerDemoScreen(), // hepsi fairbesten çazğrıcaz
   // HomePage (), //çet
   BookCategoryOverview(), //satış için--satış
- PhotoPickerScreen(),
+  Favorite(),
 
-
-
-  
   //AddScreen()
   // ignore: prefer_const_constructorzzzs
   //const Favorite(), //boş--fovori
