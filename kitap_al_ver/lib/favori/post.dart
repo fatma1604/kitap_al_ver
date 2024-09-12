@@ -10,7 +10,7 @@ class Posts {
     required this.title,
     required this.postId,
     required this.imageUrls,
-    required this.likes,
+       this.likes = const []
   });
 
   factory Posts.fromFirestore(DocumentSnapshot doc) {

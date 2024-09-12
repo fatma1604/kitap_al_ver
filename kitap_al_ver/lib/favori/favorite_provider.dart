@@ -1,74 +1,22 @@
 import 'package:flutter/material.dart';
-// `Product` modelini buraya ekleyin
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:kitap_al_ver/favori/post.dart';
-import 'package:provider/provider.dart'; // `Posts` modelini buraya ekleyin
+import 'package:kitap_al_ver/favori/post.dart'; // Ensure you have this model defined
 
-class FavoriteProvider extends ChangeNotifier {
-  final List<Posts> _favorite = [];
-
-  List<Posts> get favorites => _favorite;
-
-  FavoriteProvider() {
-    _loadFavorites();
-  }
-
-  Future<void> _loadFavorites() async {
-    final userId = FirebaseAuth.instance.currentUser?.uid;
-    if (userId == null) return;
-
-    try {
-      final snapshot = await FirebaseFirestore.instance
-          .collection('uid')
-          .doc(userId)
-          .collection('favorites')
-          .get();
-
-      _favorite.clear();
-      for (var doc in snapshot.docs) {
-        final post = Posts.fromFirestore(doc);
-        _favorite.add(post);
-      }
-      notifyListeners();
-    } catch (e) {
-      print('Error loading favorites: $e');
-    }
-  }
-
-  void toggleFavorite(Posts post) async {
-    final userId = FirebaseAuth.instance.currentUser?.uid;
-    if (userId == null) return;
-
-    if (_favorite.contains(post)) {
-      _favorite.remove(post);
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(userId)
-          .collection('favorites')
-          .doc(post.postId)
-          .delete();
-    } else {
-      _favorite.add(post);
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(userId)
-          .collection('favorites')
-          .doc(post.postId)
-          .set({
-        'title': post.title,
-        'postImages': post.imageUrls,
-        'like': post.likes,
-      });
-    }
-    notifyListeners();
-  }
+class FavoriteProvider with ChangeNotifier {
+  // Assuming you have a list or a set to keep track of liked posts
+  final Set<String> _likedPostIds = {};
 
   bool isExist(Posts post) {
-    return _favorite.contains(post);
+    return _likedPostIds.contains(post.postId); // Check if post is in the liked list
   }
 
-  static FavoriteProvider of(BuildContext context, {bool listen = true}) {
-    return Provider.of<FavoriteProvider>(context, listen: listen);
+  void toggleFavorite(Posts post) {
+    if (isExist(post)) {
+      _likedPostIds.remove(post.postId); // Remove if already liked
+    } else {
+      _likedPostIds.add(post.postId); // Add if not liked
+    }
+    notifyListeners(); // Notify listeners to update UI
   }
+
+  // Optionally, you might want to initialize _likedPostIds with data from Firestore
 }
