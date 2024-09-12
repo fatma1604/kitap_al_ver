@@ -37,7 +37,13 @@ class ProductCard extends StatelessWidget {
           final post = Posts(
             postId: postUid,
             title: title, likes: [],
-            imageUrls: [], // Assuming title represents genre here
+            imageUrls: [],
+            rating: "",
+            userName: "",
+
+            category: genre,
+
+            // Assuming title represents genre here
           );
 
           return Stack(

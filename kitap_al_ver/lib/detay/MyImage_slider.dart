@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class MyImageSlider extends StatelessWidget {
   final Function(int) onChange;
-  final String image;
+  final List<String> imageUrls; // Expect a List<String>
+
   const MyImageSlider({
     super.key,
-    required this.image,
+    required this.imageUrls,
     required this.onChange,
   });
 
@@ -16,10 +16,12 @@ class MyImageSlider extends StatelessWidget {
       height: 250,
       child: PageView.builder(
         onPageChanged: onChange,
+        itemCount: imageUrls.length,
         itemBuilder: (context, index) {
           return Hero(
-            tag: image,
-            child: Image.asset(image),
+            tag: imageUrls[index],
+            child: Image.network(
+                imageUrls[index]), // Use the image URL from the list
           );
         },
       ),

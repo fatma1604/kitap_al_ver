@@ -30,6 +30,7 @@ class _InformationFormScreenState extends State<InformationFormScreen> {
   List<String> _like = [];
   var uid = Uuid().v4();
   String _title = '';
+    String _description = '';
   String _additionalInfo = '';
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -62,6 +63,8 @@ class _InformationFormScreenState extends State<InformationFormScreen> {
   Future<void> _submitForm() async {
     if (_formKey.currentState!.validate()) {
       try {
+        User? currentUser = _auth.currentUser;
+        String username = currentUser?.displayName ?? 'Bilgi Yok';
         // Firestore'da bir belge oluştur ve verileri kaydet
         await FirebaseFirestore.instance.collection('post').doc(uid).set({
           'title': _title.isNotEmpty ? _title : 'Başlık Yok',
@@ -69,12 +72,15 @@ class _InformationFormScreenState extends State<InformationFormScreen> {
           'usageStatus': _selectedUsageStatus,
           'type': _selectedType,
           'subject': _selectedSubjec,
-          'additionalInfo': _additionalInfo.isNotEmpty ? _additionalInfo : 'Ek Bilgi Yok',
+          'additionalInfo':
+              _additionalInfo.isNotEmpty ? _additionalInfo : 'Ek Bilgi Yok',
           'createdAt': FieldValue.serverTimestamp(),
           'user_uid': _auth.currentUser!.uid,
           'post_uid': uid, // UUID'yi veriye dahil et
           'postImages': _postImages, // Save the list of image URLs
           'like': _like,
+          'username': username,
+          "description":_description
         });
 
         // Başarılı olduğunda bir mesaj göster
@@ -83,7 +89,8 @@ class _InformationFormScreenState extends State<InformationFormScreen> {
         );
 
         // Bir sonraki ekrana git
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => Mykonum()));
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => Mykonum()));
       } catch (e) {
         print('Error saving information: $e');
         ScaffoldMessenger.of(context).showSnackBar(
@@ -94,8 +101,6 @@ class _InformationFormScreenState extends State<InformationFormScreen> {
   }
 
   // Other methods and widget build implementation would go here...
-
-
 
   Future<void> _checkUserRole() async {
     try {
@@ -161,7 +166,7 @@ class _InformationFormScreenState extends State<InformationFormScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(100.0),
         child: AppBar(

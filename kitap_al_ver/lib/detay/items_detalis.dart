@@ -1,12 +1,15 @@
-
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:kitap_al_ver/configuration/costant/color.dart';
-import 'package:kitap_al_ver/model/product_model.dart';
+import 'package:kitap_al_ver/favori/post.dart';
+// Ensure Detay is imported
 
 class ItemsDetails extends StatelessWidget {
-  final Product product;
-  const ItemsDetails({super.key, required this.product});
+  final Posts post;
+
+  const ItemsDetails({
+    super.key,
+    required this.post,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +17,7 @@ class ItemsDetails extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          product.title,
+          post.title,
           style: const TextStyle(
             fontWeight: FontWeight.w800,
             fontSize: 25,
@@ -26,22 +29,22 @@ class ItemsDetails extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "\$${product.price}",
+                  post.category,
                   style: const TextStyle(
                     fontWeight: FontWeight.w800,
                     fontSize: 25,
                   ),
                 ),
                 const SizedBox(height: 10),
-                // for rating
+                // For rating
                 Row(
                   children: [
                     Container(
-                      width: 55,
+                      width: 65,
                       height: 25,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
-                        color: kprimaryColor,
+                        color: const Color.fromARGB(255, 156, 82, 82),
                       ),
                       alignment: Alignment.center,
                       padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -50,13 +53,11 @@ class ItemsDetails extends StatelessWidget {
                           const Icon(
                             Icons.star,
                             size: 15,
-                            color: Colors.white,
+                            color: Color.fromARGB(255, 224, 95, 95),
                           ),
-                          const SizedBox(
-                            width: 3,
-                          ),
+                          const SizedBox(width: 3),
                           Text(
-                            product.rate.toString(),
+                            post.rating, // Display rating with one decimal
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
@@ -66,16 +67,8 @@ class ItemsDetails extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(width: 5),
-                    Text(
-                      product.review,
-                      style: const TextStyle(
-                        color: Colors.grey,
-                        fontSize: 15,
-                      ),
-                    )
                   ],
-                )
+                ),
               ],
             ),
             const Spacer(),
@@ -83,11 +76,11 @@ class ItemsDetails extends StatelessWidget {
               TextSpan(
                 children: [
                   const TextSpan(
-                    text: "Seller: ",
+                    text: "User: ",
                     style: TextStyle(fontSize: 16),
                   ),
                   TextSpan(
-                    text: product.seller,
+                    text:post.userName,
                     style: const TextStyle(
                         fontSize: 16, fontWeight: FontWeight.bold),
                   ),
@@ -95,8 +88,23 @@ class ItemsDetails extends StatelessWidget {
               ),
             ),
           ],
-        )
+        ),
       ],
     );
+  }
+
+  static Future<String> fetchUserName(String? userId) async {
+    if (userId == null) return 'user'; // Default if no userId is available
+    try {
+      final userDoc = await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(userId)
+          .get();
+      final userData = userDoc.data() as Map<String, dynamic>;
+      return userData['username'] ?? 'user'; // Default if userName is null
+    } catch (e) {
+      print('Error fetching user: $e');
+      return 'user'; // Default in case of error
+    }
   }
 }

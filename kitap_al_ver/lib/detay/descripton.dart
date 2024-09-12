@@ -1,14 +1,13 @@
-
-
-
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/configuration/costant/color.dart';
 
-
 class Description extends StatelessWidget {
-  final String description;
-  const Description({super.key, required this.description});
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final String postUid; // Belge ID'sini alabilmek için
+
+  Description(
+      {super.key, required this.postUid}); // Constructor'da belge ID'si alınır
 
   @override
   Widget build(BuildContext context) {
@@ -52,12 +51,29 @@ class Description extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 20),
-        Text(
-          description,
-          style: const TextStyle(
-            fontSize: 16,
-            color: Colors.grey,
-          ),
+        StreamBuilder<DocumentSnapshot>(
+          stream: _firestore.collection('post').doc(postUid).snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            }
+            if (snapshot.hasError) {
+              return Center(child: Text('Something went wrong!'));
+            }
+            if (!snapshot.hasData || !snapshot.data!.exists) {
+              return Center(child: Text('No description found!'));
+            }
+
+            final description = snapshot.data!.get('additionalInfo') ??
+                'No description available';
+            return Text(
+              description,
+              style: const TextStyle(
+                fontSize: 16,
+                color: Colors.grey,
+              ),
+            );
+          },
         ),
       ],
     );

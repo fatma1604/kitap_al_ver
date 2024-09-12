@@ -47,6 +47,7 @@ dependencies:
   cached_network_image: ^3.4.1
   date_format: ^2.0.9
   shared_preferences: ^2.3.2
+  carousel_slider: ^5.0.0
 
 dev_dependencies:
   flutter_test:

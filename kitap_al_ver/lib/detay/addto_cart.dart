@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:uuid/uuid.dart';
 
 class AddToCart extends StatefulWidget {
-  final String postUid; // Ürün ID'si bu widget'a dışarıdan geçirilecek.
+  final String postUid;
 
   const AddToCart({Key? key, required this.postUid}) : super(key: key);
 
@@ -12,24 +13,28 @@ class AddToCart extends StatefulWidget {
 }
 
 class _AddToCartState extends State<AddToCart> {
+  var uid = Uuid().v4();
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  Future<String> _getUserId() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      return user.uid;
+    }
+    return 'Unknown User';
+  }
 
   Future<void> _addToCart() async {
     try {
-     
-      
-      // Dinamik ürün ID'sini kullan
+      final userId = await _getUserId();
       final postUid = widget.postUid;
-      
-      // Firestore'da koleksiyon ve belge yapısını belirleyin
-      await _firestore.collection('cart').add({
-        'productId': postUid,
-        'quantity': 1, // Örnek olarak 1 adet ekliyoruz
-        'timestamp': Timestamp.now(),
-        // Burada diğer gerekli bilgileri ekleyebilirsiniz
+
+      await _firestore.collection('cart').doc(uid).set({
+        'postuid': postUid,
+        'userId': userId,
+        "cartud": uid // Unique cart ID
       });
-      
-      // Başarıyla eklendiğinde SnackBar göster
+
       const snackBar = SnackBar(
         content: Text(
           "Successfully added!",
@@ -43,7 +48,6 @@ class _AddToCartState extends State<AddToCart> {
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     } catch (e) {
-      // Hata durumu için bir mesaj göster
       print("Error adding to cart: $e");
     }
   }

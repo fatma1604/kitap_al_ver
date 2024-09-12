@@ -1,23 +1,25 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/configuration/costant/color.dart';
+import 'package:kitap_al_ver/detay/MyImage_slider.dart';
 import 'package:kitap_al_ver/detay/addto_cart.dart';
+import 'package:kitap_al_ver/detay/descripton.dart';
 import 'package:kitap_al_ver/detay/detail_app_bar.dart';
+import 'package:kitap_al_ver/detay/items_detalis.dart'; // Assuming this is a widget
 import 'package:kitap_al_ver/favori/post.dart';
+
 
 class DetailScreen extends StatefulWidget {
   final String postUid;
 
-  DetailScreen({
-    super.key,
-    required this.postUid,
-  });
+  DetailScreen({super.key, required this.postUid});
 
   @override
   State<DetailScreen> createState() => _DetailScreenState();
 }
 
 class _DetailScreenState extends State<DetailScreen> {
+  int currentImage = 0;
   late Future<Posts> _postFuture;
 
   @override
@@ -55,13 +57,74 @@ class _DetailScreenState extends State<DetailScreen> {
             }
 
             final post = snapshot.data!;
+            final images = post.imageUrls;
 
             return SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   DetailAppBar(posts: post),
-                  // Other widgets to display post details
+                  MyImageSlider(
+                    imageUrls: images,
+                    onChange: (index) {
+                      setState(() {
+                        currentImage = index;
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(
+                      images.length,
+                      (index) => AnimatedContainer(
+                        duration: const Duration(milliseconds: 300),
+                        width: currentImage == index ? 15 : 8,
+                        height: 8,
+                        margin: const EdgeInsets.only(right: 3),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: currentImage == index
+                              ? Colors.black
+                              : Colors.transparent,
+                          border: Border.all(
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Container(
+                    width: double.infinity,
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(40),
+                        topLeft: Radius.circular(40),
+                      ),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ItemsDetails(
+                          post: post,
+                        ), // Assuming this is a widget that displays item details
+                        const SizedBox(height: 20),
+                        const Text(
+                          "Color",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 22),
+                        ),
+                        const SizedBox(height: 20),
+                          Description(
+                   postUid: widget.postUid,
+                  )
+                      ],
+                    ),
+                  ),
                 ],
               ),
             );
