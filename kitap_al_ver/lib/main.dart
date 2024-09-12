@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kitap_al_ver/configuration/costant/aprouta.dart';
 import 'package:kitap_al_ver/configuration/costant/theme/theme.dart';
+import 'package:kitap_al_ver/favori/favorite_provider.dart';
 import 'package:kitap_al_ver/firebase_options.dart';
 import 'package:kitap_al_ver/pages/onbording/onbording_screen.dart';
 import 'package:kitap_al_ver/provider/add_to_cart_provider.dart';
-import 'package:kitap_al_ver/provider/favorite_provider.dart';
 import 'package:provider/provider.dart';
 
 //pushh

@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/configuration/costant/color.dart';
-
+import 'package:kitap_al_ver/detay/deail_screen.dart';
 
 class ProductCard extends StatelessWidget {
   final String photoUrl;
@@ -22,14 +22,14 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  GestureDetector(
+    return GestureDetector(
       onTap: () {
-      //  Navigator.push(
-        //  context,
-          //MaterialPageRoute(
-           // builder: (context) =>// DetailScreen(postUid: postUid),
-         // ),
-      //  );
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailScreen(postUid: postUid),
+          ),
+        );
       },
       child: Stack(
         children: [

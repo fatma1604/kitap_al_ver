@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:kitap_al_ver/configuration/costant/color.dart';
 import 'package:kitap_al_ver/favori/animated.dart';
+import 'package:kitap_al_ver/favori/post.dart';
 
 class Favorite extends StatefulWidget {
   const Favorite({super.key});
@@ -43,7 +44,7 @@ class _FavoriteState extends State<Favorite> {
           }
 
           final posts = snapshot.data!.docs
-              .map((doc) => Post.fromFirestore(doc))
+              .map((doc) => Posts.fromFirestore(doc))
               .toList();
 
           return ListView.builder(
@@ -87,26 +88,3 @@ class _FavoriteState extends State<Favorite> {
   }
 }
 
-class Post {
-  final String title;
-  final String postId;
-  final List<String> imageUrls; // Updated to handle multiple image URLs
-  final List<String> likes;
-
-  Post({
-    required this.title,
-    required this.postId,
-    required this.imageUrls,
-    required this.likes,
-  });
-
-  factory Post.fromFirestore(DocumentSnapshot doc) {
-    final data = doc.data() as Map<String, dynamic>;
-    return Post(
-      title: data['title'] ?? '',
-      postId: doc.id,
-      imageUrls: List<String>.from(data['postImages'] ?? []),
-      likes: List<String>.from(data['like'] ?? []),
-    );
-  }
-}

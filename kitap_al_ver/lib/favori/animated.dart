@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:kitap_al_ver/favori/favorite.dart';
+import 'package:kitap_al_ver/favori/post.dart';
 
 class AnimatedPostCard extends StatefulWidget {
-  final Post post;
+  final Posts post;
   final VoidCallback onDelete; // Callback to handle deletion
 
   const AnimatedPostCard(

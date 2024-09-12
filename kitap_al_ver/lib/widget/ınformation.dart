@@ -74,7 +74,7 @@ class _InformationFormScreenState extends State<InformationFormScreen> {
           'user_uid': _auth.currentUser!.uid,
           'post_uid': uid, // UUID'yi veriye dahil et
           'postImages': _postImages, // Save the list of image URLs
-          'link': _like,
+          'like': _like,
         });
 
         // Başarılı olduğunda bir mesaj göster
