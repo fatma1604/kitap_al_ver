@@ -15,7 +15,7 @@ class Usermodel {
     required this.following,
   });
 
-  factory Usermodel.fromDocument(DocumentSnapshot doc) {
+  factory Usermodel.fromFirestore(DocumentSnapshot doc) {
     var data = doc.data() as Map<String, dynamic>;
     return Usermodel(
       username: data['username'] ?? '',

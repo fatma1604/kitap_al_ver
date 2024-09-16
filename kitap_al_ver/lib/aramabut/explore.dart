@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:kitap_al_ver/aramabut/image_cached.dart';
-import 'package:kitap_al_ver/aramabut/profil_screen.dart';
+
 import 'package:kitap_al_ver/aramabut/searchisyory.dart';
+import 'package:kitap_al_ver/tabbar/profil_screen.dart';
 // Import the search history helper
 
 class Explone extends StatefulWidget {
@@ -105,7 +106,7 @@ class _ExploneState extends State<Explone> {
                                 onTap: () {
                                   Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) =>
-                                        ProfileScreen(Uid: snap.id),
+                                        ProfilScreen(userId: snap.id),
                                   ));
                                 },
                                 child: Row(

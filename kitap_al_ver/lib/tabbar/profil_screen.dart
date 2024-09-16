@@ -1,124 +1,47 @@
-
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kitap_al_ver/aramabut/image_cached.dart';
 import 'package:kitap_al_ver/model/usermodel.dart';
 import 'package:kitap_al_ver/pages/data/firebes_post.dart';
-import 'package:kitap_al_ver/aramabut/post_screen.dart';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
+import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ProfileScreen extends StatefulWidget {
-  String Uid;
-  //profil kısmı
-  ProfileScreen({super.key, required this.Uid});
+class ProfilScreen extends StatefulWidget {
+  final String userId;
+
+  ProfilScreen({required this.userId});
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  _ProfilScreenState createState() => _ProfilScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
-  final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  int post_lenght = 0;
-  bool yourse = false;
-  List following = [];
+class _ProfilScreenState extends State<ProfilScreen> {
+  late Future<Usermodel> userModelFuture;
   bool follow = false;
+  bool yourse = false; // Profilin senin olup olmadığını belirten bir boolean
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    getdata();
-    if (widget.Uid == _auth.currentUser!.uid) {
-      setState(() {
-        yourse = true;
-      });
-    }
+    userModelFuture = fetchUserData(widget.userId);
   }
 
-  getdata() async {
-    DocumentSnapshot snap = await _firebaseFirestore
-        .collection('Users')
-        .doc(_auth.currentUser!.uid)
-        .get();
-    following = (snap.data()! as dynamic)['following'];
-    if (following.contains(widget.Uid)) {
-      setState(() {
-        follow = true;
-      });
-    }
+  Future<Usermodel> fetchUserData(String userId) async {
+    DocumentSnapshot snapshot =
+        await FirebaseFirestore.instance.collection('Users').doc(userId).get();
+    return Usermodel.fromFirestore(snapshot);
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-        backgroundColor: Colors.grey.shade100,
-        body: SafeArea(
-          child: CustomScrollView(
-            slivers: [
-              SliverToBoxAdapter(
-                child: FutureBuilder(
-                  future: FirebasePostServis().getUser(UID: widget.Uid),
-                  builder: (context, snapshot) {
-                    if (!snapshot.hasData) {
-                      return const Center(child: CircularProgressIndicator());
-                    }
-                    return Head(snapshot.data!);
-                  },
-                ),
-              ),
-              StreamBuilder(
-                stream: _firebaseFirestore
-                    .collection('posts')
-                    .where('uid', isEqualTo: widget.Uid)
-                    .snapshots(),
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
-                    return SliverToBoxAdapter(
-                        child:
-                            const Center(child: CircularProgressIndicator()));
-                  }
-                  post_lenght = snapshot.data!.docs.length;
-                  return SliverGrid(
-                    delegate: SliverChildBuilderDelegate((context, index) {
-                      final snap = snapshot.data!.docs[index];
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => PostScreen(snap.data())));
-                        },
-                        child: CachedImage(
-                          snap['postImage'],
-                        ),
-                      );
-                    }, childCount: post_lenght),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      crossAxisSpacing: 4,
-                      mainAxisSpacing: 4,
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  // ignore: non_constant_identifier_names
   Widget Head(Usermodel user) {
     return Container(
-      color: Colors.white,
+      color: const Color.fromARGB(255, 141, 23, 23),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -130,7 +53,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: SizedBox(
                     width: 80.w,
                     height: 80.h,
-                    child: CachedImage(user.profile),
+                    child: CachedNetworkImage(
+                      imageUrl: user.profile,
+                      placeholder: (context, url) =>
+                          CircularProgressIndicator(),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                    ),
                   ),
                 ),
               ),
@@ -141,7 +69,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     children: [
                       SizedBox(width: 35.w),
                       Text(
-                        post_lenght.toString(),
+                        'Posts', // Gerçek veri ile değiştirilmeli
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16.sp,
@@ -191,7 +119,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ],
                   ),
                 ],
-              )
+              ),
             ],
           ),
           Padding(
@@ -224,8 +152,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               padding: EdgeInsets.symmetric(horizontal: 13.w),
               child: GestureDetector(
                 onTap: () {
-                  if (yourse == false) {
-                    FirebasePostServis().flollow(uid: widget.Uid);
+                  if (!yourse) {
+                    // FirebaseAuthService().follow(uid: widget.userId); // Follow işlemini gerçekleştirin
                     setState(() {
                       follow = true;
                     });
@@ -260,7 +188,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Expanded(
                     child: GestureDetector(
                       onTap: () {
-                        FirebasePostServis().flollow(uid: widget.Uid);
+                        // FirebaseAuthService().follow(uid: widget.userId); // Unfollow işlemini gerçekleştirin
                         setState(() {
                           follow = false;
                         });
@@ -270,7 +198,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           height: 30.h,
                           width: 100.w,
                           decoration: BoxDecoration(
-                            color: Colors.grey.shade200,
+                            color: const Color.fromARGB(255, 116, 35, 35),
                             borderRadius: BorderRadius.circular(5.r),
                             border: Border.all(color: Colors.grey.shade200),
                           ),
@@ -302,21 +230,47 @@ class _ProfileScreenState extends State<ProfileScreen> {
           SizedBox(
             width: double.infinity,
             height: 30.h,
-            child: const TabBar(
-              unselectedLabelColor: Colors.grey,
-              labelColor: Colors.black,
-              indicatorColor: Colors.black,
-              tabs: [
-                Icon(Icons.grid_on),
-                Icon(Icons.video_collection),
-                Icon(Icons.person),
-              ],
-            ),
           ),
           SizedBox(
             height: 5.h,
-          )
+          ),
         ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Profil'),
+      ),
+      body: FutureBuilder<Usermodel>(
+        future: userModelFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          }
+
+          if (snapshot.hasError) {
+            return Center(child: Text('Bir hata oluştu: ${snapshot.error}'));
+          }
+
+          if (!snapshot.hasData) {
+            return Center(child: Text('Kullanıcı bulunamadı'));
+          }
+
+          Usermodel user = snapshot.data!;
+
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                Head(user),
+                // Diğer widget'lar
+              ],
+            ),
+          );
+        },
       ),
     );
   }

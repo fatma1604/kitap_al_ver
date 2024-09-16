@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/admin.dart';
 import 'package:kitap_al_ver/aramabut/explore.dart';
@@ -11,21 +12,10 @@ import 'package:kitap_al_ver/post/post_denme.dart';
 import 'package:kitap_al_ver/screnn/widget/bookcatagory.dart';
 import 'package:kitap_al_ver/tabbar/bgcirclewidget.dart';
 import 'package:kitap_al_ver/tabbar/bottomLiquidWidget.dart';
+import 'package:kitap_al_ver/tabbar/profil_screen.dart';
 import 'package:kitap_al_ver/tabbar/screen/drawerDemo_Screen.dart';
 import 'package:kitap_al_ver/tabbar/tBiconData.dart';
 import 'package:kitap_al_ver/tabbar/tbicon.dart';
-
-List<Widget> screens = [
-  DrawerDemoScreen(), // hepsi fairbesten çazğrıcaz
-  // HomePage (), //çet
-  BookCategoryOverview(), //satış için--satış
-  Favorite(),
-
-  //AddScreen()
-  // ignore: prefer_const_constructorzzzs
-  //const Favorite(), //boş--fovori
-  //ProfileScreen(), //boş--profil
-];
 
 // ignore: use_key_in_widget_constructors
 class LiquidTabBar extends StatefulWidget {
@@ -36,7 +26,7 @@ class LiquidTabBar extends StatefulWidget {
 class LiquidTabBarState extends State<LiquidTabBar>
     with TickerProviderStateMixin {
   late PageController pageCon;
-
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   int currentColor = 0;
   int index = 0;
   int pageIndex = 0;
@@ -240,6 +230,20 @@ class LiquidTabBarState extends State<LiquidTabBar>
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+    List<Widget> screens = [
+      DrawerDemoScreen(), // hepsi fairbesten çazğrıcaz
+      // HomePage (), //çet
+      BookCategoryOverview(), //satış için--satış
+      Favorite(),
+      ProfilScreen(
+        userId: _auth.currentUser!.uid,
+      ), //hat
+
+      //AddScreen()
+      // ignore: prefer_const_constructorzzzs
+      //const Favorite(), //boş--fovori
+      //ProfileScreen(), //boş--profil
+    ];
     return Scaffold(
       body: Stack(
         alignment: Alignment.bottomCenter,
