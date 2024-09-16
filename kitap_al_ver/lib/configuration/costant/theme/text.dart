@@ -9,6 +9,15 @@ class AppText {
   static const String google = " Google ile giriş yapılamadı";
   static const String error = " Bir hata oluştu.";
 
+  static const allFieldsRequired = 'Tüm alanlar zorunludur.';
+  static const registrationSuccessful = 'Registration successful!';
+  static const invalidEmail = 'Invalid email address.';
+  static const weakPassword = 'Password is too weak.';
+  static const registrationError = 'kayıt başarısız oldu .';
+  static const generalError = 'An error occurred. Please try again.';
+  static const String passwordComplexity =
+      "Şifre en az 8 karakter uzunluğunda olmalı, en az bir büyük harf ve bir özel karakter içermelidir.";
+
   //REGİSTER OR LOGİN
 
   static const String plaseconfigure = "Lütfen tekrar deneyin.";
@@ -24,13 +33,12 @@ class AppText {
 
   static const String networkError =
       'Lütfen internet bağlantısını kontrol edin.';
-  static const String userNotFound = 'Bu mail adresi kullanıcı bulunamadı.';
   static const String enterUsernamePassword =
       'Lütfen bir e-posta adresi  ve şifre girin.';
-static const String wrongPasandEml =
+  static const String wrongPasandEml =
       'Lütfen e postanızı veya şifrenizi kontrol edin ';
-   static const String invalideEpos =
-      'Geçersiz e-posta adresi. Lütfen e-posta formatını kontrol edin ';   
+  static const String invalideEpos =
+      'Geçersiz e-posta adresi. Lütfen e-posta formatını kontrol edin ';
 
   static const String validPassword = "Lütfen geçerli bir Şifre girin";
   static const String member = "Üye değil misiniz?";
@@ -48,8 +56,9 @@ static const String wrongPasandEml =
   static const String logingo = "Giriş sayfasına git";
   static const String snackBarClose = "Kapat";
   static const String signOut = "Çıkış Yap";
-    static const String forgetEmail = 'Lütfen bir e-posta adresi giriniz.';
- static const String trueEmail = 'Şifre sıfırlama bağlantısı e-postanıza gönderildi.';
+  static const String forgetEmail = 'Lütfen bir e-posta adresi giriniz.';
+  static const String trueEmail =
+      'Şifre sıfırlama bağlantısı e-postanıza gönderildi.';
   static const String approval = 'ŞİFREYİ RESETLE.';
 
   static const String help = "Yardım";
@@ -65,7 +74,7 @@ static const String wrongPasandEml =
   static const String mytabCaht = "Chats";
   static const String mytabG = "Güncellemeler";
   static const String mytabA = "Arramlar";
-   static const String wrongPassword = 'Şifreniz hatalı. Lütfen tekrar deneyin.';
-   static const String wrongEmail = 'Böyle bir kullanıcı bulunamadı. Lütfen kayıt olun.';
-    
+  static const String wrongPassword = 'Şifreniz hatalı. Lütfen tekrar deneyin.';
+  static const String wrongEmail =
+      'Böyle bir kullanıcı bulunamadı. Lütfen kayıt olun.';
 }

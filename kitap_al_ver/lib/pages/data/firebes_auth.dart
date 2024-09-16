@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously, non_constant_identifier_names, unnecessary_string_interpolations
-
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -19,20 +17,19 @@ class FirebaseAuthService {
     required String email,
     required String password,
   }) async {
+    if (email.isEmpty || password.isEmpty) {
+      showAlertDialog(context: context, message: AppText.enterUsernamePassword);
+      return;
+    }
+
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
+        email: email.trim(),
+        password: password.trim(),
       );
 
       // Store user information in Firestore
-      await _firebaseFirestore
-          .collection("Users")
-          .doc(userCredential.user!.uid)
-          .set({
-        'uid': userCredential.user!.uid,
-        'email': email,
-      });
+      await _storeUserInfo(userCredential.user!.uid, email);
 
       Navigator.pushReplacement(
         context,
@@ -42,111 +39,69 @@ class FirebaseAuthService {
       _handleAuthError(context, e);
     }
   }
-
-  Future<void> registerUser({
-    required BuildContext context,
-    required String email,
-    required String password,
-    required String confirmPassword,
-    required String username,
-    required File profile,
-  }) async {
-    // Şifrelerin eşleşip eşleşmediğini kontrol et
-    if (password != confirmPassword) {
-      showAlertDialog(
-        context: context,
-        message: AppText.match,
-      );
-      return;
-    }
-
-    try {
-      // Kullanıcıyı Firebase Authentication ile oluştur
-      UserCredential userCredential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email.trim(),
-        password: password.trim(),
-      );
-
-      // Eğer profil resmi varsa, resmi yükle ve URL'sini al
-      String URL = '';
-      if (profile.path.isNotEmpty) {
-        URL = await StorageMethod().uploadImageToStorage('Profile', profile);
-      }
-
-      // Kullanıcı bilgilerini Firestore'a ekle
-      await FirebaseFirestore.instance
-          .collection("Users")
-          .doc(userCredential.user!.uid)
-          .set({
-        'uid': userCredential.user!.uid,
-        'email': email,
-        'username': username,
-        'followers': [],
-        'following': [],
-        'profile': URL.isEmpty
-            ? 'https://firebasestorage.googleapis.com/v0/b/instagram-8a227.appspot.com/o/person.png?alt=media&token=c6fcbe9d-f502-4aa1-8b4b-ec37339e78ab'
-            : URL,
-      });
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text(AppText.showmessaj)),
-      );
-
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => LiquidTabBar()),
-      );
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'email-already-in-use') {
-        showAlertDialog(
-          context: context,
-          message: AppText.emailuse,
-        );
-      } else if (e.code == 'invalid-email') {
-        showAlertDialog(
-          context: context,
-          message: AppText.invalide,
-        );
-      } else {
-        showAlertDialog(
-          context: context,
-          message: '${AppText.allerterror}',
-        );
-      }
-    } catch (e) {
-      showAlertDialog(
-        context: context,
-        message: AppText.allerterror,
-      );
-    }
+Future<void> registerUser({
+  required BuildContext context,
+  required String email,
+  required String password,
+  required String confirmPassword,
+  required String username,
+  required File profile,
+}) async {
+  // Check if any field is empty
+  if (email.isEmpty || password.isEmpty || confirmPassword.isEmpty || username.isEmpty) {
+    showAlertDialog(context: context, message: AppText.allFieldsRequired);//tüm alanlar zorunlu 
+    return;
   }
+
+  // Check if passwords match
+  if (password != confirmPassword) {
+    showAlertDialog(context: context, message: AppText.match);
+    return;
+  }
+
+  try {
+    UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+      email: email.trim(),
+      password: password.trim(),
+    );
+
+    String profileUrl = '';
+    if (profile.path.isNotEmpty) {
+      profileUrl = await StorageMethod().uploadImageToStorage('Profile', profile);
+    }
+
+    await _firebaseFirestore.collection("Users").doc(userCredential.user!.uid).set({
+      'uid': userCredential.user!.uid,
+      'email': email,
+      'username': username,
+      'followers': [],
+      'following': [],
+      'profile': profileUrl.isEmpty
+          ? 'https://firebasestorage.googleapis.com/v0/b/instagram-8a227.appspot.com/o/person.png?alt=media&token=c6fcbe9d-f502-4aa1-8b4b-ec37339e78ab'
+          : profileUrl,
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text(AppText.registrationSuccessful)),
+    );
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => LiquidTabBar()),
+    );
+  } on FirebaseAuthException catch (e) {
+    _handleRegistrationError(context, e);
+  } catch (e) {
+    showAlertDialog(context: context, message: AppText.generalError);
+  }
+}
+
 
   Future<void> signOut() async {
     await _auth.signOut();
   }
 
-  void _handleAuthError(BuildContext context, FirebaseAuthException e) {
-    String errorMessage = AppText.enterUsernamePassword;
-    switch (e.code) {
-      case 'user-not-found':
-        errorMessage = AppText.userNotFound;
-        break;
-      case 'invalid-email':
-        errorMessage = AppText.invalide;
-        break;
-      case 'network-request-failed':
-        errorMessage = AppText.networkError;
-        break;
-      case 'wrong-password':
-        errorMessage = AppText.wrongPassword;
-        break;
-      default:
-        errorMessage = '${AppText.wrongPassword}: ${e.code}';
-    }
-    showAlertDialog(context: context, message: errorMessage);
-  }
-
+ 
   Future<void> handlePasswordReset({
     required BuildContext context,
     required String email,
@@ -190,4 +145,52 @@ class FirebaseAuthService {
       );
     }
   }
+
+  Future<void> _storeUserInfo(String uid, String email) async {
+    await _firebaseFirestore.collection("Users").doc(uid).set({
+      'uid': uid,
+      'email': email,
+    }, SetOptions(merge: true)); // Merge option to prevent overwriting
+  }
+
+  void _handleAuthError(BuildContext context, FirebaseAuthException e) {
+    String errorMessage;//giriş
+    switch (e.code) {
+     case 'invalid-credential':
+          errorMessage =
+             AppText.wrongPasandEml; 
+          break;
+       case 'invalid-email':
+          errorMessage =
+        AppText.invalideEpos; 
+          break;
+      case 'network-request-failed':
+        errorMessage =" AppText.networkError";
+        break;
+     
+      default:
+        errorMessage = '${"bilimeyen hata"}: ${e.code}';
+    }
+
+    showAlertDialog(context: context, message: errorMessage);
+  }
+
+void _handleRegistrationError(BuildContext context, FirebaseAuthException e) {
+  String errorMessage;
+  switch (e.code) {
+    case 'email-already-in-use':
+      errorMessage = AppText.emailuse;
+      break;
+    case 'invalid-email':
+      errorMessage =  AppText.invalideEpos;
+      break;
+   
+    default:
+      errorMessage = AppText.registrationError;
+  }
+  showAlertDialog(context: context, message: errorMessage);
+}
+
+
+
 }
