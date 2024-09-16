@@ -2,7 +2,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:kitap_al_ver/admin.dart';
+import 'package:kitap_al_ver/aramabut/admin.dart';
 import 'package:kitap_al_ver/aramabut/explore.dart';
 import 'package:kitap_al_ver/configuration/core/pageCon.dart';
 import 'package:kitap_al_ver/configuration/costant/constat.dart';

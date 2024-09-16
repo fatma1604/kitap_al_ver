@@ -65,7 +65,7 @@ class AuthPage extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(10),
                         child: isLogin
-                            ? LoginFrom(onTap: onTap)
+                            ? LoginForm(onTap: onTap)
                             : RegisterPage(onTap: onTap),
                       ),
                     ),

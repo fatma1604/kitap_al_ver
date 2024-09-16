@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kitap_al_ver/model/bilgi_model.dart';
-import 'package:kitap_al_ver/mykonum.dart';
+import 'package:kitap_al_ver/aramabut/mykonum.dart';
 import 'package:kitap_al_ver/pages/data/firebes_post.dart';
 import 'package:kitap_al_ver/post/galleripage.dart';
 import 'package:uuid/uuid.dart';
