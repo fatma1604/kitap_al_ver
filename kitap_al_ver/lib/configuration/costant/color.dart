@@ -24,8 +24,8 @@ final class AppColor {
   static const Color forget2 = Color.fromARGB(255, 143, 61, 57);
 
 //yazı
-  static const Color yazilight = Color.fromARGB(244, 185, 105, 138);
-  static const Color yazidart = Color.fromARGB(221, 139, 118, 118);
+  static const Color yazilight = Color.fromARGB(244, 70, 27, 43);
+  static const Color yazidart = Color.fromARGB(221, 219, 216, 216);
 
 //button
   static const Color buttonlight = Color.fromARGB(178, 248, 201, 201);
@@ -35,16 +35,12 @@ final class AppColor {
   static const Color screenlight1 = Color.fromARGB(230, 219, 136, 132);
   static const Color screendart1 = Color.fromARGB(255, 116, 82, 80);
 
+  static const Color screenlight2 = Color.fromARGB(255, 219, 123, 116);
+  static const Color screendart2 = Color.fromARGB(255, 95, 52, 50);
 
-   static const Color screenlight2 =  Color.fromARGB(255, 219, 123, 116);
-  static const Color screendart2 =  Color.fromARGB(255, 95, 52, 50);
+  static const Color userTitle = Color.fromARGB(232, 243, 174, 174);
 
-    static const Color userTitle = Color.fromARGB(232, 243, 174, 174);
-
-
-
-//mesajdan 
-
+//mesajdan
 
   static const Color greenDark = Color(0xFF00A884);
   static const Color greenLight = Color(0xFF008069);
@@ -55,10 +51,7 @@ final class AppColor {
   static const Color backgroundDark = Color(0xFF111B21);
   static const Color backgroundLight = Color(0xFFFFFFFF);
   static const Color greyBackground = Color(0xFF202C33);
-
-
-
 }
-    const kcontentColor = Color(0xffF5F5F5);
- const kprimaryColor = Color(0xffF5F5F5);
 
+const kcontentColor = Color(0xffF5F5F5);
+const kprimaryColor = Color(0xffF5F5F5);

@@ -40,7 +40,7 @@ class _FavoriteState extends State<Favorite> {
             .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
 
           final posts = snapshot.data!.docs

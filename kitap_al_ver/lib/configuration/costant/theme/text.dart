@@ -24,10 +24,14 @@ class AppText {
 
   static const String networkError =
       'Lütfen internet bağlantısını kontrol edin.';
-  static const String wrongPassword = 'Şifreniz hatalı. Lütfen tekrar deneyin.';
   static const String userNotFound = 'Bu mail adresi kullanıcı bulunamadı.';
   static const String enterUsernamePassword =
-      'Lütfen kullanıcı adı ve şifre girin.';
+      'Lütfen bir e-posta adresi  ve şifre girin.';
+static const String wrongPasandEml =
+      'Lütfen e postanızı veya şifrenizi kontrol edin ';
+   static const String invalideEpos =
+      'Geçersiz e-posta adresi. Lütfen e-posta formatını kontrol edin ';   
+
   static const String validPassword = "Lütfen geçerli bir Şifre girin";
   static const String member = "Üye değil misiniz?";
   static const String invalide = "Lütfen geçerli bir e-posta girin.";
@@ -35,7 +39,7 @@ class AppText {
   static const String allerterror = "Beklenmeyen bir hata oluştu";
   static const String match = "Şifreler eşleşmiyor";
   static const String showmessaj = "Kayıt başarılı";
-  static const String notFound = "Sonuç Bulunamadı !";
+
   static const String passwordResetLink =
       "Şifre sıfırlama bağlantısı için mail adresinizi giriniz.";
   static const String enterValue = "Bir değer giriniz";
@@ -45,7 +49,6 @@ class AppText {
   static const String snackBarClose = "Kapat";
   static const String signOut = "Çıkış Yap";
     static const String forgetEmail = 'Lütfen bir e-posta adresi giriniz.';
-  static const String wrongEmail = 'Böyle bir kullanıcı bulunamadı. Lütfen kayıt olun.';
  static const String trueEmail = 'Şifre sıfırlama bağlantısı e-postanıza gönderildi.';
   static const String approval = 'ŞİFREYİ RESETLE.';
 
@@ -62,5 +65,7 @@ class AppText {
   static const String mytabCaht = "Chats";
   static const String mytabG = "Güncellemeler";
   static const String mytabA = "Arramlar";
+   static const String wrongPassword = 'Şifreniz hatalı. Lütfen tekrar deneyin.';
+   static const String wrongEmail = 'Böyle bir kullanıcı bulunamadı. Lütfen kayıt olun.';
     
 }

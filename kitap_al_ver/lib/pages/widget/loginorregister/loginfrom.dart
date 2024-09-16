@@ -1,6 +1,4 @@
-
 // ignore_for_file: use_build_context_synchronously
-
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +15,6 @@ import 'package:kitap_al_ver/pages/widget/loginorregister/forget/forget_page.dar
 import 'package:kitap_al_ver/pages/widget/loginorregister/lodiverder.dart';
 import 'package:kitap_al_ver/tabbar/liquidTabbar.dart';
 
-
 class LoginFrom extends StatefulWidget {
   const LoginFrom({super.key, required this.onTap});
   final void Function()? onTap;
@@ -29,20 +26,20 @@ class LoginFrom extends StatefulWidget {
 class _LoginFromState extends State<LoginFrom> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
- void _handleLogin() async {
-    // Check if the username and password fields are empty
+  void _handleLogin() async {
+    
     if (_usernameController.text.isEmpty || _passwordController.text.isEmpty) {
-      // Show an AlertDialog if any of them is empty
+ 
       showDialog(
         context: context,
         builder: (context) => const AlertDialog(
-          title: Text(AppText.enterUsernamePassword),
+          title: Text(AppText.enterUsernamePassword), 
         ),
       );
-      return; // Terminate the process when an error occurs
+      return; 
     }
 
-    // Continue with the login process if both fields are filled
+
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: _usernameController.text,
@@ -50,58 +47,39 @@ class _LoginFromState extends State<LoginFrom> {
       );
       Navigator.pushReplacement(
         context,
-       MaterialPageRoute(builder: (context) =>  LiquidTabBar()),
+        MaterialPageRoute(builder: (context) => LiquidTabBar()),
       );
-      // Successful login, you can optionally perform other operations
+      
     } on FirebaseAuthException catch (e) {
-      // Handle FirebaseAuthException errors
-      // ignore: avoid_print
-      print(e.code); // Print the error code
-      if (e.code == 'user-not-found') {
-        showDialog(
-          context: context,
-          builder: (context) =>const AlertDialog(
-            title: Text(AppText.userNotFound),
-          ),
-        );
-        return;
-      }
-      if (e.code == 'invalid-email') {
-        showDialog(
-          context: context,
-          builder: (context) =>const  AlertDialog(
-            title: Text(AppText.invalide),
-          ),
-        );
-      }
-      if (e.code == 'network-request-failed') {
-        showDialog(
-          context: context,
-          builder: (context) =>const  AlertDialog(
-            title: Text(AppText.networkError),
-          ),
-        );
+
+      String errorMessage;
+      switch (e.code) {
+        case 'invalid-credential':
+          errorMessage =
+             AppText.wrongPasandEml; 
+          break;
+        case 'network-request-failed':
+          errorMessage =
+              AppText.networkError; 
+          break;
+        case 'invalid-email':
+          errorMessage =
+        AppText.invalideEpos; 
+          break;
+
+        default:
+          errorMessage =
+              'Bilinmeyen : ${e.code}'; 
       }
 
-      if (e.code == 'wrong-password') {
-        showDialog(
-          context: context,
-          builder: (context) =>const  AlertDialog(
-            title: Text(AppText.wrongPassword),
-          ),
-        );
-        return;
-      }
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text("Error: ${e.code}"), // Print the error code
+          title: Text(errorMessage),
         ),
       );
     }
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -167,10 +145,10 @@ class _LoginFromState extends State<LoginFrom> {
               )
             ],
           ),
-           MyButton(
+          MyButton(
             buttonText: AppText.login,
             onTap: () {
-             _handleLogin();
+              _handleLogin();
             },
           ),
           Padding(

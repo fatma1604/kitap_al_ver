@@ -1,7 +1,6 @@
-// ignore_for_file: library_private_types_in_public_api
+// ignore_for_file: library_private_types_in_public_api, prefer_final_fields
 
 import 'dart:async';
-
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,7 +9,6 @@ import 'package:kitap_al_ver/configuration/costant/color.dart';
 import 'package:kitap_al_ver/configuration/costant/images.dart';
 import 'package:kitap_al_ver/pages/onbording/intopage.dart';
 import 'package:kitap_al_ver/pages/widget/loginorregister/auth.dart';
-
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -21,7 +19,6 @@ class OnboardingScreen extends StatefulWidget {
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
   int _currentPage = 0;
-  // ignore: prefer_final_fields
   List<bool> _buttonsVisible = [false, false, false];
 
   final List<Widget> pages = [
@@ -29,51 +26,33 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       imagePath: AppImage.onbording1,
       lightGradient: LinearGradient(
         begin: Alignment.topCenter,
-        colors: [
-          AppColor.onbordinglight,
-          AppColor.onbordinglight1,
-        ],
+        colors: [AppColor.onbordinglight, AppColor.onbordinglight1],
       ),
       darkGradient: LinearGradient(
-        begin: Alignment.centerRight,
-        colors: [
-          AppColor.onbordingdark,
-          AppColor.onbordingdark1,
-        ],
+        begin: Alignment.topCenter,
+        colors: [AppColor.onbordingdark, AppColor.onbordingdark1],
       ),
     ),
     const IntroPage(
       imagePath: AppImage.onbording2,
       lightGradient: LinearGradient(
         begin: Alignment.topCenter,
-        colors: [
-          AppColor.onbordinglight,
-          AppColor.onbordinglight1,
-        ],
+      colors: [AppColor.onbordinglight, AppColor.onbordinglight1],
       ),
       darkGradient: LinearGradient(
         begin: Alignment.topCenter,
-        colors: [
-          AppColor.onbordingdark,
-          AppColor.onbordingdark1,
-        ],
+        colors: [AppColor.onbordingdark, AppColor.onbordingdark1],
       ),
     ),
     const IntroPage(
       imagePath: AppImage.onbording3,
       lightGradient: LinearGradient(
         begin: Alignment.topCenter,
-        colors: [
-          AppColor.onbordinglight,
-          AppColor.onbordinglight1,
-        ],
+        colors: [AppColor.onbordinglight, AppColor.onbordinglight1],
       ),
       darkGradient: LinearGradient(
         begin: Alignment.topCenter,
-        colors: [
-          AppColor.onbordingdark,
-          AppColor.onbordingdark1,
-        ],
+        colors: [AppColor.onbordingdark, AppColor.onbordingdark1],
       ),
     ),
   ];
@@ -82,13 +61,34 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   void initState() {
     super.initState();
     for (int i = 0; i < _buttonsVisible.length; i++) {
-      Timer(Duration(seconds: 5 * (i + 1)), () {
+      Future.delayed(Duration(seconds: 5 * (i + 1)), () {
         if (mounted) {
           setState(() {
             _buttonsVisible[i] = true;
           });
         }
       });
+    }
+  }
+
+  void _handleBack() {
+    if (_currentPage > 0) {
+      setState(() {
+        _currentPage--;
+      });
+    }
+  }
+
+  void _handleNext() {
+    if (_currentPage < pages.length - 1) {
+      setState(() {
+        _currentPage++;
+      });
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => AuthPage(isLogin: true)),
+      );
     }
   }
 
@@ -107,19 +107,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             child: AnimatedOpacity(
               opacity: _buttonsVisible[_currentPage] ? 1.0 : 0.0,
               duration: const Duration(milliseconds: 500),
-              child: Container(
+              child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 16.h),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     OnButton(
-                      onPressed: () {
-                        if (_currentPage > 0) {
-                          setState(() {
-                            _currentPage--;
-                          });
-                        }
-                      },
+                      onPressed: _handleBack,
                       primaryColor: AppColor.lightBg,
                       onPrimaryColor: Theme.of(context).cardColor,
                       elevation: 5.w,
@@ -128,21 +122,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       text: 'Back',
                     ),
                     OnButton(
-                      onPressed: () {
-                        if (_currentPage < pages.length - 1) {
-                          setState(() {
-                            _currentPage++;
-                          });
-                        } else {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => AuthPage(
-                                      isLogin: true,
-                                    )),
-                          );
-                        }
-                      },
+                      onPressed: _handleNext,
                       primaryColor: AppColor.lightBg,
                       onPrimaryColor: Theme.of(context).cardColor,
                       elevation: 5.w,

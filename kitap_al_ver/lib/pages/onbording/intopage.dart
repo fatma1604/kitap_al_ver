@@ -29,11 +29,11 @@ class IntroPage extends StatelessWidget {
             flex: 8,
             child: Container(
               decoration: BoxDecoration(
-                color: isDarkMode ? AppColor.darttBg : AppColor.lightBg,
+                color: isDarkMode ? AppColor.darttBg : AppColor.onbordinglight,
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.elliptical(
-                    300.w, // Use responsive sizing if needed
-                    80.h, // Use responsive sizing if needed
+                    300.w,
+                    80.h,
                   ),
                 ),
               ),
