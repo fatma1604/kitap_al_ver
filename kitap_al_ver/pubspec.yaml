@@ -75,13 +75,7 @@ flutter:
  
   assets:
     - assets/images/
-    - assets/images/all/
-    - assets/images/shoes/
-    - assets/images/beauty/
-    - assets/images/women fashion/
-    - assets/images/men fashion/
-    - assets/images/jewelry/ 
-    - assets/images/img/ 
+ 
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

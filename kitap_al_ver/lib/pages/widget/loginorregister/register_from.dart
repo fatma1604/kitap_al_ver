@@ -4,6 +4,7 @@ import 'dart:io';
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kitap_al_ver/configuration/core/google_button.dart';
 import 'package:kitap_al_ver/configuration/core/my_button.dart';
@@ -14,6 +15,7 @@ import 'package:kitap_al_ver/configuration/costant/theme/text.dart';
 import 'package:kitap_al_ver/configuration/costant/theme/text_them.dart';
 import 'package:kitap_al_ver/pages/data/firebes_auth.dart';
 import 'package:kitap_al_ver/pages/widget/loginorregister/auth.dart';
+import 'package:kitap_al_ver/pages/widget/loginorregister/imagepicker.dart';
 import 'package:kitap_al_ver/pages/widget/loginorregister/user_info_page.dart';
 
 
@@ -95,7 +97,34 @@ class _RegisterPageState extends State<RegisterPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const UserInfoPage(),
+              InkWell(
+                onTap: () async {
+                  File _imagefilee =
+                      await ImagePickerr().uploadImage('gallery');
+                  setState(() {
+                    _imageFile = _imagefilee;
+                  });
+                },
+                child: CircleAvatar(
+                  radius: 36.r,
+                  backgroundColor: Colors.grey,
+                  child: _imageFile == null
+                      ? CircleAvatar(
+                          radius: 34.r,
+                          backgroundImage:
+                              AssetImage('assets/images/person.png'),
+                          backgroundColor: Colors.grey.shade200,
+                        )
+                      : CircleAvatar(
+                          radius: 34.r,
+                          backgroundImage: Image.file(
+                            _imageFile!,
+                            fit: BoxFit.cover,
+                          ).image,
+                          backgroundColor: Colors.grey.shade200,
+                        ),
+                ),
+              ),
               MyTextField(
                 hintText: AppText.email,
                 obscureText: false,
