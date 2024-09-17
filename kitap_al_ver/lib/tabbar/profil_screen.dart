@@ -1,21 +1,16 @@
+// ignore_for_file: prefer_const_constructors_in_immutables, library_private_types_in_public_api, non_constant_identifier_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:kitap_al_ver/aramabut/image_cached.dart';
 import 'package:kitap_al_ver/model/usermodel.dart';
-import 'package:kitap_al_ver/pages/data/firebes_post.dart';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-
-import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 
 class ProfilScreen extends StatefulWidget {
   final String userId;
 
+  // ignore: use_key_in_widget_constructors
   ProfilScreen({required this.userId});
 
   @override
@@ -56,8 +51,8 @@ class _ProfilScreenState extends State<ProfilScreen> {
                     child: CachedNetworkImage(
                       imageUrl: user.profile,
                       placeholder: (context, url) =>
-                          CircularProgressIndicator(),
-                      errorWidget: (context, url, error) => Icon(Icons.error),
+                          const CircularProgressIndicator(),
+                      errorWidget: (context, url, error) => const Icon(Icons.error),
                     ),
                   ),
                 ),
@@ -170,8 +165,8 @@ class _ProfilScreenState extends State<ProfilScreen> {
                         color: yourse ? Colors.grey.shade400 : Colors.blue),
                   ),
                   child: yourse
-                      ? Text('Edit Your Profile')
-                      : Text(
+                      ? const Text('Edit Your Profile')
+                      : const Text(
                           'Follow',
                           style: TextStyle(color: Colors.white),
                         ),
@@ -202,7 +197,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
                             borderRadius: BorderRadius.circular(5.r),
                             border: Border.all(color: Colors.grey.shade200),
                           ),
-                          child: Text('Unfollow')),
+                          child: const Text('Unfollow')),
                     ),
                   ),
                   SizedBox(width: 8.w),
@@ -216,7 +211,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
                         borderRadius: BorderRadius.circular(5.r),
                         border: Border.all(color: Colors.grey.shade200),
                       ),
-                      child: Text(
+                      child: const Text(
                         'Message',
                         style: TextStyle(color: Colors.black),
                       ),
@@ -243,13 +238,13 @@ class _ProfilScreenState extends State<ProfilScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profil'),
+        title: const Text('Profil'),
       ),
       body: FutureBuilder<Usermodel>(
         future: userModelFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
 
           if (snapshot.hasError) {
@@ -257,7 +252,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
           }
 
           if (!snapshot.hasData) {
-            return Center(child: Text('Kullanıcı bulunamadı'));
+            return const Center(child: Text('Kullanıcı bulunamadı'));
           }
 
           Usermodel user = snapshot.data!;

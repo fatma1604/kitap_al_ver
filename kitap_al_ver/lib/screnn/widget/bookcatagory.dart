@@ -1,9 +1,13 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:kitap_al_ver/configuration/costant/color.dart';
-import 'package:kitap_al_ver/model/kategorymodel.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:kitap_al_ver/widget/%C4%B1nformation.dart';
+import 'package:kitap_al_ver/configuration/costant/color.dart';
+import 'package:kitap_al_ver/configuration/costant/images.dart';
+import 'package:kitap_al_ver/model/kategorymodel.dart';
+
+import 'package:kitap_al_ver/pages/data/for%C4%B1mHelper.dart';
+import 'package:kitap_al_ver/widget/information.dart';
+
 
 class BookCategoryOverview extends StatefulWidget {
   @override
@@ -14,50 +18,17 @@ class _BookCategoryOverviewState extends State<BookCategoryOverview> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   bool _isCoder = false; // Indicates if the user is a coder
+  final List<Kategorymodel> kategory = []; // Add the actual initialization here
 
   @override
   void initState() {
     super.initState();
-    _checkUserRole();
-    _checkAndSendDataToFirestore();
-  }
-
-  Future<void> _checkUserRole() async {
-    try {
-      User? user = _auth.currentUser;
-      if (user != null) {
-        DocumentSnapshot userDoc =
-            await _firestore.collection('users').doc(user.uid).get();
-        setState(() {
-          _isCoder = userDoc['role'] == 'coder'; // Assuming role field exists
-        });
-      }
-    } catch (e) {
-      print('Error fetching user role: $e');
-    }
-  }
-
-  Future<void> _checkAndSendDataToFirestore() async {
-    try {
-      final categoryCollection = _firestore.collection('categories');
-      final querySnapshot = await categoryCollection.get();
-
-      if (querySnapshot.docs.isEmpty) {
-        for (var category in kategory) {
-          DocumentReference docRef = categoryCollection.doc();
-          await docRef.set({
-            'category_name': category.categoryname,
-            'category_uid': docRef.id,
-            'image_url': category.images,
-            'colors': category.colors
-                .map((color) => color.value)
-                .toList(), // Renkleri integer olarak saklayın
-          });
-        }
-      }
-    } catch (e) {
-      print('Error: $e');
-    }
+    FormHelpers.checkUserRole(_auth, _firestore, (isCoder) {
+      setState(() {
+        _isCoder = isCoder;
+      });
+    });
+    FormHelpers.checkAndSendDataToFirestore(_firestore, kategory);
   }
 
   @override
@@ -80,7 +51,7 @@ class _BookCategoryOverviewState extends State<BookCategoryOverview> {
                   if (_isCoder) // Conditionally show the button
                     ElevatedButton(
                       onPressed: () {
-                        _checkAndSendDataToFirestore();
+                        FormHelpers.checkAndSendDataToFirestore(_firestore, kategory);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blue,
@@ -101,8 +72,7 @@ class _BookCategoryOverviewState extends State<BookCategoryOverview> {
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 decoration: const BoxDecoration(
                   color: Colors.white,
-                  borderRadius:
-                      BorderRadius.only(topLeft: Radius.circular(200)),
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(200)),
                 ),
                 child: StreamBuilder<QuerySnapshot>(
                   stream: _firestore.collection('categories').snapshots(),
@@ -112,34 +82,25 @@ class _BookCategoryOverviewState extends State<BookCategoryOverview> {
                     }
 
                     if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                      return const Center(
-                          child: Text('Kategoriler bulunamadı.'));
+                      return const Center(child: Text('Kategoriler bulunamadı.'));
                     }
 
                     final categories = snapshot.data!.docs;
 
                     return GridView.builder(
                       padding: const EdgeInsets.all(16),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 16,
                         mainAxisSpacing: 16,
                       ),
                       itemCount: categories.length,
                       itemBuilder: (context, index) {
-                        final categoryData =
-                            categories[index].data() as Map<String, dynamic>;
-                        final title =
-                            categoryData['category_name'] ?? 'No Title';
-                        final imageUrl = categoryData['image_url'] ??
-                            'assets/images/profile.png';
-                        final colorValues = List<int>.from(
-                            categoryData['colors'] ??
-                                [Colors.grey.value]); // Varsayılan renk
-                        final color = Color(colorValues.isNotEmpty
-                            ? colorValues[0]
-                            : Colors.grey.value);
+                        final categoryData = categories[index].data() as Map<String, dynamic>;
+                        final title = categoryData['category_name'] ?? 'No Title';
+                        final imageUrl = categoryData['image_url'] ?? AppImage.profil;
+                        final colorValues = List<int>.from(categoryData['colors'] ?? [Colors.grey.value]); // Default color
+                        final color = Color(colorValues.isNotEmpty ? colorValues[0] : Colors.grey.value);
 
                         return itemDashboard(
                           title,
@@ -147,9 +108,9 @@ class _BookCategoryOverviewState extends State<BookCategoryOverview> {
                           color,
                           () {
                             Navigator.pushReplacement(
-        context,
-       MaterialPageRoute(builder: (context) =>  InformationFormScreen()),
-      );
+                              context,
+                              MaterialPageRoute(builder: (context) => InformationFormScreen()),
+                            );
                           },
                         );
                       },
@@ -164,8 +125,7 @@ class _BookCategoryOverviewState extends State<BookCategoryOverview> {
     );
   }
 
-  Widget itemDashboard(String title, String imagePath, Color background,
-      VoidCallback onPressed) {
+  Widget itemDashboard(String title, String imagePath, Color background, VoidCallback onPressed) {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(

@@ -2,6 +2,7 @@
 
 
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kitap_al_ver/configuration/core/newrow.dart';
@@ -16,6 +17,22 @@ class DrawerScreen extends StatefulWidget {
 }
 
 class _DrawerScreenState extends State<DrawerScreen> {
+    String _userName = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserName();
+  }
+    Future<void> _loadUserName() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      setState(() {
+        _userName = user.displayName ?? 'User';
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -31,7 +48,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 const SizedBox(
                   width: 10,
                 ),
-                Text('Fatma Nur Kamış',
+                Text(  _userName,
                     style: GoogleFonts.playfairDisplay(
                         textStyle: AppTextTheme.login(context))),
               ],

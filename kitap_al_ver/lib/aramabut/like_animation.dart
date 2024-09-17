@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names, use_super_parameters
+
 import 'package:flutter/material.dart';
 
 class LikeAnimation extends StatefulWidget {

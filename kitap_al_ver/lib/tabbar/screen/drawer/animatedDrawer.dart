@@ -1,8 +1,11 @@
-import 'package:date_format/date_format.dart';
+// ignore_for_file: file_names, use_super_parameters
+
 import 'package:flutter/material.dart';
-import 'package:kitap_al_ver/aramabut/explore.dart';
+import 'package:kitap_al_ver/aramabut/admin.dart';
+import 'package:kitap_al_ver/aramabut/bildirim.dart';
+import 'package:kitap_al_ver/configuration/costant/color.dart';
 import 'package:kitap_al_ver/tabbar/screen/drawer/books_home.dart';
-import 'package:kitap_al_ver/aramabut/buton.dart';
+import 'package:kitap_al_ver/aramabut/mySearc.dart';
 
 class AnimatedDrawer extends StatefulWidget {
   const AnimatedDrawer({Key? key}) : super(key: key);
@@ -26,10 +29,11 @@ class _DrawerfState extends State<AnimatedDrawer> {
     return AnimatedContainer(
       transform: Matrix4.translationValues(xOffset, yOffset, 0)
         ..scale(isDrawerOpen ? 0.85 : 1.00)
-        ..rotateZ(isDrawerOpen ? -0.5 : 0),
+        ..rotateZ(isDrawerOpen ? -50 : 0),
       duration: const Duration(milliseconds: 200),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(isDrawerOpen ? 40 : 0),
+        borderRadius:
+            isDrawerOpen ? BorderRadius.circular(40) : BorderRadius.circular(0),
       ),
       child: SizedBox(
         width: mWidth,
@@ -65,23 +69,35 @@ class _DrawerfState extends State<AnimatedDrawer> {
                         ),
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 10.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Expanded(
-                            child: MySearchWidget(searchController: searchController,),
+                          Flexible(
+                            flex: 1,
+                            child: MySearchWidget(
+                                searchController: searchController),
                           ),
+                          const Text("konum A"),
                           IconButton(
-                            icon: const Icon(Icons.filter_list),
+                            icon: const Icon(Icons.add_location_outlined),
+                            color: const Color.fromARGB(232, 131, 17, 17),
                             onPressed: () {
-                              // Add functionality for the filter icon here
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          PhotoPickerScreen()));
                             },
                           ),
                           IconButton(
-                            icon: const Icon(Icons.settings),
+                            icon: const Icon(Icons.add_alert_outlined),
+                            color: const Color.fromARGB(232, 131, 17, 17),
                             onPressed: () {
-                              // Add functionality for the settings icon here
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const Bildirim()));
                             },
                           ),
                         ],

@@ -1,11 +1,13 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/configuration/costant/color.dart';
-import 'package:provider/provider.dart';
-import 'package:kitap_al_ver/favori/favorite_provider.dart';
-import 'package:kitap_al_ver/favori/post.dart'; // Ensure you have this model defined
+import 'package:kitap_al_ver/configuration/costant/images.dart';
 import 'package:kitap_al_ver/detay/deail_screen.dart';
+import 'package:kitap_al_ver/favori/favorite_provider.dart';
+import 'package:kitap_al_ver/model/post.dart';
+import 'package:kitap_al_ver/pages/data/firebes_post.dart';
+import 'package:provider/provider.dart';
 
 class ProductCard extends StatelessWidget {
   final String photoUrl;
@@ -36,14 +38,12 @@ class ProductCard extends StatelessWidget {
         builder: (context, provider, child) {
           final post = Posts(
             postId: postUid,
-            title: title, likes: [],
+            title: title,
+            likes: [],
             imageUrls: [],
             rating: "",
             userName: "",
-
             category: genre,
-
-            // Assuming title represents genre here
           );
 
           return Stack(
@@ -59,18 +59,31 @@ class ProductCard extends StatelessWidget {
                   children: [
                     const SizedBox(height: 5),
                     Center(
-                      child: Image.network(
-                        photoUrl,
-                        width: double.infinity,
-                        height: 150,
-                        fit: BoxFit.cover,
-                      ),
+                      child: photoUrl.isNotEmpty
+                          ? Image.network(photoUrl,
+                              width: double.infinity,
+                              height: 150,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                              return Image.asset(
+                              AppImage.product,
+                                width: double.infinity,
+                                height: 150,
+                                fit: BoxFit.cover,
+                              );
+                            })
+                          : Image.asset(
+                              AppImage.profil,
+                              width: double.infinity,
+                              height: 150,
+                              fit: BoxFit.cover,
+                            ),
                     ),
                     const SizedBox(height: 10),
                     Padding(
                       padding: const EdgeInsets.only(left: 10),
                       child: Text(
-                        title,
+                        title.isNotEmpty ? title : 'No Title',
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
@@ -81,7 +94,7 @@ class ProductCard extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(left: 10, bottom: 10),
                       child: Text(
-                        genre,
+                        genre.isNotEmpty ? genre : 'No Genre',
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 17,
@@ -105,10 +118,9 @@ class ProductCard extends StatelessWidget {
                       ),
                     ),
                     child: GestureDetector(
-                      onTap: () {
-                        provider.toggleFavorite(post);
-                        addLikeToPost(
-                            postUid); // Update Firestore with the like action
+                      onTap: () async {
+                        final firebaseService = FirebasePostServis();
+                        await firebaseService.addLikeToPost(postUid);
                       },
                       child: Icon(
                         provider.isExist(post)
@@ -126,28 +138,5 @@ class ProductCard extends StatelessWidget {
         },
       ),
     );
-  }
-
-  Future<void> addLikeToPost(String postId) async {
-    try {
-      final postRef = FirebaseFirestore.instance.collection('post').doc(postId);
-
-      await postRef.update({
-        'like': FieldValue.arrayUnion([getCurrentUserId()]),
-      });
-
-      print('Like successfully added to the post.');
-    } catch (e) {
-      print('Error adding like: $e');
-    }
-  }
-
-  String? getCurrentUserId() {
-    final User? user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      return user.uid; // Kullanıcının benzersiz ID'sini döndürür
-    } else {
-      return null; // Kullanıcı oturum açmamışsa null döner
-    }
   }
 }

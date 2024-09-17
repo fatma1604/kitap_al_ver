@@ -1,9 +1,11 @@
+// ignore_for_file: sort_child_properties_last
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:kitap_al_ver/configuration/costant/color.dart';
 import 'package:kitap_al_ver/favori/animated.dart';
-import 'package:kitap_al_ver/favori/post.dart';
+import 'package:kitap_al_ver/model/post.dart';
 
 class Favorite extends StatefulWidget {
   const Favorite({super.key});

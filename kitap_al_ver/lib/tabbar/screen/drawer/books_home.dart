@@ -1,8 +1,7 @@
 // ignore_for_file: camel_case_types
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:kitap_al_ver/configuration/costant/aprouta.dart';
+import 'package:kitap_al_ver/pages/data/firebes_post.dart';
 import 'package:kitap_al_ver/screnn/widget/imageCarousel.dart';
 import 'package:kitap_al_ver/widget/product_Card.dart';
 
@@ -19,64 +18,18 @@ class _Books_HomeState extends State<Books_Home> {
   @override
   void initState() {
     super.initState();
-    _loadImageUrls();
+    loadImageUrls();
   }
 
-  Future<void> _loadImageUrls() async {
-    try {
-      final ListResult result =
-          await FirebaseStorage.instance.ref('deneme').listAll();
-
-      final List<String> urls = [];
-      for (var ref in result.items) {
-        final String url = await ref.getDownloadURL();
-        urls.add(url);
-      }
-
-      setState(() {
-        _imageUrls = urls;
-      });
-    } catch (e) {
-      print('Error loading image URLs: $e');
-    }
+   Future<void> loadImageUrls() async {
+    final urls = await FirebasePostServis().loadImageUrls();
+    setState(() {
+      _imageUrls = urls;
+    });
   }
 
   Future<List<Map<String, dynamic>>> getPhotoUrls() async {
-    try {
-      final QuerySnapshot querySnapshot =
-          await FirebaseFirestore.instance.collection('post').get();
-
-      if (querySnapshot.docs.isNotEmpty) {
-        return querySnapshot.docs.map((doc) {
-          final data = doc.data() as Map<String, dynamic>;
-          final postImages = data['postImages'] as List<dynamic>?;
-
-          // İlk resim URL'sini al (eğer liste boş değilse)
-          final url = postImages != null && postImages.isNotEmpty
-              ? postImages[0] as String?
-              : null;
-          final title = data['title'] as String?;
-          final type = data['type'] as String?;
-          final postUid = data['post_uid'] as String?;
-
-          if (url != null && title != null && type != null && postUid != null) {
-            return {
-              'postImage': url,
-              'title': title,
-              'type': type,
-              'postUid': postUid
-            };
-          } else {
-            throw Exception('Missing data in a document');
-          }
-        }).toList();
-      } else {
-        throw Exception('No documents found');
-      }
-    } catch (e) {
-      print('Error fetching photo URLs: $e');
-      return []; // Return an empty list in case of error
-    }
+    return await FirebasePostServis().getPhotoUrls();
   }
 
   @override
@@ -95,7 +48,7 @@ class _Books_HomeState extends State<Books_Home> {
           future: getPhotoUrls(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return SliverToBoxAdapter(
+              return const SliverToBoxAdapter(
                 child: Center(child: CircularProgressIndicator()),
               );
             } else if (snapshot.hasError) {
@@ -104,6 +57,27 @@ class _Books_HomeState extends State<Books_Home> {
               );
             } else if (snapshot.hasData) {
               final photoDataList = snapshot.data!;
+              if (photoDataList.isEmpty) {
+                // Eğer veri yoksa, varsayılan içeriği göster
+                return SliverToBoxAdapter(
+                  child: Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.asset(
+                          AppRoute.onboard, // Varsayılan resim
+                          width: 200,
+                          height: 200,
+                        ),
+                        const SizedBox(height: 10),
+                        const Text(
+                          'RESİM ATMAYA NE DERSİN ',
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }
 
               return SliverGrid(
                 delegate: SliverChildBuilderDelegate(
@@ -125,7 +99,7 @@ class _Books_HomeState extends State<Books_Home> {
                 ),
               );
             } else {
-              return SliverToBoxAdapter(
+              return const SliverToBoxAdapter(
                 child: Center(child: Text('No data found')),
               );
             }

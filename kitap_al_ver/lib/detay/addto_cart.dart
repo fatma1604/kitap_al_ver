@@ -1,3 +1,5 @@
+// ignore_for_file: use_super_parameters, use_build_context_synchronously, avoid_print
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,7 +15,7 @@ class AddToCart extends StatefulWidget {
 }
 
 class _AddToCartState extends State<AddToCart> {
-  var uid = Uuid().v4();
+  var uid = const Uuid().v4();
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<String> _getUserId() async {
@@ -83,7 +85,7 @@ class _AddToCartState extends State<AddToCart> {
                 alignment: Alignment.center,
                 padding: const EdgeInsets.symmetric(horizontal: 50),
                 child: const Text(
-                  "Add to Cart",
+                  "Sepete Ekle",
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,

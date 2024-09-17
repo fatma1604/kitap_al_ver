@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously, avoid_print
+
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -6,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:kitap_al_ver/configuration/core/custom_icon_button.dart';
-import 'package:kitap_al_ver/post/add_post_screen.dart';
+
 import 'package:photo_manager/photo_manager.dart';
 import 'package:uuid/uuid.dart';
 
@@ -57,7 +59,7 @@ class _GalleripageState extends State<Galleripage> {
           }
           tempMediaList.add(
             FutureBuilder(
-              future: asset.thumbnailDataWithSize(ThumbnailSize(200, 200)),
+              future: asset.thumbnailDataWithSize(const ThumbnailSize(200, 200)),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
                   return GestureDetector(
@@ -79,7 +81,7 @@ class _GalleripageState extends State<Galleripage> {
                           ),
                         ),
                         if (_selectedFiles.contains(file))
-                          Positioned(
+                          const Positioned(
                             top: 0,
                             right: 0,
                             child: Icon(
@@ -117,7 +119,7 @@ class _GalleripageState extends State<Galleripage> {
   try {
     final storage = FirebaseStorage.instance;
     final auth = FirebaseAuth.instance;
-    final uid = Uuid().v4(); // Unique identifier for each upload
+    final uid = const Uuid().v4(); // Unique identifier for each upload
     List<String> downloadUrls = [];
 
     for (File file in _selectedFiles) {
@@ -225,7 +227,7 @@ class _GalleripageState extends State<Galleripage> {
                 GridView.builder(
                   shrinkWrap: true,
                   physics:
-                      NeverScrollableScrollPhysics(), // Disable scrolling for inner GridView
+                      const NeverScrollableScrollPhysics(), // Disable scrolling for inner GridView
                   itemCount: _mediaList.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3, // 3 columns in the grid

@@ -1,4 +1,4 @@
-// ignore_for_file: unused_local_variable, use_super_parameters, annotate_overrides
+// ignore_for_file: unused_local_variable, use_super_parameters, annotate_overrides, no_leading_underscores_for_local_identifiers
 
 import 'dart:io';
 
@@ -16,7 +16,7 @@ import 'package:kitap_al_ver/configuration/costant/theme/text_them.dart';
 import 'package:kitap_al_ver/pages/data/firebes_auth.dart';
 import 'package:kitap_al_ver/pages/widget/loginorregister/auth.dart';
 import 'package:kitap_al_ver/pages/widget/loginorregister/imagepicker.dart';
-import 'package:kitap_al_ver/pages/widget/loginorregister/user_info_page.dart';
+
 
 
 class RegisterPage extends StatefulWidget {
@@ -112,7 +112,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ? CircleAvatar(
                           radius: 34.r,
                           backgroundImage:
-                              AssetImage('assets/images/person.png'),
+                              const AssetImage('assets/images/person.png'),
                           backgroundColor: Colors.grey.shade200,
                         )
                       : CircleAvatar(

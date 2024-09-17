@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:kitap_al_ver/configuration/core/my_button.dart';
 import 'package:kitap_al_ver/favori/favorite_provider.dart';
-import 'package:kitap_al_ver/favori/post.dart';
+import 'package:kitap_al_ver/model/post.dart';
 import 'package:provider/provider.dart';
 
 class DetailAppBar extends StatelessWidget {
@@ -32,8 +33,14 @@ class DetailAppBar extends StatelessWidget {
                   backgroundColor: Colors.white,
                   padding: const EdgeInsets.all(15),
                 ),
-                onPressed: () {},
-                icon: const Icon(Icons.share_outlined),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              MyButton(buttonText: "buttonText")));
+                },
+                icon: const Icon(Icons.add_shopping_cart_rounded),
               ),
               const SizedBox(width: 10),
               IconButton(
@@ -58,5 +65,4 @@ class DetailAppBar extends StatelessWidget {
       },
     );
   }
-  
 }

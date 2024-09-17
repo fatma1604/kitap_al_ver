@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors, file_names
+
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/aramabut/explore.dart'; // Eksik olan sayfa importu
 
@@ -22,19 +24,19 @@ class MySearchWidget extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => Explone(),
+                  builder: (context) => const Explone(),
                 ),
               );
             },
             icon: const Icon(Icons.search, color: Color.fromARGB(255, 0, 0, 0)),
           ),
           const SizedBox(width: 10),
-          Expanded(
+          const Expanded(
             child: Text(
-              'Search',
+              'KİTAPLARI ARAYALIM',
               style: TextStyle(
                 color: Color.fromARGB(255, 0, 0, 0),
-                fontSize: 16,
+                fontSize: 15,
               ),
             ),
           ),

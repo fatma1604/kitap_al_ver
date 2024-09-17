@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kitap_al_ver/favori/post.dart'; // Ensure you have this model defined
+import 'package:kitap_al_ver/model/post.dart'; // Ensure you have this model defined
 
 class FavoriteProvider with ChangeNotifier {
   // Assuming you have a list or a set to keep track of liked posts

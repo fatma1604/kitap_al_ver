@@ -21,12 +21,12 @@ class Description extends StatelessWidget {
               width: 120,
               height: 40,
               decoration: BoxDecoration(
-                color: kprimaryColor,
+                color: const Color.fromARGB(255, 14, 1, 1),
                 borderRadius: BorderRadius.circular(20),
               ),
               alignment: Alignment.center,
               child: const Text(
-                "Description",
+                "Açıklama",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
@@ -34,20 +34,13 @@ class Description extends StatelessWidget {
               ),
             ),
             const Text(
-              "Specifications",
+              "Özellikler",
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                   fontSize: 16),
             ),
-            const Text(
-              "Reviews",
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
+            IconButton(onPressed: () {}, icon: Icon(Icons.add_comment_rounded))
           ],
         ),
         const SizedBox(height: 20),
@@ -55,13 +48,13 @@ class Description extends StatelessWidget {
           stream: _firestore.collection('post').doc(postUid).snapshots(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             }
             if (snapshot.hasError) {
-              return Center(child: Text('Something went wrong!'));
+              return const Center(child: Text('Something went wrong!'));
             }
             if (!snapshot.hasData || !snapshot.data!.exists) {
-              return Center(child: Text('No description found!'));
+              return const Center(child: Text('No description found!'));
             }
 
             final description = snapshot.data!.get('additionalInfo') ??

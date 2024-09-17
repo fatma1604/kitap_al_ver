@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors, avoid_print
+
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -54,7 +56,7 @@ class _PhotoPickerScreenState extends State<PhotoPickerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Fotoğraf Yükleme'),
+        title: const Text('Fotoğraf Yükleme'),
       ),
       body: Center(
         child: Column(
@@ -62,9 +64,9 @@ class _PhotoPickerScreenState extends State<PhotoPickerScreen> {
           children: <Widget>[
             ElevatedButton(
               onPressed: _pickImage,
-              child: Text('Fotoğraf Seç'),
+              child: const Text('Fotoğraf Seç'),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             _image != null
                 ? Image.file(
                     _image!,
@@ -72,13 +74,13 @@ class _PhotoPickerScreenState extends State<PhotoPickerScreen> {
                     width: 300,
                     fit: BoxFit.cover,
                   )
-                : Text('Bir fotoğraf seçilmedi.'),
-            SizedBox(height: 20),
+                : const Text('Bir fotoğraf seçilmedi.'),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _uploadImage,
-              child: Text('Fotoğrafı Yükle'),
+              child: const Text('Fotoğrafı Yükle'),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             _downloadUrl != null
                 ? Text('Fotoğraf URL: $_downloadUrl')
                 : Container(),

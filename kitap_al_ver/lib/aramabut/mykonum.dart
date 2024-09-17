@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors, avoid_print
+
 import 'package:flutter/material.dart';
 
 
@@ -7,7 +9,7 @@ class Mykonum extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('konum'),
+          title: const Text('konum'),
 //konum gelecek  sonra ilanı gör yapa biliriz
         ),
         body: Center(
@@ -32,7 +34,7 @@ class _MykonumbutState extends State<Mykonumbut> {
       
         print('Butona tıklandı!');
       },
-      child: Text('Butona Tıkla'),
+      child: const Text('Butona Tıkla'),
     );
   }
 }

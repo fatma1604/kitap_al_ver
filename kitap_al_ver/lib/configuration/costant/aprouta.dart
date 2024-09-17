@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/pages/onbording/onbording_screen.dart';
-import 'package:kitap_al_ver/widget/%C4%B1nformation.dart';
+
 
 typedef AppRouteMapFunction = Widget Function(BuildContext context);
 

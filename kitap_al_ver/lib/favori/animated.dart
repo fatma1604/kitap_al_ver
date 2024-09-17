@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kitap_al_ver/favori/post.dart';
+import 'package:kitap_al_ver/model/post.dart';
 
 class AnimatedPostCard extends StatefulWidget {
   final Posts post;
@@ -79,7 +79,7 @@ class _AnimatedPostCardState extends State<AnimatedPostCard>
                     ),
                     child: widget.post.imageUrls.isNotEmpty
                         ? Image.network(widget.post.imageUrls.first)
-                        : Icon(Icons.image, color: Colors.white),
+                        : const Icon(Icons.image, color: Colors.white),
                   ),
                   const SizedBox(width: 10),
                   Expanded(

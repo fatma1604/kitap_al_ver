@@ -56,7 +56,7 @@ class _ForgetState extends State<Forget> {
               children: [
                 IconButton(
                     onPressed: () {},
-                    icon: Image.asset(AppImage.profi)),
+                    icon: Image.asset(AppImage.profil)),
                 MyTextField(
                   prefixIcon: Image.asset(AppImage.email),
                   hintText: AppText.email,

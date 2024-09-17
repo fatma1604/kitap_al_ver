@@ -7,6 +7,6 @@ class AppImage {
   static const String email = "assets/images/envelope (1).png";
   static const String pasword = "assets/images/lock.png";
    static const String profil = "'assets/images/profile.png'";
-    static const String google = "assets/images/google.png";
-     static const String profi = 'assets/images/profile.png'; 
+    static const String google = "assets/images/google.png"; 
+     static const String product = 'assets/images/logo.jpeg'; 
 }

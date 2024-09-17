@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors_in_immutables
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/configuration/costant/color.dart';
@@ -6,8 +8,7 @@ import 'package:kitap_al_ver/detay/addto_cart.dart';
 import 'package:kitap_al_ver/detay/descripton.dart';
 import 'package:kitap_al_ver/detay/detail_app_bar.dart';
 import 'package:kitap_al_ver/detay/items_detalis.dart'; // Assuming this is a widget
-import 'package:kitap_al_ver/favori/post.dart';
-
+import 'package:kitap_al_ver/model/post.dart';
 
 class DetailScreen extends StatefulWidget {
   final String postUid;
@@ -47,13 +48,13 @@ class _DetailScreenState extends State<DetailScreen> {
           future: _postFuture,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             }
             if (snapshot.hasError) {
               return Center(child: Text('Error: ${snapshot.error}'));
             }
             if (!snapshot.hasData) {
-              return Center(child: Text('No Data Found'));
+              return const Center(child: Text('No Data Found'));
             }
 
             final post = snapshot.data!;
@@ -113,15 +114,11 @@ class _DetailScreenState extends State<DetailScreen> {
                           post: post,
                         ), // Assuming this is a widget that displays item details
                         const SizedBox(height: 20),
-                        const Text(
-                          "Color",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 22),
-                        ),
+
                         const SizedBox(height: 20),
-                          Description(
-                   postUid: widget.postUid,
-                  )
+                        Description(
+                          postUid: widget.postUid,
+                        )
                       ],
                     ),
                   ),

@@ -8,7 +8,6 @@ import 'package:kitap_al_ver/configuration/costant/theme/theme.dart';
 import 'package:kitap_al_ver/favori/favorite_provider.dart';
 import 'package:kitap_al_ver/firebase_options.dart';
 import 'package:kitap_al_ver/pages/onbording/onbording_screen.dart';
-
 import 'package:provider/provider.dart';
 
 //pushh

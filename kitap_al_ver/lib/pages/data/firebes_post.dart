@@ -1,11 +1,21 @@
+// ignore_for_file: non_constant_identifier_names, avoid_print
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:kitap_al_ver/model/usermodel.dart';
 import 'package:uuid/uuid.dart';
 
 class FirebasePostServis {
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
+
+
+
+
+
+  
 
   Future<bool> CreatePost({
     required String caption,
@@ -54,7 +64,8 @@ class FirebasePostServis {
       rethrow;
     }
   }
-   Future<String> like({
+
+  Future<String> like({
     required List like,
     required String type,
     required String uid,
@@ -76,13 +87,14 @@ class FirebasePostServis {
       return 'Error: $e';
     }
   }
-   Future<bool> Comments({
+
+  Future<bool> Comments({
     required String comment,
     required String type,
     required String uidd,
   }) async {
     try {
-      var uid = Uuid().v4();
+      var uid = const Uuid().v4();
       Usermodel user = await getUser();
       await _firebaseFirestore
           .collection(type)
@@ -101,7 +113,8 @@ class FirebasePostServis {
       return false;
     }
   }
-   Future<void> flollow({
+
+  Future<void> flollow({
     required String uid,
   }) async {
     try {
@@ -136,5 +149,80 @@ class FirebasePostServis {
     }
   }
 
+  Future<void> addLikeToPost(String postId) async {
+    try {
+      final postRef = FirebaseFirestore.instance.collection('post').doc(postId);
 
+      await postRef.update({
+        'like': FieldValue.arrayUnion([getCurrentUserId()]),
+      });
+
+      print('Like successfully added to the post.');
+    } catch (e) {
+      print('Error adding like: $e');
+    }
+  }
+
+  String? getCurrentUserId() {
+    final User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      return user.uid;
+    } else {
+      return null;
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> getPhotoUrls() async {
+    try {
+      final QuerySnapshot querySnapshot =
+          await FirebaseFirestore.instance.collection('post').get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        return querySnapshot.docs.map((doc) {
+          final data = doc.data() as Map<String, dynamic>;
+          final postImages = data['postImages'] as List<dynamic>?;
+
+          // İlk resim URL'sini al (eğer liste boş değilse)
+          final url = postImages != null && postImages.isNotEmpty
+              ? postImages[0] as String?
+              : 'assets/images/onbord1.jpeg'; // Fallback asset URL
+          final title = data['title'] as String? ?? 'No Title';
+          final type = data['type'] as String? ?? 'No Genre';
+          final postUid = data['post_uid'] as String? ?? 'No UID';
+
+          return {
+            'postImage': url,
+            'title': title,
+            'type': type,
+            'postUid': postUid
+          };
+        }).toList();
+      } else {
+        return []; // No documents found
+      }
+    } catch (e) {
+      print('Error fetching photo URLs: $e');
+      return []; // Return an empty list in case of error
+    }
+  }
+
+  Future<List<String>> loadImageUrls() async {
+    try {
+      final ListResult result =
+          await FirebaseStorage.instance.ref('deneme').listAll();
+
+      final List<String> urls = [];
+      for (var ref in result.items) {
+        final String url = await ref.getDownloadURL();
+        urls.add(url);
+      }
+      return urls;
+    } catch (e) {
+      print('Error loading image URLs: $e');
+      return [];
+    }
+  }
+  
+
+  
 }

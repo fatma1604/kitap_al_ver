@@ -1,9 +1,9 @@
+// ignore_for_file: body_might_complete_normally_nullable, unused_local_variable, use_super_parameters, library_private_types_in_public_api
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:kitap_al_ver/aramabut/image_cached.dart';
-
 import 'package:kitap_al_ver/aramabut/searchisyory.dart';
 import 'package:kitap_al_ver/tabbar/profil_screen.dart';
 // Import the search history helper

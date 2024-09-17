@@ -1,6 +1,8 @@
+// ignore_for_file: avoid_print
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:kitap_al_ver/favori/post.dart';
+import 'package:kitap_al_ver/model/post.dart';
 // Ensure Detay is imported
 
 class ItemsDetails extends StatelessWidget {
@@ -40,11 +42,11 @@ class ItemsDetails extends StatelessWidget {
                 Row(
                   children: [
                     Container(
-                      width: 65,
-                      height: 25,
+                      width: 85,
+                      height: 35,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
-                        color: const Color.fromARGB(255, 156, 82, 82),
+                        color: const Color.fromARGB(255, 224, 95, 95),
                       ),
                       alignment: Alignment.center,
                       padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -52,7 +54,7 @@ class ItemsDetails extends StatelessWidget {
                         children: [
                           const Icon(
                             Icons.star,
-                            size: 15,
+                            size: 25,
                             color: Color.fromARGB(255, 224, 95, 95),
                           ),
                           const SizedBox(width: 3),
@@ -76,11 +78,11 @@ class ItemsDetails extends StatelessWidget {
               TextSpan(
                 children: [
                   const TextSpan(
-                    text: "User: ",
+                    text: "Kullanıcı: ",
                     style: TextStyle(fontSize: 16),
                   ),
                   TextSpan(
-                    text:post.userName,
+                    text: post.userName,
                     style: const TextStyle(
                         fontSize: 16, fontWeight: FontWeight.bold),
                   ),
