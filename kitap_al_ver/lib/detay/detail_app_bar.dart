@@ -38,7 +38,7 @@ class DetailAppBar extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              MyButton(buttonText: "buttonText")));
+                              const MyButton(buttonText: "buttonText")));
                 },
                 icon: const Icon(Icons.add_shopping_cart_rounded),
               ),

@@ -1,5 +1,7 @@
 // ignore: depend_on_referenced_packages
 
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/tabbar/topLiquidPainter.dart';
 
@@ -45,7 +47,7 @@ class BGCircleWidget extends StatelessWidget {
               height: 40,
               decoration: const BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.white,
+                color: Color.fromARGB(211, 235, 177, 174),
               ),
             ),
             Container(
@@ -67,7 +69,7 @@ class BGCircleWidget extends StatelessWidget {
                     bottomLiquidAni2.value,
                     bottomLiquidAni3.value,
                     bottomLiquidAni4.value,
-                    Colors.white,
+                    Color.fromARGB(229, 199, 140, 137),
                   ),
                 ),
               ),

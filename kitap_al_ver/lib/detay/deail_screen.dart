@@ -2,7 +2,6 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:kitap_al_ver/configuration/costant/color.dart';
 import 'package:kitap_al_ver/detay/MyImage_slider.dart';
 import 'package:kitap_al_ver/detay/addto_cart.dart';
 import 'package:kitap_al_ver/detay/descripton.dart';
@@ -40,7 +39,7 @@ class _DetailScreenState extends State<DetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kcontentColor,
+    //  backgroundColor: kcontentColor,
       floatingActionButton: AddToCart(postUid: widget.postUid),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: SafeArea(

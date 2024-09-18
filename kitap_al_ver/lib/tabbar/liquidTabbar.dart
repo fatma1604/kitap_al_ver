@@ -1,16 +1,17 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, unused_import, prefer_const_constructors
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:kitap_al_ver/configuration/core/pageCon.dart';
+import 'package:kitap_al_ver/configuration/costant/color.dart';
 import 'package:kitap_al_ver/configuration/costant/constat.dart';
 import 'package:kitap_al_ver/favori/favorite.dart';
 import 'package:kitap_al_ver/screnn/widget/bookcatagory.dart';
 import 'package:kitap_al_ver/tabbar/bgcirclewidget.dart';
 import 'package:kitap_al_ver/tabbar/bottomLiquidWidget.dart';
 import 'package:kitap_al_ver/tabbar/profil_screen.dart';
-import 'package:kitap_al_ver/tabbar/screen/drawerDemo_Screen.dart';
+import 'package:kitap_al_ver/tabbar/screen/drawer/drawerDemo_Screen.dart';
 import 'package:kitap_al_ver/tabbar/tBiconData.dart';
 import 'package:kitap_al_ver/tabbar/tbicon.dart';
 
@@ -228,16 +229,12 @@ class LiquidTabBarState extends State<LiquidTabBar>
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     List<Widget> screens = [
-      DrawerDemoScreen(), // hepsi fairbesten çazğrıcaz
-      // HomePage (), //çet
-      BookCategoryOverview(), //satış için--satış
+      DrawerDemoScreen(),
+      BookCategoryOverview(),
       const Favorite(),
-      ProfilScreen( userId: _auth.currentUser!.uid,), //hat
-
-      //AddScreen()
-      // ignore: prefer_const_constructorzzzs
-      //const Favorite(), //boş--fovori
-      //ProfileScreen(), //boş--profil
+      ProfilScreen(
+        userId: _auth.currentUser!.uid,
+      ),
     ];
     return Scaffold(
       body: Stack(
@@ -302,8 +299,11 @@ class LiquidTabBarState extends State<LiquidTabBar>
             ),
           ),
           Container(
-            decoration: const BoxDecoration(
-              color: Colors.white,
+            decoration: BoxDecoration(
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? const Color.fromARGB(255, 109, 64, 64) // Dark mode color
+                  : const Color.fromARGB(
+                      255, 247, 100, 100), // Light mode color
               borderRadius: BorderRadius.vertical(),
             ),
             child: Container(
@@ -357,8 +357,6 @@ class LiquidTabBarState extends State<LiquidTabBar>
 
   Widget tBTrigger(int currentIndex) {
     return InkWell(
-      highlightColor: Colors.transparent,
-      splashColor: Colors.transparent,
       onTap: () {
         onTabTapped(currentIndex);
         currentColor = currentIndex;

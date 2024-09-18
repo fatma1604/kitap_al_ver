@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:kitap_al_ver/configuration/costant/color.dart';
 
 class Description extends StatelessWidget {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -40,7 +39,7 @@ class Description extends StatelessWidget {
                   color: Colors.black,
                   fontSize: 16),
             ),
-            IconButton(onPressed: () {}, icon: Icon(Icons.add_comment_rounded))
+            IconButton(onPressed: () {}, icon: const Icon(Icons.add_comment_rounded))
           ],
         ),
         const SizedBox(height: 20),

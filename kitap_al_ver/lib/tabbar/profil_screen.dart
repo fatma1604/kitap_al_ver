@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors_in_immutables, library_private_types_in_public_api, non_constant_identifier_names
+// ignore_for_file: prefer_const_constructors_in_immutables, library_private_types_in_public_api, non_constant_identifier_names, use_key_in_widget_constructors
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kitap_al_ver/aramabut/image_cached.dart';
 import 'package:kitap_al_ver/model/usermodel.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:kitap_al_ver/pages/data/firebes_post.dart';
 
 class ProfilScreen extends StatefulWidget {
@@ -179,8 +178,8 @@ class _ProfilScreenState extends State<ProfilScreen> {
                         color: yourse ? Colors.grey.shade400 : Colors.blue),
                   ),
                   child: yourse
-                      ? Text('Edit Your Profile')
-                      : Text(
+                      ? const Text('Edit Your Profile')
+                      : const Text(
                           'Follow',
                           style: TextStyle(color: Colors.white),
                         ),
@@ -211,7 +210,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
                             borderRadius: BorderRadius.circular(5.r),
                             border: Border.all(color: Colors.grey.shade200),
                           ),
-                          child: Text('Unfollow')),
+                          child: const Text('Unfollow')),
                     ),
                   ),
                   SizedBox(width: 8.w),
@@ -225,7 +224,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
                         borderRadius: BorderRadius.circular(5.r),
                         border: Border.all(color: Colors.grey.shade200),
                       ),
-                      child: Text(
+                      child: const Text(
                         'Message',
                         style: TextStyle(color: Colors.black),
                       ),
@@ -247,7 +246,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
       future: userModelFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else if (snapshot.hasData) {
@@ -263,7 +262,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
                   Head(user),
                   SizedBox(
                       height: 10.h), // Add spacing between head and tab bar
-                  TabBar(
+                  const TabBar(
                     unselectedLabelColor: Colors.grey,
                     labelColor: Colors.black,
                     indicatorColor: Colors.black,
@@ -273,7 +272,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
                       Tab(icon: Icon(Icons.person)),
                     ],
                   ),
-                  Expanded(
+                  const Expanded(
                     child: TabBarView(
                       children: [
                         Center(child: Text("Posts")),
@@ -287,7 +286,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
             ),
           );
         } else {
-          return Center(child: Text('User not found'));
+          return const Center(child: Text('User not found'));
         }
       },
     );

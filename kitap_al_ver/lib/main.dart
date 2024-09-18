@@ -10,8 +10,6 @@ import 'package:kitap_al_ver/firebase_options.dart';
 import 'package:kitap_al_ver/pages/onbording/onbording_screen.dart';
 import 'package:provider/provider.dart';
 
-//pushh
-//istedim gibi çalışan
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);

@@ -1,7 +1,6 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:kitap_al_ver/configuration/costant/color.dart';
 import 'package:kitap_al_ver/configuration/costant/images.dart';
 import 'package:kitap_al_ver/detay/deail_screen.dart';
 import 'package:kitap_al_ver/favori/favorite_provider.dart';
@@ -52,7 +51,7 @@ class ProductCard extends StatelessWidget {
                 width: double.infinity,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                  color: kcontentColor,
+                  color: Colors.white,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,7 +65,7 @@ class ProductCard extends StatelessWidget {
                               fit: BoxFit.cover,
                               errorBuilder: (context, error, stackTrace) {
                               return Image.asset(
-                              AppImage.product,
+                                AppImage.product,
                                 width: double.infinity,
                                 height: 150,
                                 fit: BoxFit.cover,
@@ -111,7 +110,7 @@ class ProductCard extends StatelessWidget {
                     height: 40,
                     width: 40,
                     decoration: const BoxDecoration(
-                      color: kprimaryColor,
+                      color: Colors.white,
                       borderRadius: BorderRadius.only(
                         topRight: Radius.circular(20),
                         bottomLeft: Radius.circular(10),
