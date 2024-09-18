@@ -105,8 +105,7 @@ class _ExploneState extends State<Explone> {
                               GestureDetector(
                                 onTap: () {
                                   Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) =>
-                                        ProfilScreen(userId: snap.id),
+                                    builder: (context) => ProfilScreen(userId: snap.id),
                                   ));
                                 },
                                 child: Row(

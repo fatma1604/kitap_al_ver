@@ -232,9 +232,7 @@ class LiquidTabBarState extends State<LiquidTabBar>
       // HomePage (), //çet
       BookCategoryOverview(), //satış için--satış
       const Favorite(),
-      ProfilScreen(
-        userId: _auth.currentUser!.uid,
-      ), //hat
+      ProfilScreen( userId: _auth.currentUser!.uid,), //hat
 
       //AddScreen()
       // ignore: prefer_const_constructorzzzs

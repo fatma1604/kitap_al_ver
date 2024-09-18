@@ -1,46 +1,31 @@
-
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:kitap_al_ver/configuration/costant/theme/text_them.dart';
-
-
 
 class NewRow extends StatelessWidget {
-  final IconData icon;
   final String text;
-  final VoidCallback onPressed; // Butona tıklandığında gerçekleştirilecek işlem
+  final IconData icon;
+  final VoidCallback onPressed;
+  final Color? textColor; // Yeni parametre ekleyin
 
-  // ignore: use_key_in_widget_constructors
   const NewRow({
-    required this.icon,
+    Key? key,
     required this.text,
+    required this.icon,
     required this.onPressed,
-  });
+    this.textColor, // Yeni parametre için varsayılan değer
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed:
-          onPressed, // Butona tıklandığında belirlenen işlemi gerçekleştir
-      style: TextButton.styleFrom(
-        // Buton metin rengini belirleyin
-        padding: EdgeInsets.zero, // Butonun iç boşluğunu sıfırlayın
-        alignment: Alignment.centerLeft, // İçeriği sola hizalayın
-      ),
+      onPressed: onPressed,
       child: Row(
-        children: <Widget>[
-          Icon(
-            icon,
-            color: const Color.fromARGB(255, 133, 78, 78),
-          ),
-          const SizedBox(
-            width: 20,
-          ),
+        children: [
+          Icon(icon, color: textColor), // İkon rengi
+          const SizedBox(width: 10),
           Text(
             text,
-            style:
-                GoogleFonts.aBeeZee(textStyle: AppTextTheme.myDrwer(context)),
-          )
+            style: TextStyle(color: textColor), // Metin rengi
+          ),
         ],
       ),
     );

@@ -1,16 +1,17 @@
 // ignore_for_file: prefer_const_constructors_in_immutables, library_private_types_in_public_api, non_constant_identifier_names
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kitap_al_ver/aramabut/image_cached.dart';
 import 'package:kitap_al_ver/model/usermodel.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-
+import 'package:kitap_al_ver/pages/data/firebes_post.dart';
 
 class ProfilScreen extends StatefulWidget {
   final String userId;
 
-  // ignore: use_key_in_widget_constructors
   ProfilScreen({required this.userId});
 
   @override
@@ -18,7 +19,11 @@ class ProfilScreen extends StatefulWidget {
 }
 
 class _ProfilScreenState extends State<ProfilScreen> {
+  final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   late Future<Usermodel> userModelFuture;
+  int post_length = 0;
+  List following = [];
   bool follow = false;
   bool yourse = false; // Profilin senin olup olmadığını belirten bir boolean
 
@@ -26,6 +31,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
   void initState() {
     super.initState();
     userModelFuture = fetchUserData(widget.userId);
+    getdata(); // Ensure data is fetched when initializing
   }
 
   Future<Usermodel> fetchUserData(String userId) async {
@@ -34,9 +40,22 @@ class _ProfilScreenState extends State<ProfilScreen> {
     return Usermodel.fromFirestore(snapshot);
   }
 
+  getdata() async {
+    DocumentSnapshot snap = await _firebaseFirestore
+        .collection('Users')
+        .doc(_auth.currentUser!.uid)
+        .get();
+    following = (snap.data()! as dynamic)['following'];
+    if (following.contains(widget.userId)) {
+      setState(() {
+        follow = true;
+      });
+    }
+  }
+
   Widget Head(Usermodel user) {
     return Container(
-      color: const Color.fromARGB(255, 141, 23, 23),
+      color: Colors.transparent,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -48,12 +67,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
                   child: SizedBox(
                     width: 80.w,
                     height: 80.h,
-                    child: CachedNetworkImage(
-                      imageUrl: user.profile,
-                      placeholder: (context, url) =>
-                          const CircularProgressIndicator(),
-                      errorWidget: (context, url, error) => const Icon(Icons.error),
-                    ),
+                    child: CachedImage(user.profile),
                   ),
                 ),
               ),
@@ -64,7 +78,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
                     children: [
                       SizedBox(width: 35.w),
                       Text(
-                        'Posts', // Gerçek veri ile değiştirilmeli
+                        post_length.toString(),
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16.sp,
@@ -74,9 +88,9 @@ class _ProfilScreenState extends State<ProfilScreen> {
                       Text(
                         user.followers.length.toString(),
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16.sp,
-                        ),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.sp,
+                            color: Colors.white),
                       ),
                       SizedBox(width: 70.w),
                       Text(
@@ -114,7 +128,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
                     ],
                   ),
                 ],
-              ),
+              )
             ],
           ),
           Padding(
@@ -148,7 +162,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
               child: GestureDetector(
                 onTap: () {
                   if (!yourse) {
-                    // FirebaseAuthService().follow(uid: widget.userId); // Follow işlemini gerçekleştirin
+                    FirebasePostServis().flollow(uid: widget.userId);
                     setState(() {
                       follow = true;
                     });
@@ -165,8 +179,8 @@ class _ProfilScreenState extends State<ProfilScreen> {
                         color: yourse ? Colors.grey.shade400 : Colors.blue),
                   ),
                   child: yourse
-                      ? const Text('Edit Your Profile')
-                      : const Text(
+                      ? Text('Edit Your Profile')
+                      : Text(
                           'Follow',
                           style: TextStyle(color: Colors.white),
                         ),
@@ -183,7 +197,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
                   Expanded(
                     child: GestureDetector(
                       onTap: () {
-                        // FirebaseAuthService().follow(uid: widget.userId); // Unfollow işlemini gerçekleştirin
+                        FirebasePostServis().flollow(uid: widget.userId);
                         setState(() {
                           follow = false;
                         });
@@ -193,11 +207,11 @@ class _ProfilScreenState extends State<ProfilScreen> {
                           height: 30.h,
                           width: 100.w,
                           decoration: BoxDecoration(
-                            color: const Color.fromARGB(255, 116, 35, 35),
+                            color: Colors.grey.shade200,
                             borderRadius: BorderRadius.circular(5.r),
                             border: Border.all(color: Colors.grey.shade200),
                           ),
-                          child: const Text('Unfollow')),
+                          child: Text('Unfollow')),
                     ),
                   ),
                   SizedBox(width: 8.w),
@@ -211,7 +225,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
                         borderRadius: BorderRadius.circular(5.r),
                         border: Border.all(color: Colors.grey.shade200),
                       ),
-                      child: const Text(
+                      child: Text(
                         'Message',
                         style: TextStyle(color: Colors.black),
                       ),
@@ -222,13 +236,6 @@ class _ProfilScreenState extends State<ProfilScreen> {
             ),
           ),
           SizedBox(height: 5.h),
-          SizedBox(
-            width: double.infinity,
-            height: 30.h,
-          ),
-          SizedBox(
-            height: 5.h,
-          ),
         ],
       ),
     );
@@ -236,37 +243,53 @@ class _ProfilScreenState extends State<ProfilScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Profil'),
-      ),
-      body: FutureBuilder<Usermodel>(
-        future: userModelFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
-
-          if (snapshot.hasError) {
-            return Center(child: Text('Bir hata oluştu: ${snapshot.error}'));
-          }
-
-          if (!snapshot.hasData) {
-            return const Center(child: Text('Kullanıcı bulunamadı'));
-          }
-
+    return FutureBuilder<Usermodel>(
+      future: userModelFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        } else if (snapshot.hasData) {
           Usermodel user = snapshot.data!;
-
-          return SingleChildScrollView(
-            child: Column(
-              children: [
-                Head(user),
-                // Diğer widget'lar
-              ],
+          return DefaultTabController(
+            length: 3, // Number of tabs
+            child: Scaffold(
+              appBar: AppBar(
+                title: Text(user.username),
+              ),
+              body: Column(
+                children: [
+                  Head(user),
+                  SizedBox(
+                      height: 10.h), // Add spacing between head and tab bar
+                  TabBar(
+                    unselectedLabelColor: Colors.grey,
+                    labelColor: Colors.black,
+                    indicatorColor: Colors.black,
+                    tabs: [
+                      Tab(icon: Icon(Icons.grid_on)),
+                      Tab(icon: Icon(Icons.video_collection)),
+                      Tab(icon: Icon(Icons.person)),
+                    ],
+                  ),
+                  Expanded(
+                    child: TabBarView(
+                      children: [
+                        Center(child: Text("Posts")),
+                        Center(child: Text("Videos")),
+                        Center(child: Text("Profile")),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           );
-        },
-      ),
+        } else {
+          return Center(child: Text('User not found'));
+        }
+      },
     );
   }
 }
