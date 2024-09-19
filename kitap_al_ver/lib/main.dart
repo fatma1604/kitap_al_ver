@@ -3,6 +3,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kitap_al_ver/chat/them_provider.dart';
 import 'package:kitap_al_ver/configuration/costant/aprouta.dart';
 import 'package:kitap_al_ver/configuration/costant/theme/theme.dart';
 import 'package:kitap_al_ver/favori/favorite_provider.dart';
@@ -18,6 +19,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => FavoriteProvider()),
+          ChangeNotifierProvider(create: (_) => ThemProvider()),
        
       ],
       child: const MyApp(),

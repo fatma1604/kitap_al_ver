@@ -16,6 +16,23 @@ class FirebaseAuthService {
  User? getCurrentUser() {
     return _auth.currentUser;
   }
+  Future<List<Map<String, dynamic>>> getNotifications() async {
+    try {
+      QuerySnapshot snapshot = await _firebaseFirestore
+          .collection('chat_rooms')
+          .orderBy('timestamp', descending: true)
+          .get();
+
+      return snapshot.docs.map((doc) => {
+        'title': doc['title'],
+        'message': doc['message'],
+        'timestamp': doc['timestamp'],
+      }).toList();
+    } catch (e) {
+      print('Error fetching notifications: $e');
+      return [];
+    }
+  }
   Future<void> signInWithEmailAndPassword({
     required BuildContext context,
     required String email,
@@ -194,6 +211,8 @@ void _handleRegistrationError(BuildContext context, FirebaseAuthException e) {
   }
   showAlertDialog(context: context, message: errorMessage);
 }
+
+  
 
 
 

@@ -11,8 +11,10 @@ import 'package:kitap_al_ver/model/post.dart';
 
 class DetailScreen extends StatefulWidget {
   final String postUid;
+  final String photoUrl;
+  
 
-  DetailScreen({super.key, required this.postUid});
+  DetailScreen({super.key, required this.postUid, required this.photoUrl});
 
   @override
   State<DetailScreen> createState() => _DetailScreenState();
@@ -40,7 +42,7 @@ class _DetailScreenState extends State<DetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
     //  backgroundColor: kcontentColor,
-      floatingActionButton: AddToCart(postUid: widget.postUid),
+      floatingActionButton: AddToCart(postUid: widget.postUid,photoUrl:widget.photoUrl ,),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: SafeArea(
         child: FutureBuilder<Posts>(

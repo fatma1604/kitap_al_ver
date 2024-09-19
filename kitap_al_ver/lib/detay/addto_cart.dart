@@ -7,8 +7,10 @@ import 'package:uuid/uuid.dart';
 
 class AddToCart extends StatefulWidget {
   final String postUid;
+  final String photoUrl;
 
-  const AddToCart({Key? key, required this.postUid}) : super(key: key);
+  const AddToCart({Key? key, required this.postUid, required this.photoUrl})
+      : super(key: key);
 
   @override
   State<AddToCart> createState() => _AddToCartState();
@@ -30,11 +32,14 @@ class _AddToCartState extends State<AddToCart> {
     try {
       final userId = await _getUserId();
       final postUid = widget.postUid;
+       final photoUrl = widget.photoUrl;
 
-      await _firestore.collection('cart').doc(uid).set({
+      await _firestore.collection('sepet').doc(uid).set({
         'postuid': postUid,
         'userId': userId,
-        "cartud": uid // Unique cart ID
+        "cartud": uid ,
+        // Unique cart ID
+         'photoUrl': photoUrl,
       });
 
       const snackBar = SnackBar(

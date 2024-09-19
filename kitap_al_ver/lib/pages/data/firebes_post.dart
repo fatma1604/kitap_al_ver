@@ -10,13 +10,6 @@ class FirebasePostServis {
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-
-
-
-
-
-  
-
   Future<bool> CreatePost({
     required String caption,
     required String location,

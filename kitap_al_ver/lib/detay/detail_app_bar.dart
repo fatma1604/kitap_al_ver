@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kitap_al_ver/configuration/core/my_button.dart';
+import 'package:kitap_al_ver/detay/sepet.dart';
 import 'package:kitap_al_ver/favori/favorite_provider.dart';
 import 'package:kitap_al_ver/model/post.dart';
 import 'package:provider/provider.dart';
@@ -38,7 +38,7 @@ class DetailAppBar extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              const MyButton(buttonText: "buttonText")));
+                              const Sepet()));
                 },
                 icon: const Icon(Icons.add_shopping_cart_rounded),
               ),

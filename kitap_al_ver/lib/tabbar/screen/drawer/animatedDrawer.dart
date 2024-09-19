@@ -95,7 +95,7 @@ class _DrawerfState extends State<AnimatedDrawer> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => const Bildirim()));
+                                      builder: (context) =>  Bildirim()));
                             },
                           ),
                         ],
