@@ -1,16 +1,7 @@
 
-
-
-
-
-
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/configuration/costant/color.dart';
-import 'package:kitap_al_ver/pages/widget/loginorregister/forget/forget.dart';
-
-
-
-
+import 'package:kitap_al_ver/pages/auth/forget.dart';
 class ForgetPage extends StatelessWidget {
   const ForgetPage({super.key});
 

@@ -3,11 +3,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/detay/MyImage_slider.dart';
-import 'package:kitap_al_ver/detay/addto_cart.dart';
 import 'package:kitap_al_ver/detay/descripton.dart';
 import 'package:kitap_al_ver/detay/detail_app_bar.dart';
-import 'package:kitap_al_ver/detay/items_detalis.dart'; // Assuming this is a widget
 import 'package:kitap_al_ver/model/post.dart';
+import 'package:kitap_al_ver/pages/product/addto_cart.dart';
+import 'package:kitap_al_ver/pages/product/items_detalis.dart'; // Assuming this is a widget
+
 
 class DetailScreen extends StatefulWidget {
   final String postUid;

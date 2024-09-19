@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:kitap_al_ver/favori/animated.dart';
 import 'package:kitap_al_ver/model/post.dart';
 
+
 class Favorite extends StatefulWidget {
   const Favorite({super.key});
 

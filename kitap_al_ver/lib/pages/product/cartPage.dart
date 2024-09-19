@@ -1,15 +1,17 @@
+// ignore_for_file: unnecessary_brace_in_string_interps, file_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class Sepet extends StatefulWidget {
-  const Sepet({super.key});
+class CartPage extends StatefulWidget {
+  const CartPage({super.key});
 
   @override
-  State<Sepet> createState() => _SepetState();
+  State<CartPage> createState() => _CartPageState();
 }
 
-class _SepetState extends State<Sepet> {
+class _CartPageState extends State<CartPage> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 

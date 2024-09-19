@@ -2,8 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/configuration/core/nebox.dart';
 
-
-
 class MyTextField extends StatefulWidget {
   final TextEditingController? controller;
   final Widget prefixIcon;

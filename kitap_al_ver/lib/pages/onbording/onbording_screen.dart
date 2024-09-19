@@ -1,14 +1,13 @@
 // ignore_for_file: library_private_types_in_public_api, prefer_final_fields
 
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kitap_al_ver/configuration/core/onbordbutton.dart';
 import 'package:kitap_al_ver/configuration/costant/color.dart';
 import 'package:kitap_al_ver/configuration/costant/images.dart';
 import 'package:kitap_al_ver/pages/onbording/intopage.dart';
-import 'package:kitap_al_ver/pages/widget/loginorregister/auth.dart';
+import 'package:kitap_al_ver/pages/auth/auth_Page.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});

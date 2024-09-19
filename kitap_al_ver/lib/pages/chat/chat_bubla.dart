@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:kitap_al_ver/chat/them_provider.dart';
+import 'package:kitap_al_ver/pages/chat/them_provider.dart';
 
 import 'package:provider/provider.dart';
 

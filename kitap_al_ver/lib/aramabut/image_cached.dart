@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CachedImage extends StatelessWidget {
-  //yulenecek fotoraf
+  
   String? imageURL;
   CachedImage(this.imageURL, {super.key});
 

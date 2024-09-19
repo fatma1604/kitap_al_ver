@@ -6,7 +6,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/aramabut/mykonum.dart';
 import 'package:kitap_al_ver/model/kategorymodel.dart';
-import 'package:kitap_al_ver/post/galleripage.dart';
+
+import 'package:kitap_al_ver/pages/home/galleripage.dart';
 import 'package:uuid/uuid.dart';
 
 class FormHelpers {

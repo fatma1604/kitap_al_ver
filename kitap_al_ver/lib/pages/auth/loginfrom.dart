@@ -8,8 +8,8 @@ import 'package:kitap_al_ver/configuration/costant/images.dart';
 import 'package:kitap_al_ver/configuration/costant/theme/text.dart';
 import 'package:kitap_al_ver/configuration/costant/theme/text_them.dart';
 import 'package:kitap_al_ver/pages/data/firebes_auth.dart';
-import 'package:kitap_al_ver/pages/widget/loginorregister/auth.dart';
-import 'package:kitap_al_ver/pages/widget/loginorregister/forget/forget_page.dart';
+import 'package:kitap_al_ver/pages/auth/auth_Page.dart';
+import 'package:kitap_al_ver/pages/auth/forget_page.dart';
 import 'package:kitap_al_ver/pages/widget/loginorregister/lodiverder.dart';
 
 

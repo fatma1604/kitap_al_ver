@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/model/bilgi_model.dart';
 
+
 // FirebaseFirestore ve bilgi değişkenlerini tanımlayın
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 List<BilgiModel> bilgi = []; // YourDataType uygun veri tipinizle değiştirilmelidir

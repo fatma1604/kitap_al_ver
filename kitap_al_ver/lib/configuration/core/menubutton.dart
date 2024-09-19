@@ -2,8 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/configuration/costant/color.dart';
 
-
-
 class Menubutton extends StatelessWidget {
   final String buttonText;
   final Widget targetScreen;

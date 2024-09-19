@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/model/post.dart';
 
+
 class AnimatedPostCard extends StatefulWidget {
   final Posts post;
   final VoidCallback onDelete; // Callback to handle deletion

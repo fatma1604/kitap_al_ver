@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/configuration/costant/aprouta.dart';
 import 'package:kitap_al_ver/pages/data/firebes_post.dart';
 import 'package:kitap_al_ver/screnn/widget/imageCarousel.dart';
-import 'package:kitap_al_ver/widget/product_Card.dart';
+import 'package:kitap_al_ver/pages/product/product_Card.dart';
 
 class Books_Home extends StatefulWidget {
   const Books_Home({super.key});

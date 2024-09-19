@@ -2,13 +2,13 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:kitap_al_ver/chat/chat_home.dart';
+import 'package:kitap_al_ver/pages/chat/chat_home.dart';
 
 import 'package:kitap_al_ver/configuration/core/pageCon.dart';
 import 'package:kitap_al_ver/configuration/costant/color.dart';
 import 'package:kitap_al_ver/configuration/costant/constat.dart';
 import 'package:kitap_al_ver/favori/favorite.dart';
-import 'package:kitap_al_ver/screnn/widget/bookcatagory.dart';
+import 'package:kitap_al_ver/pages/home/bookcatagory.dart';
 import 'package:kitap_al_ver/tabbar/bgcirclewidget.dart';
 import 'package:kitap_al_ver/tabbar/bottomLiquidWidget.dart';
 import 'package:kitap_al_ver/tabbar/profil_screen.dart';

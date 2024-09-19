@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/aramabut/admin.dart';
-import 'package:kitap_al_ver/aramabut/bildirim.dart';
-import 'package:kitap_al_ver/tabbar/screen/drawer/books_home.dart';
+import 'package:kitap_al_ver/aramabut/notification.dart';
+import 'package:kitap_al_ver/pages/home/books_home.dart';
 import 'package:kitap_al_ver/aramabut/mySearc.dart';
 
 class AnimatedDrawer extends StatefulWidget {
@@ -95,7 +95,7 @@ class _DrawerfState extends State<AnimatedDrawer> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>  Bildirim()));
+                                      builder: (context) =>  const NotificationPage()));
                             },
                           ),
                         ],

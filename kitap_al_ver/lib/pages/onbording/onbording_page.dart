@@ -1,9 +1,6 @@
 
-
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/pages/onbording/pagedsata.dart';
-
-
 class OnboardPage extends StatelessWidget {
   final PageData page;
 

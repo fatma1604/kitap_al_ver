@@ -2,8 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/configuration/costant/color.dart';
 
-
-
 class MyButton extends StatelessWidget {
   final String buttonText;
   final void Function()? onTap;

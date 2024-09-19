@@ -2,7 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:kitap_al_ver/chat/models/message.dart';
+import 'package:kitap_al_ver/models/message.dart';
 
 
 

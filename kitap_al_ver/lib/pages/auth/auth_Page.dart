@@ -3,14 +3,13 @@
 //Ama onbordingten sonra Authpage cahrılıyor
 //loginfrom  ile regidter burda
 
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/configuration/costant/color.dart';
 import 'package:kitap_al_ver/configuration/costant/images.dart';
-import 'package:kitap_al_ver/pages/widget/loginorregister/loginfrom.dart';
-import 'package:kitap_al_ver/pages/widget/loginorregister/register_from.dart';
-
-
-
+import 'package:kitap_al_ver/pages/auth/loginfrom.dart';
+import 'package:kitap_al_ver/pages/auth/register_from.dart';
 
 class AuthPage extends StatelessWidget {
   final bool isLogin;
