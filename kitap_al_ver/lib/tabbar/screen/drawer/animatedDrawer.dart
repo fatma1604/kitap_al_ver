@@ -77,10 +77,9 @@ class _DrawerfState extends State<AnimatedDrawer> {
                             child: MySearchWidget(
                                 searchController: searchController),
                           ),
-                          const Text("konum A"),
                           IconButton(
                             icon: const Icon(Icons.add_location_outlined),
-                            color: const Color.fromARGB(232, 131, 17, 17),
+                            color: Colors.grey,
                             onPressed: () {
                               Navigator.push(
                                   context,
@@ -91,7 +90,7 @@ class _DrawerfState extends State<AnimatedDrawer> {
                           ),
                           IconButton(
                             icon: const Icon(Icons.add_alert_outlined),
-                            color: const Color.fromARGB(232, 131, 17, 17),
+                            color: Colors.grey,
                             onPressed: () {
                               Navigator.push(
                                   context,

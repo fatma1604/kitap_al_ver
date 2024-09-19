@@ -13,7 +13,9 @@ import 'package:kitap_al_ver/tabbar/liquidTabbar.dart';
 class FirebaseAuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
-
+ User? getCurrentUser() {
+    return _auth.currentUser;
+  }
   Future<void> signInWithEmailAndPassword({
     required BuildContext context,
     required String email,

@@ -20,7 +20,7 @@ class TBIconData extends StatelessWidget {
     return Icon(
       icon,
       size: 28 * size,
-      color: Colors.black.withOpacity(opacity),
+      color: const Color.fromARGB(150, 0, 0, 0),
     );
   }
 }

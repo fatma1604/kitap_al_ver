@@ -2,6 +2,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:kitap_al_ver/chat/chat_home.dart';
 
 import 'package:kitap_al_ver/configuration/core/pageCon.dart';
 import 'package:kitap_al_ver/configuration/costant/color.dart';
@@ -230,6 +231,7 @@ class LiquidTabBarState extends State<LiquidTabBar>
     double screenWidth = MediaQuery.of(context).size.width;
     List<Widget> screens = [
       DrawerDemoScreen(),
+      ChatHome(),
       BookCategoryOverview(),
       const Favorite(),
       ProfilScreen(

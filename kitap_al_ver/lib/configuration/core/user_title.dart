@@ -35,9 +35,13 @@ class _UserTitleState extends State<UserTitle> {
             CircleAvatar(
               backgroundImage: widget.profileImageUrl != null
                   ? NetworkImage(widget.profileImageUrl!)
-                  : const AssetImage('assets/images/akrep8.png') as ImageProvider,
+                  : const AssetImage('assets/images/akrep8.png')
+                      as ImageProvider,
             ),
-            Text(widget.text)
+            Text(
+              widget.text,
+              style: const TextStyle(color: Colors.white),
+            )
           ],
         ),
       ),
