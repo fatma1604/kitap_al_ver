@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:kitap_al_ver/configuration/costant/color.dart';
+import 'package:kitap_al_ver/utils/color.dart';
 
 class IntroPage extends StatelessWidget {
   final String imagePath;

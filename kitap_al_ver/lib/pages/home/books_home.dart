@@ -1,8 +1,8 @@
 // ignore_for_file: camel_case_types
 import 'package:flutter/material.dart';
-import 'package:kitap_al_ver/configuration/costant/aprouta.dart';
-import 'package:kitap_al_ver/pages/data/firebes_post.dart';
-import 'package:kitap_al_ver/screnn/widget/imageCarousel.dart';
+import 'package:kitap_al_ver/utils/aprouta.dart';
+import 'package:kitap_al_ver/service/firebes_post.dart';
+import 'package:kitap_al_ver/pages/misc/imageCarousel.dart';
 import 'package:kitap_al_ver/pages/product/product_Card.dart';
 
 class Books_Home extends StatefulWidget {

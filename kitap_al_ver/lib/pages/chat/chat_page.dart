@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/pages/chat/chat_bubla.dart';
-import 'package:kitap_al_ver/pages/chat/chat_service.dart';
-import 'package:kitap_al_ver/pages/chat/my_textfild.dart';
-import 'package:kitap_al_ver/pages/data/firebes_auth.dart';
+import 'package:kitap_al_ver/service/chat_service.dart';
+import 'package:kitap_al_ver/components/my_textfild.dart';
+import 'package:kitap_al_ver/service/firebes_auth.dart';
 
 class ChatPage extends StatelessWidget {
   final String receiverEmail;

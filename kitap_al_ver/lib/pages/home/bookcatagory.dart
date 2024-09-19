@@ -3,12 +3,12 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:kitap_al_ver/configuration/costant/color.dart';
+import 'package:kitap_al_ver/utils/color.dart';
 import 'package:kitap_al_ver/configuration/costant/images.dart';
 import 'package:kitap_al_ver/models/kategorymodel.dart';
 
-import 'package:kitap_al_ver/pages/data/for%C4%B1mHelper.dart';
-import 'package:kitap_al_ver/widget/information.dart';
+import 'package:kitap_al_ver/service/for%C4%B1mHelper.dart';
+import 'package:kitap_al_ver/pages/auth/information.dart';
 
 class BookCategoryOverview extends StatefulWidget {
   @override

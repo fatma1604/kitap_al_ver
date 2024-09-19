@@ -2,7 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:kitap_al_ver/model/post.dart';
+import 'package:kitap_al_ver/models/post.dart';
 
 // Ensure Detay is imported
 

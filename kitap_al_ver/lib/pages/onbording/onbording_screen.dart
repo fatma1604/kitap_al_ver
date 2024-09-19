@@ -3,11 +3,11 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:kitap_al_ver/configuration/core/onbordbutton.dart';
-import 'package:kitap_al_ver/configuration/costant/color.dart';
-import 'package:kitap_al_ver/configuration/costant/images.dart';
+import 'package:kitap_al_ver/pages/widget/core/onbordbutton.dart';
+import 'package:kitap_al_ver/utils/color.dart';
 import 'package:kitap_al_ver/pages/onbording/intopage.dart';
 import 'package:kitap_al_ver/pages/auth/auth_Page.dart';
+import 'package:kitap_al_ver/utils/images.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});

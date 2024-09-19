@@ -3,10 +3,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:kitap_al_ver/pages/chat/them_provider.dart';
-import 'package:kitap_al_ver/configuration/costant/aprouta.dart';
-import 'package:kitap_al_ver/configuration/costant/theme/theme.dart';
-import 'package:kitap_al_ver/favori/favorite_provider.dart';
+import 'package:kitap_al_ver/utils/aprouta.dart';
+import 'package:kitap_al_ver/pages/widget/theme/tehm_provider.dart';
+import 'package:kitap_al_ver/pages/widget/theme/theme.dart';
+import 'package:kitap_al_ver/provider/favorite_provider.dart';
 import 'package:kitap_al_ver/firebase_options.dart';
 import 'package:kitap_al_ver/pages/onbording/onbording_screen.dart';
 import 'package:provider/provider.dart';

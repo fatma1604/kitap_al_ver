@@ -7,7 +7,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:kitap_al_ver/configuration/core/custom_icon_button.dart';
+import 'package:kitap_al_ver/components/custom_icon_button.dart';
 
 import 'package:photo_manager/photo_manager.dart';
 import 'package:uuid/uuid.dart';

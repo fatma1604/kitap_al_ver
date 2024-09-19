@@ -1,11 +1,11 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:kitap_al_ver/configuration/costant/images.dart';
-import 'package:kitap_al_ver/detay/deail_screen.dart';
-import 'package:kitap_al_ver/model/post.dart';
-import 'package:kitap_al_ver/favori/favorite_provider.dart';
-import 'package:kitap_al_ver/pages/data/firebes_post.dart';
+import 'package:kitap_al_ver/pages/product/deail_screen.dart';
+import 'package:kitap_al_ver/models/post.dart';
+import 'package:kitap_al_ver/provider/favorite_provider.dart';
+import 'package:kitap_al_ver/service/firebes_post.dart';
+import 'package:kitap_al_ver/utils/images.dart';
 import 'package:provider/provider.dart';
 
 class ProductCard extends StatelessWidget {

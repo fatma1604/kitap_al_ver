@@ -6,16 +6,16 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:kitap_al_ver/configuration/core/google_button.dart';
-import 'package:kitap_al_ver/configuration/core/my_button.dart';
-import 'package:kitap_al_ver/configuration/core/my_tex.dart';
-import 'package:kitap_al_ver/configuration/costant/color.dart';
-import 'package:kitap_al_ver/configuration/costant/images.dart';
-import 'package:kitap_al_ver/configuration/costant/theme/text.dart';
-import 'package:kitap_al_ver/configuration/costant/theme/text_them.dart';
-import 'package:kitap_al_ver/pages/data/firebes_auth.dart';
+import 'package:kitap_al_ver/components/google_button.dart';
+import 'package:kitap_al_ver/components/my_button.dart';
+import 'package:kitap_al_ver/pages/widget/core/my_tex.dart';
+import 'package:kitap_al_ver/utils/color.dart';
+import 'package:kitap_al_ver/pages/widget/theme/text.dart';
+import 'package:kitap_al_ver/pages/widget/theme/text_them.dart';
+import 'package:kitap_al_ver/service/firebes_auth.dart';
 import 'package:kitap_al_ver/pages/auth/auth_Page.dart';
-import 'package:kitap_al_ver/pages/widget/loginorregister/imagepicker.dart';
+import 'package:kitap_al_ver/pages/misc/imagepicker.dart';
+import 'package:kitap_al_ver/utils/images.dart';
 
 
 

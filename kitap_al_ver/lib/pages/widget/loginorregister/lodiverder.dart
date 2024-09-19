@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
-import 'package:kitap_al_ver/configuration/costant/theme/text.dart';
-import 'package:kitap_al_ver/configuration/costant/theme/text_them.dart';
+import 'package:kitap_al_ver/pages/widget/theme/text.dart';
+import 'package:kitap_al_ver/pages/widget/theme/text_them.dart';
 
 
 
