@@ -3,12 +3,12 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:kitap_al_ver/utils/color.dart';
-import 'package:kitap_al_ver/configuration/costant/images.dart';
 import 'package:kitap_al_ver/models/kategorymodel.dart';
-
-import 'package:kitap_al_ver/service/for%C4%B1mHelper.dart';
 import 'package:kitap_al_ver/pages/auth/information.dart';
+import 'package:kitap_al_ver/service/for%C4%B1mHelper.dart';
+import 'package:kitap_al_ver/utils/color.dart';
+import 'package:kitap_al_ver/utils/images.dart';
+
 
 class BookCategoryOverview extends StatefulWidget {
   @override
@@ -19,7 +19,7 @@ class _BookCategoryOverviewState extends State<BookCategoryOverview> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   bool _isCoder = false; // Indicates if the user is a coder
-  final List<Kategorymodel> kategory = []; // Add the actual initialization here
+  final List<CategoryModel> kategory = []; // Add the actual initialization here
 
   @override
   void initState() {

@@ -43,7 +43,6 @@ class _ExploneState extends State<Explone> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.white,
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
@@ -105,7 +104,8 @@ class _ExploneState extends State<Explone> {
                               GestureDetector(
                                 onTap: () {
                                   Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => ProfilScreen(userId: snap.id),
+                                    builder: (context) =>
+                                        ProfilScreen(userId: snap.id),
                                   ));
                                 },
                                 child: Row(
@@ -169,7 +169,9 @@ class _ExploneState extends State<Explone> {
           width: double.infinity, // Make sure it takes full width
           height: 45.h,
           decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 243, 157, 157),
+            color: Theme.of(context).brightness == Brightness.dark
+                ? const Color.fromARGB(248, 190, 141, 141) // Dark mode color
+                : const Color.fromARGB(255, 243, 157, 157), // Light mode color
             borderRadius: BorderRadius.circular(20.0.r),
           ),
           child: Padding(
@@ -190,7 +192,7 @@ class _ExploneState extends State<Explone> {
                       }
                     },
                     decoration: const InputDecoration(
-                      hintText: 'Search User',
+                      hintText: 'Kitabı arayalım',
                       hintStyle: TextStyle(color: Colors.black),
                       enabledBorder: InputBorder.none,
                       focusedBorder: InputBorder.none,

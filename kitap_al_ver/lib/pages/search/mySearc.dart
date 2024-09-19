@@ -1,7 +1,7 @@
 // ignore_for_file: use_key_in_widget_constructors, file_names
 
 import 'package:flutter/material.dart';
-import 'package:kitap_al_ver/aramabut/explone.dart';
+import 'package:kitap_al_ver/pages/misc/explone.dart';
 
 
 class MySearchWidget extends StatelessWidget {

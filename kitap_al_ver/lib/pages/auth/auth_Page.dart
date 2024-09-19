@@ -7,9 +7,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/utils/color.dart';
-import 'package:kitap_al_ver/configuration/costant/images.dart';
 import 'package:kitap_al_ver/pages/auth/loginfrom.dart';
 import 'package:kitap_al_ver/pages/auth/register_from.dart';
+import 'package:kitap_al_ver/utils/images.dart';
 
 class AuthPage extends StatelessWidget {
   final bool isLogin;
