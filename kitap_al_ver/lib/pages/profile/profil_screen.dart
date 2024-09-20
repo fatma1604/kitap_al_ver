@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kitap_al_ver/pages/misc/image_cached.dart';
 import 'package:kitap_al_ver/models/usermodel.dart';
+import 'package:kitap_al_ver/pages/profile/post_screen.dart';
 import 'package:kitap_al_ver/service/firebes_post.dart';
+import 'package:kitap_al_ver/utils/color.dart';
 
 class ProfilScreen extends StatefulWidget {
   final String userId;
@@ -21,25 +23,25 @@ class _ProfilScreenState extends State<ProfilScreen> {
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   late Future<Usermodel> userModelFuture;
-  int post_length = 0;
+  int postLength = 0;
   List following = [];
   bool follow = false;
-  bool yourse = false; // Profilin senin olup olmadığını belirten bir boolean
+  bool yourse = false;
 
   @override
   void initState() {
     super.initState();
     userModelFuture = fetchUserData(widget.userId);
-    getdata(); // Ensure data is fetched when initializing
+    getData();
   }
 
   Future<Usermodel> fetchUserData(String userId) async {
     DocumentSnapshot snapshot =
-        await FirebaseFirestore.instance.collection('Users').doc(userId).get();
+        await _firebaseFirestore.collection('Users').doc(userId).get();
     return Usermodel.fromFirestore(snapshot);
   }
 
-  getdata() async {
+  getData() async {
     DocumentSnapshot snap = await _firebaseFirestore
         .collection('Users')
         .doc(_auth.currentUser!.uid)
@@ -52,9 +54,11 @@ class _ProfilScreenState extends State<ProfilScreen> {
     }
   }
 
-  Widget Head(Usermodel user) {
+  Widget head(Usermodel user) {
     return Container(
-      color: Colors.transparent,
+      color: Theme.of(context).brightness == Brightness.dark
+          ? AppColor.screendart
+          : AppColor.screenlight,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -77,11 +81,11 @@ class _ProfilScreenState extends State<ProfilScreen> {
                     children: [
                       SizedBox(width: 35.w),
                       Text(
-                        post_length.toString(),
+                        postLength.toString(),
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16.sp,
-                        ),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.sp,
+                            color: Colors.white),
                       ),
                       SizedBox(width: 53.w),
                       Text(
@@ -95,9 +99,9 @@ class _ProfilScreenState extends State<ProfilScreen> {
                       Text(
                         user.following.length.toString(),
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16.sp,
-                        ),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.sp,
+                            color: Colors.white),
                       ),
                     ],
                   ),
@@ -106,23 +110,17 @@ class _ProfilScreenState extends State<ProfilScreen> {
                       SizedBox(width: 30.w),
                       Text(
                         'Posts',
-                        style: TextStyle(
-                          fontSize: 13.sp,
-                        ),
+                        style: TextStyle(fontSize: 13.sp, color: Colors.white),
                       ),
                       SizedBox(width: 25.w),
                       Text(
                         'Followers',
-                        style: TextStyle(
-                          fontSize: 13.sp,
-                        ),
+                        style: TextStyle(fontSize: 13.sp, color: Colors.white),
                       ),
                       SizedBox(width: 19.w),
                       Text(
                         'Following',
-                        style: TextStyle(
-                          fontSize: 13.sp,
-                        ),
+                        style: TextStyle(fontSize: 13.sp, color: Colors.white),
                       ),
                     ],
                   ),
@@ -138,17 +136,17 @@ class _ProfilScreenState extends State<ProfilScreen> {
                 Text(
                   user.username,
                   style: TextStyle(
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.bold,
-                  ),
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
                 ),
                 SizedBox(height: 5.h),
                 Text(
                   user.bio,
                   style: TextStyle(
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w300,
-                  ),
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w300,
+                      color: Colors.white),
                 ),
               ],
             ),
@@ -172,10 +170,11 @@ class _ProfilScreenState extends State<ProfilScreen> {
                   height: 30.h,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: yourse ? Colors.white : Colors.blue,
+                    color: yourse ? Colors.white : AppColor.userTitle,
                     borderRadius: BorderRadius.circular(5.r),
                     border: Border.all(
-                        color: yourse ? Colors.grey.shade400 : Colors.blue),
+                        color:
+                            yourse ? Colors.grey.shade400 : AppColor.userTitle),
                   ),
                   child: yourse
                       ? const Text('Edit Your Profile')
@@ -210,7 +209,10 @@ class _ProfilScreenState extends State<ProfilScreen> {
                             borderRadius: BorderRadius.circular(5.r),
                             border: Border.all(color: Colors.grey.shade200),
                           ),
-                          child: const Text('Unfollow')),
+                          child: const Text(
+                            'Unfollow',
+                            style: TextStyle(color: Colors.black),
+                          )),
                     ),
                   ),
                   SizedBox(width: 8.w),
@@ -251,34 +253,62 @@ class _ProfilScreenState extends State<ProfilScreen> {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else if (snapshot.hasData) {
           Usermodel user = snapshot.data!;
+
           return DefaultTabController(
-            length: 3, // Number of tabs
+            length: 3,
             child: Scaffold(
+              backgroundColor: Theme.of(context).brightness == Brightness.dark
+                  ? AppColor.screendart
+                  : AppColor.screenlight,
               appBar: AppBar(
                 title: Text(user.username),
               ),
               body: Column(
                 children: [
-                  Head(user),
-                  SizedBox(
-                      height: 10.h), // Add spacing between head and tab bar
-                  const TabBar(
-                    unselectedLabelColor: Colors.grey,
-                    labelColor: Colors.black,
-                    indicatorColor: Colors.black,
-                    tabs: [
-                      Tab(icon: Icon(Icons.grid_on)),
-                      Tab(icon: Icon(Icons.video_collection)),
-                      Tab(icon: Icon(Icons.person)),
-                    ],
-                  ),
-                  const Expanded(
-                    child: TabBarView(
-                      children: [
-                        Center(child: Text("Posts")),
-                        Center(child: Text("Videos")),
-                        Center(child: Text("Profile")),
-                      ],
+                  head(user),
+                  SizedBox(height: 10.h),
+                  Expanded(
+                    child: StreamBuilder<QuerySnapshot>(
+                      stream: _firebaseFirestore
+                          .collection('post')
+                          .where('user_uid', isEqualTo: widget.userId)
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData) {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        }
+
+                        postLength = snapshot.data!.docs.length;
+                        return GridView.builder(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            crossAxisSpacing: 5,
+                            mainAxisSpacing: 5,
+                          ),
+                          itemCount: postLength,
+                          itemBuilder: (context, index) {
+                            final snap = snapshot.data!.docs[index];
+                            final postUid = snap.id;
+                            final photoUrl = (snap['postImages'] is List)
+                                ? snap['postImages'][0]
+                                : snap['postImages'];
+
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => PostScreen(
+                                    postUid: postUid,
+                                    photoUrl: photoUrl,
+                                  ),
+                                ));
+                              },
+                              child: CachedImage(photoUrl),
+                            );
+                          },
+                        );
+                      },
                     ),
                   ),
                 ],
