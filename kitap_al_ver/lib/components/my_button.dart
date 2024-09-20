@@ -32,13 +32,13 @@ class MyButton extends StatelessWidget {
           buttonText,
           style: TextStyle(
             color: theme.brightness == Brightness.dark
-                ? const Color.fromARGB(244, 255, 255, 255)
+                ? AppColor.white
                 : AppColor.yazilight,
             fontWeight: FontWeight.w900,
             fontSize: 18,
             shadows: const [
               BoxShadow(
-                color: Color.fromARGB(122, 185, 105, 138),
+                color: AppColor.shadow,
                 blurRadius: 3,
                 offset: Offset(0, 1), // Gölgelendirme yönü ve mesafesi
               ),

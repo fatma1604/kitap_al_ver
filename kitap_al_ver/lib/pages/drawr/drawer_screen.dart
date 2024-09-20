@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kitap_al_ver/pages/widget/core/newrow.dart';
 import 'package:kitap_al_ver/pages/widget/theme/text_them.dart';
+import 'package:kitap_al_ver/utils/color.dart';
 
 class DrawerScreen extends StatefulWidget {
   @override
@@ -33,9 +34,14 @@ class _DrawerScreenState extends State<DrawerScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textColor =
-        theme.brightness == Brightness.dark ? Colors.white : Colors.black;
+        theme.brightness == Brightness.dark ? AppColor.white : AppColor.black;
+
+    final backgroundColor = theme.brightness == Brightness.dark
+        ? AppColor.screendart // Background color for dark mode
+        : AppColor.screenlight; // Background color for light mode
 
     return Container(
+      color: backgroundColor, // Set background color
       child: Padding(
         padding: const EdgeInsets.only(top: 50, left: 40, bottom: 70),
         child: Column(
@@ -59,7 +65,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   onPressed: () {},
                   text: 'Anasayfa',
                   icon: Icons.home,
-                  textColor: textColor, // Buton için metin rengi
+                  textColor: textColor,
                 ),
                 const SizedBox(height: 20),
                 NewRow(
@@ -95,21 +101,9 @@ class _DrawerScreenState extends State<DrawerScreen> {
               children: <Widget>[
                 Icon(
                   Icons.cancel,
-                  color: Colors.white.withOpacity(0.5),
+                  color: textColor,
                 ),
                 const SizedBox(width: 10),
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed("/home");
-                  },
-                  child: Text(
-                    "Çıkış",
-                    style: GoogleFonts.playfairDisplay(
-                      textStyle: AppTextTheme.login(context)
-                          .copyWith(color: textColor),
-                    ),
-                  ),
-                ),
               ],
             ),
           ],

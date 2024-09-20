@@ -1,14 +1,17 @@
-// ignore_for_file: file_names
-
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/pages/drawr/animatedDrawer.dart';
 import 'package:kitap_al_ver/pages/drawr/drawer_screen.dart';
 
-// ignore: use_key_in_widget_constructors
+import 'package:kitap_al_ver/utils/color.dart';
+
 class DrawerDemoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final brightness = MediaQuery.of(context).platformBrightness;
+    final isDarkMode = brightness == Brightness.dark;
+
     return Scaffold(
+      backgroundColor: isDarkMode ? AppColor.screendart : AppColor.screenlight,
       body: Stack(
         children: [
           DrawerScreen(),

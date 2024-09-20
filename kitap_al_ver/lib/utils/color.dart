@@ -24,7 +24,7 @@ final class AppColor {
   static const Color forget2 = Color.fromARGB(255, 143, 61, 57);
 
 //yazı
-  static const Color yazilight = const Color.fromARGB(244, 148, 80, 108);
+  static const Color yazilight = Color.fromARGB(244, 148, 80, 108);
   static const Color yazidart = Color.fromARGB(221, 219, 216, 216);
 
 //button
@@ -40,5 +40,13 @@ final class AppColor {
 
   static const Color userTitle = Color.fromARGB(232, 243, 174, 174);
 
-//mesajdan
+  static const Color white = Colors.white;
+  static const Color black = Colors.black;
+  static const Color shadow = Color.fromARGB(122, 185, 105, 138);
+
+  static const Color liqudart = Color.fromARGB(255, 109, 64, 64);
+
+  static const Color liquliht = Color.fromARGB(255, 247, 100, 100);
+
+     static const Color  icon= Color.fromARGB(214, 233, 224, 224);
 }

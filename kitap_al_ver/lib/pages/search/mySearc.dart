@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/pages/misc/explone.dart';
+import 'package:kitap_al_ver/utils/color.dart';
 
 
 class MySearchWidget extends StatelessWidget {
@@ -16,7 +17,7 @@ class MySearchWidget extends StatelessWidget {
       width: 165,
       decoration: BoxDecoration(
         color: Theme.of(context).brightness == Brightness.dark
-            ? const Color.fromARGB(248, 190, 141, 141) // Dark mode color
+            ? const Color.fromARGB(255, 139, 81, 81) // Dark mode colory
             : const Color.fromARGB(255, 243, 157, 157), // Light mode color
         borderRadius: BorderRadius.circular(30.0),
       ),
@@ -38,9 +39,9 @@ class MySearchWidget extends StatelessWidget {
           const SizedBox(width: 10),
           const Expanded(
             child: Text(
-              'KİTAPLARI ARAYALIM',
+              ' ARAYALIM',
               style: TextStyle(
-                color: Color.fromARGB(255, 0, 0, 0),
+                color: AppColor.icon,
                 fontSize: 15,
               ),
             ),

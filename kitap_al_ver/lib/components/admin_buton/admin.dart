@@ -32,7 +32,7 @@ class _PhotoPickerScreenState extends State<PhotoPickerScreen> {
 
     try {
       final fileName = DateTime.now().millisecondsSinceEpoch.toString();
-      final storageRef = FirebaseStorage.instance.ref().child('deneme/$fileName');
+      final storageRef = FirebaseStorage.instance.ref().child('admin/$fileName');
       final uploadTask = storageRef.putFile(_image!);
 
       // Yükleme durumunu dinleme

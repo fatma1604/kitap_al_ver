@@ -1,10 +1,8 @@
-// ignore_for_file: file_names, use_super_parameters
-
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/components/admin_buton/admin.dart';
-import 'package:kitap_al_ver/pages/profile/notification.dart';
 import 'package:kitap_al_ver/pages/home/books_home.dart';
 import 'package:kitap_al_ver/pages/search/mySearc.dart';
+import 'package:kitap_al_ver/utils/color.dart';
 
 class AnimatedDrawer extends StatefulWidget {
   const AnimatedDrawer({Key? key}) : super(key: key);
@@ -25,12 +23,22 @@ class _DrawerfState extends State<AnimatedDrawer> {
     final double mHeight = mediaQueryData.size.height;
     final double mWidth = mediaQueryData.size.width;
 
+    // Get current theme data
+    final theme = Theme.of(context);
+    final backgroundColor = theme.brightness == Brightness.dark
+        ? AppColor.screendart
+        : AppColor.screenlight; // Background color for light mode
+    final iconColor = theme.brightness == Brightness.dark
+        ? Colors.white
+        : Colors.white; // Icon color
+
     return AnimatedContainer(
       transform: Matrix4.translationValues(xOffset, yOffset, 0)
         ..scale(isDrawerOpen ? 0.85 : 1.00)
         ..rotateZ(isDrawerOpen ? -50 : 0),
       duration: const Duration(milliseconds: 200),
       decoration: BoxDecoration(
+        color: backgroundColor,
         borderRadius:
             isDrawerOpen ? BorderRadius.circular(40) : BorderRadius.circular(0),
       ),
@@ -47,7 +55,8 @@ class _DrawerfState extends State<AnimatedDrawer> {
                 children: <Widget>[
                   isDrawerOpen
                       ? GestureDetector(
-                          child: const Icon(Icons.arrow_back_ios),
+                          child: Icon(Icons.arrow_back_ios,
+                              color: iconColor), // Icon color
                           onTap: () {
                             setState(() {
                               xOffset = 0;
@@ -57,7 +66,8 @@ class _DrawerfState extends State<AnimatedDrawer> {
                           },
                         )
                       : GestureDetector(
-                          child: const Icon(Icons.menu),
+                          child:
+                              Icon(Icons.menu, color: iconColor), // Icon color
                           onTap: () {
                             setState(() {
                               xOffset = 290;
@@ -79,23 +89,21 @@ class _DrawerfState extends State<AnimatedDrawer> {
                           ),
                           IconButton(
                             icon: const Icon(Icons.add_location_outlined),
-                            color: Colors.grey,
+                            color: AppColor.icon,
                             onPressed: () {
                               Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          PhotoPickerScreen()));
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => PhotoPickerScreen(),
+                                ),
+                              );
                             },
                           ),
                           IconButton(
                             icon: const Icon(Icons.add_alert_outlined),
-                            color: Colors.grey,
+                            color: AppColor.icon,
                             onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>  const NotificationPage()));
+                              // Your alert action here
                             },
                           ),
                         ],

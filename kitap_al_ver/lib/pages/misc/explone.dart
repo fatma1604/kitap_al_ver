@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:kitap_al_ver/pages/search/searchisyory.dart';
 import 'package:kitap_al_ver/pages/profile/profil_screen.dart';
+import 'package:kitap_al_ver/utils/color.dart';
 // Import the search history helper
 
 class Explone extends StatefulWidget {
@@ -41,8 +42,13 @@ class _ExploneState extends State<Explone> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final backgroundColor = theme.brightness == Brightness.dark
+        ? AppColor.screendart // Dark mode background
+        : AppColor.screenlight;
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      backgroundColor: backgroundColor,
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
@@ -116,7 +122,10 @@ class _ExploneState extends State<Explone> {
                                           NetworkImage(snap['profile']),
                                     ),
                                     SizedBox(width: 15.w),
-                                    Text(snap['username']),
+                                    Text(
+                                      snap['username'],
+                                      style: TextStyle(color: AppColor.icon),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -139,7 +148,9 @@ class _ExploneState extends State<Explone> {
                       Text(
                         'Recent Searches',
                         style: TextStyle(
-                            fontSize: 18.sp, fontWeight: FontWeight.bold),
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.bold,
+                            color: AppColor.white),
                       ),
                       SizedBox(height: 10.h),
                       ..._searchHistory.map((term) => ListTile(
@@ -170,15 +181,21 @@ class _ExploneState extends State<Explone> {
           height: 45.h,
           decoration: BoxDecoration(
             color: Theme.of(context).brightness == Brightness.dark
-                ? const Color.fromARGB(248, 190, 141, 141) // Dark mode color
-                : const Color.fromARGB(255, 243, 157, 157), // Light mode color
+                ? const Color.fromARGB(255, 139, 81, 81) // Dark mode colory
+                : const Color.fromARGB(255, 243, 157, 157),
             borderRadius: BorderRadius.circular(20.0.r),
           ),
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 5.w),
             child: Row(
               children: [
-                const Icon(Icons.arrow_back_rounded, color: Colors.black),
+                IconButton(
+                  icon: const Icon(Icons.arrow_back_rounded,
+                      color: AppColor.icon),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/liquattab');
+                  },
+                ),
                 SizedBox(width: 10.w),
                 Expanded(
                   child: TextField(
@@ -192,8 +209,8 @@ class _ExploneState extends State<Explone> {
                       }
                     },
                     decoration: const InputDecoration(
-                      hintText: 'Kitabı arayalım',
-                      hintStyle: TextStyle(color: Colors.black),
+                      hintText: 'Arayalım',
+                      hintStyle: TextStyle(color: AppColor.icon),
                       enabledBorder: InputBorder.none,
                       focusedBorder: InputBorder.none,
                     ),

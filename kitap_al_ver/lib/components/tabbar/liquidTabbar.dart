@@ -303,9 +303,8 @@ class LiquidTabBarState extends State<LiquidTabBar>
           Container(
             decoration: BoxDecoration(
               color: Theme.of(context).brightness == Brightness.dark
-                  ? const Color.fromARGB(255, 109, 64, 64) // Dark mode color
-                  : const Color.fromARGB(
-                      255, 247, 100, 100), // Light mode color
+                  ? AppColor.liqudart
+                  : AppColor.liquliht, // Light mode color
               borderRadius: BorderRadius.vertical(),
             ),
             child: Container(
