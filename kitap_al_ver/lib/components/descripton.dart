@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:kitap_al_ver/components/comment.dart';
 
 class Description extends StatelessWidget {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -32,14 +33,47 @@ class Description extends StatelessWidget {
                     fontSize: 16),
               ),
             ),
-            const Text(
-              "Özellikler",
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                  fontSize: 16),
+            Row(
+              children: [
+                const Text(
+                  "Özellikler",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                      fontSize: 16),
+                ),
+                const SizedBox(width: 10), // İki eleman arasına boşluk
+                GestureDetector(
+                  onTap: () {
+                    showBottomSheet(
+                      backgroundColor: Colors.transparent,
+                      context: context,
+                      builder: (context) {
+                        return Padding(
+                          padding: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).viewInsets.bottom,
+                          ),
+                          child: DraggableScrollableSheet(
+                            maxChildSize: 0.6,
+                            initialChildSize: 0.6,
+                            minChildSize: 0.2,
+                            builder: (context, scrollController) {
+                              return Commentme(
+                                  'post', postUid); // postUid kullanılıyor
+                            },
+                          ),
+                        );
+                      },
+                    );
+                  },
+                  child: Image.asset(
+                    'assets/images/comment.webp',
+                    height: 28, // Yükseklik ayarlayın
+                  ),
+                ),
+                const Spacer(),
+              ],
             ),
-            IconButton(onPressed: () {}, icon: const Icon(Icons.add_comment_rounded))
           ],
         ),
         const SizedBox(height: 20),

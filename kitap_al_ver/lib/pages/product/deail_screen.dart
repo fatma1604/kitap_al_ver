@@ -7,13 +7,12 @@ import 'package:kitap_al_ver/components/descripton.dart';
 import 'package:kitap_al_ver/components/detail_app_bar.dart';
 import 'package:kitap_al_ver/models/post.dart';
 import 'package:kitap_al_ver/pages/product/addto_cart.dart';
-import 'package:kitap_al_ver/pages/product/items_detalis.dart'; // Assuming this is a widget
-
+import 'package:kitap_al_ver/pages/product/items_detalis.dart';
+import 'package:kitap_al_ver/utils/color.dart'; // Assuming this is a widget
 
 class DetailScreen extends StatefulWidget {
   final String postUid;
   final String photoUrl;
-  
 
   DetailScreen({super.key, required this.postUid, required this.photoUrl});
 
@@ -42,8 +41,13 @@ class _DetailScreenState extends State<DetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    //  backgroundColor: kcontentColor,
-      floatingActionButton: AddToCart(postUid: widget.postUid,photoUrl:widget.photoUrl ,),
+      backgroundColor: Theme.of(context).brightness == Brightness.dark
+          ? AppColor.screendart
+          : AppColor.screenlight,
+      floatingActionButton: AddToCart(
+        postUid: widget.postUid,
+        photoUrl: widget.photoUrl,
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: SafeArea(
         child: FutureBuilder<Posts>(
@@ -100,8 +104,9 @@ class _DetailScreenState extends State<DetailScreen> {
                   const SizedBox(height: 20),
                   Container(
                     width: double.infinity,
+                    height: 350,
                     decoration: const BoxDecoration(
-                      color: Colors.white,
+                      color: AppColor.userTitle,
                       borderRadius: BorderRadius.only(
                         topRight: Radius.circular(40),
                         topLeft: Radius.circular(40),

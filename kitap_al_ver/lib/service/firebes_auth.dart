@@ -5,10 +5,12 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:kitap_al_ver/models/usermodel.dart';
 import 'package:kitap_al_ver/utils/show_alert_dialog.dart';
 import 'package:kitap_al_ver/pages/widget/theme/text.dart';
 import 'package:kitap_al_ver/utils/stroge.dart';
 import 'package:kitap_al_ver/components/tabbar/liquidTabbar.dart';
+
 
 class FirebaseAuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
