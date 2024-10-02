@@ -38,11 +38,17 @@ class ChatPage extends StatelessWidget {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Text("Loading...");
             }
-            if (snapshot.hasError || !snapshot.hasData) {
+            if (snapshot.hasError ||
+                !snapshot.hasData ||
+                !snapshot.data!.exists) {
               return const Text("Error loading user");
             }
-            final userData = snapshot.data!.data() as Map<String, dynamic>;
+            final userData = snapshot.data!.data() as Map<String, dynamic>?;
+            if (userData == null) {
+              return const Text("User data is null");
+            }
             final receiverName = userData['username'] ?? 'Unknown User';
+
             return Text(receiverName);
           },
         ),

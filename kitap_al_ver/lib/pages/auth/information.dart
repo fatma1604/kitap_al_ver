@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:kitap_al_ver/components/tabbar/liquidTabbar.dart';
 import 'package:kitap_al_ver/service/for%C4%B1mHelper.dart';
 import 'package:uuid/uuid.dart';
 
@@ -85,6 +86,12 @@ class _InformationFormScreenState extends State<InformationFormScreen> {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(100.0),
         child: AppBar(
+          leading: IconButton(
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => LiquidTabBar()));
+            },
+            icon: Icon(Icons.arrow_back)),
           centerTitle: true,
           title: const Text(
             'Bilgi Ekleme',

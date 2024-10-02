@@ -6,6 +6,7 @@ import 'package:kitap_al_ver/pages/widget/core/user_title.dart';
 import 'package:kitap_al_ver/pages/chat/chat_page.dart';
 import 'package:kitap_al_ver/service/chat_service.dart';
 import 'package:kitap_al_ver/service/firebes_auth.dart';
+import 'package:kitap_al_ver/utils/aprouta.dart';
 import 'package:kitap_al_ver/utils/color.dart';
 
 class ChatHome extends StatelessWidget {
@@ -60,13 +61,14 @@ class ChatHome extends StatelessWidget {
 
         profileImageUrl: userData["profile"],
         onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => ChatPage(
-                       receiverEmail: userData["email"],
-                        receiverId: userData["uid"],
-                      )));
+          Navigator.pushNamed(
+  context,
+  AppRoute.chat,
+  arguments: {
+    "email": userData["email"],
+    "uid": userData["uid"],
+  },
+);
         },
       );
     } else {

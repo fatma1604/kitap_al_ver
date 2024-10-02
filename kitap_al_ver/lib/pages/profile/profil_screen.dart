@@ -1,15 +1,13 @@
-// ignore_for_file: prefer_const_constructors_in_immutables, library_private_types_in_public_api, non_constant_identifier_names, use_key_in_widget_constructors
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:kitap_al_ver/pages/chat/chat_home.dart';
 import 'package:kitap_al_ver/pages/misc/image_cached.dart';
-import 'package:kitap_al_ver/models/usermodel.dart';
 import 'package:kitap_al_ver/pages/profile/post_screen.dart';
 import 'package:kitap_al_ver/service/firebes_post.dart';
+import 'package:kitap_al_ver/utils/aprouta.dart';
 import 'package:kitap_al_ver/utils/color.dart';
+import 'package:kitap_al_ver/models/usermodel.dart';
 
 class ProfilScreen extends StatefulWidget {
   final String userId;
@@ -220,12 +218,9 @@ class _ProfilScreenState extends State<ProfilScreen> {
                   Expanded(
                     child: GestureDetector(
                       onTap: () {
-                        // Navigate to the Home screen when the Message button is tapped
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                ChatHome(), // Replace with your HomePage widget
-                          ),
+                        Navigator.pushNamed(
+                          context,
+                          AppRoute.chat,
                         );
                       },
                       child: Container(
