@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/components/comment.dart';
+import 'package:kitap_al_ver/utils/color.dart';
 
 class Description extends StatelessWidget {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -18,7 +19,7 @@ class Description extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-              width: 120,
+              width: 130,
               height: 40,
               decoration: BoxDecoration(
                 color: const Color.fromARGB(255, 14, 1, 1),
@@ -33,47 +34,46 @@ class Description extends StatelessWidget {
                     fontSize: 16),
               ),
             ),
-            Row(
-              children: [
-                const Text(
-                  "Özellikler",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                      fontSize: 16),
-                ),
-                const SizedBox(width: 10), // İki eleman arasına boşluk
-                GestureDetector(
-                  onTap: () {
-                    showBottomSheet(
-                      backgroundColor: Colors.transparent,
-                      context: context,
-                      builder: (context) {
-                        return Padding(
-                          padding: EdgeInsets.only(
-                            bottom: MediaQuery.of(context).viewInsets.bottom,
-                          ),
-                          child: DraggableScrollableSheet(
-                            maxChildSize: 0.6,
-                            initialChildSize: 0.6,
-                            minChildSize: 0.2,
-                            builder: (context, scrollController) {
-                              return Commentme(
-                                  'post', postUid); // postUid kullanılıyor
-                            },
-                          ),
-                        );
-                      },
+            SizedBox(
+              width: 10,
+            ),
+            const Text(
+              "Özellikler",
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                  fontSize: 16),
+            ),
+            const SizedBox(width: 10), // İki eleman arasına boşluk
+            GestureDetector(
+              onTap: () {
+                showBottomSheet(
+                  backgroundColor: Colors.transparent,
+                  context: context,
+                  builder: (context) {
+                    return Padding(
+                      padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).viewInsets.bottom,
+                      ),
+                      child: DraggableScrollableSheet(
+                        maxChildSize: 0.6,
+                        initialChildSize: 0.6,
+                        minChildSize: 0.2,
+                        builder: (context, scrollController) {
+                          return Commentme(
+                              'post', postUid); // postUid kullanılıyor
+                        },
+                      ),
                     );
                   },
-                  child: Image.asset(
-                    'assets/images/comment.webp',
-                    height: 28, // Yükseklik ayarlayın
-                  ),
-                ),
-                const Spacer(),
-              ],
+                );
+              },
+              child: Image.asset(
+                'assets/images/comment.webp',
+                height: 28, // Yükseklik ayarlayın
+              ),
             ),
+            const Spacer(),
           ],
         ),
         const SizedBox(height: 20),
@@ -94,10 +94,7 @@ class Description extends StatelessWidget {
                 'No description available';
             return Text(
               description,
-              style: const TextStyle(
-                fontSize: 16,
-                color: Colors.grey,
-              ),
+              style: const TextStyle(fontSize: 16, color: AppColor.black),
             );
           },
         ),

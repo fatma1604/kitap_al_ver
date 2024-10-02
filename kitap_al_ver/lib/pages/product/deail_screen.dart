@@ -9,6 +9,7 @@ import 'package:kitap_al_ver/models/post.dart';
 import 'package:kitap_al_ver/pages/product/addto_cart.dart';
 import 'package:kitap_al_ver/pages/product/items_detalis.dart';
 import 'package:kitap_al_ver/utils/color.dart'; // Assuming this is a widget
+//bak
 
 class DetailScreen extends StatefulWidget {
   final String postUid;
@@ -104,7 +105,6 @@ class _DetailScreenState extends State<DetailScreen> {
                   const SizedBox(height: 20),
                   Container(
                     width: double.infinity,
-                    height: 350,
                     decoration: const BoxDecoration(
                       color: AppColor.userTitle,
                       borderRadius: BorderRadius.only(

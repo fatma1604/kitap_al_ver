@@ -56,7 +56,7 @@ class ItemsDetails extends StatelessWidget {
                           const Icon(
                             Icons.star,
                             size: 25,
-                            color: Color.fromARGB(255, 224, 95, 95),
+                            color: Color.fromARGB(255, 27, 2, 2),
                           ),
                           const SizedBox(width: 3),
                           Text(

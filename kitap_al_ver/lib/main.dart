@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
         theme: AppTheme.lightMode,
         darkTheme: AppTheme.darkMode,
         themeMode: ThemeMode.system,
-        home: const OnboardingScreen(), // Splash ekranı
+        home: const OnboardingScreen(),
         routes: AppRoute.routes,
       ),
     );

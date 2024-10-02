@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kitap_al_ver/pages/chat/chat_home.dart';
 import 'package:kitap_al_ver/pages/misc/image_cached.dart';
 import 'package:kitap_al_ver/models/usermodel.dart';
 import 'package:kitap_al_ver/pages/profile/post_screen.dart';
@@ -217,18 +218,29 @@ class _ProfilScreenState extends State<ProfilScreen> {
                   ),
                   SizedBox(width: 8.w),
                   Expanded(
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: 30.h,
-                      width: 100.w,
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade200,
-                        borderRadius: BorderRadius.circular(5.r),
-                        border: Border.all(color: Colors.grey.shade200),
-                      ),
-                      child: const Text(
-                        'Message',
-                        style: TextStyle(color: Colors.black),
+                    child: GestureDetector(
+                      onTap: () {
+                        // Navigate to the Home screen when the Message button is tapped
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                ChatHome(), // Replace with your HomePage widget
+                          ),
+                        );
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 30.h,
+                        width: 100.w,
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade200,
+                          borderRadius: BorderRadius.circular(5.r),
+                          border: Border.all(color: Colors.grey.shade200),
+                        ),
+                        child: const Text(
+                          'Message',
+                          style: TextStyle(color: Colors.black),
+                        ),
                       ),
                     ),
                   ),
