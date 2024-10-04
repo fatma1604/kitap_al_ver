@@ -22,7 +22,7 @@ class Description extends StatelessWidget {
               width: 130,
               height: 40,
               decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 14, 1, 1),
+                color: AppColor.buttonlight,
                 borderRadius: BorderRadius.circular(20),
               ),
               alignment: Alignment.center,
@@ -30,7 +30,7 @@ class Description extends StatelessWidget {
                 "Açıklama",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: Colors.black54,
                     fontSize: 16),
               ),
             ),
@@ -41,7 +41,7 @@ class Description extends StatelessWidget {
               "Özellikler",
               style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: Colors.black,
+                  color: Colors.black54,
                   fontSize: 16),
             ),
             const SizedBox(width: 10), // İki eleman arasına boşluk

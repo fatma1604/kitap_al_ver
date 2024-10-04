@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:kitap_al_ver/components/animated_card.dart';
 import 'package:kitap_al_ver/models/post.dart';
-
+import 'package:kitap_al_ver/utils/color.dart';
 
 class Favorite extends StatefulWidget {
   const Favorite({super.key});
@@ -23,15 +23,21 @@ class _FavoriteState extends State<Favorite> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
-    //  backgroundColor: kcontentColor,
+      backgroundColor: theme.brightness == Brightness.dark
+          ? AppColor.screendart // Use the dark theme color
+          : AppColor.screenlight, // Use the light theme color
       appBar: AppBar(
-       // backgroundColor: kcontentColor,
         title: const Text(
           "Favorite",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
+        // Optionally set the AppBar's background color based on theme as well
+        backgroundColor: theme.brightness == Brightness.dark
+            ? AppColor.screendart // Define this color in your AppColor class
+            : AppColor.screenlight, // Define this color in your AppColor class
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: _firestore
@@ -89,4 +95,3 @@ class _FavoriteState extends State<Favorite> {
     await _firestore.collection('post').doc(postId).delete();
   }
 }
-

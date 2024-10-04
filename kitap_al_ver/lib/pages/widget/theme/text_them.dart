@@ -80,17 +80,5 @@ class AppTextTheme {
     );
   }
 
-  static TextStyle appabar(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-
-    final Color textColor = theme.brightness == Brightness.dark
-        ? const Color.fromARGB(255, 87, 85, 85)
-        : const Color.fromARGB(255, 156, 76, 76);
-
-    return TextStyle(
-      fontSize: 23,
-      color: textColor,
-      fontWeight: FontWeight.bold,
-    );
-  }
+  
 }

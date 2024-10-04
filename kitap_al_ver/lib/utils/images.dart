@@ -9,4 +9,5 @@ class AppImage {
    static const String profil = "'assets/images/profile.png'";
     static const String google = "assets/images/google.png"; 
      static const String product = 'assets/images/logo.jpeg'; 
+          static const String books = 'assets/images/book.jpeg'; 
 }

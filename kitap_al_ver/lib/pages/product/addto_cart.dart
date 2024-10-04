@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:kitap_al_ver/utils/color.dart';
 import 'package:uuid/uuid.dart';
 
 class AddToCart extends StatefulWidget {
@@ -32,23 +33,24 @@ class _AddToCartState extends State<AddToCart> {
     try {
       final userId = await _getUserId();
       final postUid = widget.postUid;
-       final photoUrl = widget.photoUrl;
+      final photoUrl = widget.photoUrl;
 
       await _firestore.collection('sepet').doc(uid).set({
         'postuid': postUid,
         'userId': userId,
-        "cartud": uid ,
+        "cartud": uid,
         // Unique cart ID
-         'photoUrl': photoUrl,
+        'photoUrl': photoUrl,
       });
 
       const snackBar = SnackBar(
+        backgroundColor: AppColor.darttBg,
         content: Text(
           "Successfully added!",
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 25,
-            color: Colors.white,
+            color: AppColor.white,
           ),
         ),
         duration: Duration(seconds: 1),

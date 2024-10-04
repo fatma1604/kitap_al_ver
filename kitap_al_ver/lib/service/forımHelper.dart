@@ -4,15 +4,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:kitap_al_ver/pages/misc/mykonum.dart';
-import 'package:kitap_al_ver/models/kategorymodel.dart';
-
+import 'package:kitap_al_ver/categry.dart';
+import 'package:kitap_al_ver/components/tabbar/liquidTabbar.dart';
 import 'package:kitap_al_ver/pages/home/galleripage.dart';
 import 'package:uuid/uuid.dart';
 
 class FormHelpers {
   // Navigate to gallery and get selected images
-  static Future<void> navigateToGallery(BuildContext context, Function(List<String>) onImagesSelected) async {
+  static Future<void> navigateToGallery(
+      BuildContext context, Function(List<String>) onImagesSelected) async {
     final result = await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => Galleripage(initialImage: null),
@@ -52,7 +52,8 @@ class FormHelpers {
           'usageStatus': selectedUsageStatus,
           'type': selectedType,
           'subject': selectedSubject,
-          'additionalInfo': additionalInfo.isNotEmpty ? additionalInfo : 'Ek Bilgi Yok',
+          'additionalInfo':
+              additionalInfo.isNotEmpty ? additionalInfo : 'Ek Bilgi Yok',
           'createdAt': FieldValue.serverTimestamp(),
           'user_uid': auth.currentUser!.uid,
           'post_uid': uid,
@@ -66,7 +67,8 @@ class FormHelpers {
           SnackBar(content: Text('Bilgiler başarıyla kaydedildi!')),
         );
 
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => Mykonum()));
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => LiquidTabBar()));
       } catch (e) {
         print('Error saving information: $e');
         ScaffoldMessenger.of(context).showSnackBar(
@@ -77,12 +79,15 @@ class FormHelpers {
   }
 
   // Check if the user has the 'coder' role
-  static Future<void> checkUserRole(FirebaseAuth auth, FirebaseFirestore firestore, Function(bool) onRoleChecked) async {
+  static Future<void> checkUserRole(FirebaseAuth auth,
+      FirebaseFirestore firestore, Function(bool) onRoleChecked) async {
     try {
       User? user = auth.currentUser;
       if (user != null) {
-        DocumentSnapshot userDoc = await firestore.collection('users').doc(user.uid).get();
-        onRoleChecked(userDoc['role'] == 'coder'); // Assuming 'role' field exists
+        DocumentSnapshot userDoc =
+            await firestore.collection('users').doc(user.uid).get();
+        onRoleChecked(
+            userDoc['role'] == 'coder'); // Assuming 'role' field exists
       }
     } catch (e) {
       print('Error fetching user role: $e');
@@ -100,26 +105,26 @@ class FormHelpers {
     try {
       final classSnapshot = await firestore.collection('Class').get();
       onClassesFetched(classSnapshot.docs
-          .expand((doc) => (doc['category_name'] as List<dynamic>)
-              .map((e) => e.toString()))
+          .expand((doc) =>
+              (doc['category_name'] as List<dynamic>).map((e) => e.toString()))
           .toList());
 
       final usageStatusSnapshot = await firestore.collection('Case').get();
       onUsageStatusesFetched(usageStatusSnapshot.docs
-          .expand((doc) =>
-              (doc['durum'] as List<dynamic>).map((e) => e.toString()))
+          .expand(
+              (doc) => (doc['durum'] as List<dynamic>).map((e) => e.toString()))
           .toList());
 
       final typeSnapshot = await firestore.collection('Type').get();
       onTypesFetched(typeSnapshot.docs
-          .expand((doc) =>
-              (doc['type'] as List<dynamic>).map((e) => e.toString()))
+          .expand(
+              (doc) => (doc['type'] as List<dynamic>).map((e) => e.toString()))
           .toList());
 
       final subjectSnapshot = await firestore.collection('Lesson').get();
       onSubjectsFetched(subjectSnapshot.docs
-          .expand((doc) => (doc['lesons'] as List<dynamic>)
-              .map((e) => e.toString()))
+          .expand((doc) =>
+              (doc['lesons'] as List<dynamic>).map((e) => e.toString()))
           .toList());
     } catch (e) {
       print('Error fetching data: $e');
@@ -128,7 +133,8 @@ class FormHelpers {
   }
 
   // Check and send data to Firestore if not already present
-  static Future<void> checkAndSendDataToFirestore(FirebaseFirestore firestore, List<CategoryModel> kategory) async {
+  static Future<void> checkAndSendDataToFirestore(
+      FirebaseFirestore firestore, List<CategoryModel> kategory) async {
     try {
       final categoryCollection = firestore.collection('categories');
       final querySnapshot = await categoryCollection.get();

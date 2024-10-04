@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/categry.dart';
-/*
+
+
 class Kats extends StatelessWidget {
   const Kats({super.key});
 
@@ -9,7 +10,7 @@ class Kats extends StatelessWidget {
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
     try {
-      await firestore.collection('slsl').add({
+      await firestore.collection('categories').add({
         'categoryname': category.categoryname,
         'images': category.images,
         'colors': category.colors.map((color) => color.value).toList(),
@@ -48,4 +49,3 @@ class Kats extends StatelessWidget {
     );
   }
 }
-*/

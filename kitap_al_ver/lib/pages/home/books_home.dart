@@ -1,9 +1,10 @@
 // ignore_for_file: camel_case_types
 import 'package:flutter/material.dart';
-import 'package:kitap_al_ver/utils/aprouta.dart';
+
 import 'package:kitap_al_ver/service/firebes_post.dart';
 import 'package:kitap_al_ver/pages/misc/imageCarousel.dart';
 import 'package:kitap_al_ver/pages/product/product_Card.dart';
+import 'package:kitap_al_ver/utils/images.dart';
 
 class Books_Home extends StatefulWidget {
   const Books_Home({super.key});
@@ -21,7 +22,7 @@ class _Books_HomeState extends State<Books_Home> {
     loadImageUrls();
   }
 
-   Future<void> loadImageUrls() async {
+  Future<void> loadImageUrls() async {
     final urls = await FirebasePostServis().loadImageUrls();
     setState(() {
       _imageUrls = urls;
@@ -65,7 +66,7 @@ class _Books_HomeState extends State<Books_Home> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Image.asset(
-                          AppRoute.onboard, // Varsayılan resim
+                          AppImage.books, // Varsayılan resim
                           width: 200,
                           height: 200,
                         ),

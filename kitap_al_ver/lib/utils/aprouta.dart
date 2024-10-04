@@ -20,6 +20,7 @@ final class AppRoute {
     booksHome: (context, {userData}) => const Books_Home(),
     liquidTab: (context, {userData}) => LiquidTabBar(),
     chat: (context, {userData}) {
+      final onboard = OnboardingScreen();
       // userData'nın null olup olmadığını kontrol et
       final email = userData?["email"] ??
           "default@example.com"; // Varsayılan değer ekleyebilirsin

@@ -1,91 +1,87 @@
-// ignore_for_file: use_key_in_widget_constructors, avoid_print
-
 import 'dart:io';
+
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class PhotoPickerScreen extends StatefulWidget {
+class Admin extends StatefulWidget {
+  const Admin({super.key});
+
   @override
-  _PhotoPickerScreenState createState() => _PhotoPickerScreenState();
+  State<Admin> createState() => _AdminState();
 }
 
-class _PhotoPickerScreenState extends State<PhotoPickerScreen> {
-  File? _image; // Seçilen fotoğrafı tutacak değişken
-  String? _downloadUrl; // Fotoğrafın indirme URL'si
+class _AdminState extends State<Admin> {
+  List<String> imageUrls = [];
   final ImagePicker _picker = ImagePicker();
 
-  Future<void> _pickImage() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-
-    if (pickedFile != null) {
-      setState(() {
-        _image = File(pickedFile.path);
-      });
-    } else {
-      print('No image selected.');
+  Future<List<String>> loadImageUrls() async {
+    try {
+      final ListResult result =
+          await FirebaseStorage.instance.ref('deneme').listAll();
+      final List<String> urls = [];
+      for (var ref in result.items) {
+        final String url = await ref.getDownloadURL();
+        urls.add(url);
+      }
+      return urls;
+    } catch (e) {
+      print('Error loading image URLs: $e');
+      return [];
     }
   }
 
+  void _loadImages() async {
+    final urls = await loadImageUrls();
+    setState(() {
+      imageUrls = urls;
+    });
+  }
+
   Future<void> _uploadImage() async {
-    if (_image == null) return;
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      // Dosya adını belirle
+      final fileName = image.name;
 
-    try {
-      final fileName = DateTime.now().millisecondsSinceEpoch.toString();
-      final storageRef = FirebaseStorage.instance.ref().child('admin/$fileName');
-      final uploadTask = storageRef.putFile(_image!);
+      // Firebase Storage'a yükle
+      final storageRef = FirebaseStorage.instance.ref('deneme/$fileName');
+      await storageRef.putFile(File(image.path));
 
-      // Yükleme durumunu dinleme
-      uploadTask.snapshotEvents.listen((TaskSnapshot snapshot) {
-        print('Upload progress: ${snapshot.bytesTransferred / snapshot.totalBytes * 100}%');
-      });
+      // Yükleme tamamlandıktan sonra URL'yi al
+      final String downloadUrl = await storageRef.getDownloadURL();
+      print('Yüklenen resmin URL\'si: $downloadUrl');
 
-      final downloadUrl = await (await uploadTask).ref.getDownloadURL();
-
+      // Yeni URL'yi imageUrls listesine ekle
       setState(() {
-        _downloadUrl = downloadUrl;
+        imageUrls.add(downloadUrl);
       });
-
-      print('Upload complete. Download URL: $_downloadUrl');
-    } catch (e) {
-      print('Error uploading image: $e');
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Fotoğraf Yükleme'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            ElevatedButton(
-              onPressed: _pickImage,
-              child: const Text('Fotoğraf Seç'),
+      appBar: AppBar(title: Text('Admin Panel')),
+      body: Column(
+        children: [
+          ElevatedButton(
+            onPressed: _loadImages,
+            child: Text('Görüntüleri Yükle'),
+          ),
+          ElevatedButton(
+            onPressed: _uploadImage,
+            child: Text('Fotoğraf Yükle'),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: imageUrls.length,
+              itemBuilder: (context, index) {
+                return Image.network(imageUrls[index]);
+              },
             ),
-            const SizedBox(height: 20),
-            _image != null
-                ? Image.file(
-                    _image!,
-                    height: 300,
-                    width: 300,
-                    fit: BoxFit.cover,
-                  )
-                : const Text('Bir fotoğraf seçilmedi.'),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _uploadImage,
-              child: const Text('Fotoğrafı Yükle'),
-            ),
-            const SizedBox(height: 20),
-            _downloadUrl != null
-                ? Text('Fotoğraf URL: $_downloadUrl')
-                : Container(),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

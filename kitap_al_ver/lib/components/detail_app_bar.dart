@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/components/tabbar/liquidTabbar.dart';
 import 'package:kitap_al_ver/models/post.dart';
-import 'package:kitap_al_ver/pages/drawr/drawerDemo_Screen.dart';
-import 'package:kitap_al_ver/pages/home/books_home.dart';
+
 import 'package:kitap_al_ver/pages/product/cartPage.dart';
 import 'package:kitap_al_ver/provider/favorite_provider.dart';
+import 'package:kitap_al_ver/utils/color.dart';
 import 'package:provider/provider.dart';
 
 class DetailAppBar extends StatelessWidget {
@@ -22,7 +22,7 @@ class DetailAppBar extends StatelessWidget {
             children: [
               IconButton(
                 style: IconButton.styleFrom(
-                  backgroundColor: Colors.white,
+                  backgroundColor: AppColor.white,
                   padding: const EdgeInsets.all(15),
                 ),
                 onPressed: () {
@@ -36,12 +36,13 @@ class DetailAppBar extends StatelessWidget {
                 icon: const Icon(
                   Icons.arrow_back_ios,
                   color: Colors.black,
+                  size: 18,
                 ),
               ),
               const Spacer(),
               IconButton(
                 style: IconButton.styleFrom(
-                  backgroundColor: Colors.white,
+                  backgroundColor: AppColor.white,
                   padding: const EdgeInsets.all(15),
                 ),
                 onPressed: () {
@@ -55,12 +56,13 @@ class DetailAppBar extends StatelessWidget {
                 icon: const Icon(
                   Icons.add_shopping_cart_rounded,
                   color: Colors.black,
+                  size: 18,
                 ),
               ),
               const SizedBox(width: 10),
               IconButton(
                 style: IconButton.styleFrom(
-                  backgroundColor: Colors.white,
+                  backgroundColor: AppColor.white,
                   padding: const EdgeInsets.all(15),
                 ),
                 onPressed: () {
@@ -71,7 +73,7 @@ class DetailAppBar extends StatelessWidget {
                       ? Icons.favorite
                       : Icons.favorite_border,
                   color: Colors.black,
-                  size: 25,
+                  size: 18,
                 ),
               ),
             ],

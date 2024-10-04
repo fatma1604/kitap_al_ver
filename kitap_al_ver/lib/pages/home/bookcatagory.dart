@@ -1,14 +1,11 @@
-// ignore_for_file: use_key_in_widget_constructors
-
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:kitap_al_ver/models/kategorymodel.dart';
+import 'package:kitap_al_ver/categry.dart';
 import 'package:kitap_al_ver/pages/auth/information.dart';
 import 'package:kitap_al_ver/service/for%C4%B1mHelper.dart';
 import 'package:kitap_al_ver/utils/color.dart';
 import 'package:kitap_al_ver/utils/images.dart';
-
 
 class BookCategoryOverview extends StatefulWidget {
   @override
@@ -34,15 +31,18 @@ class _BookCategoryOverviewState extends State<BookCategoryOverview> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: AppColor.screenlight1,
+      backgroundColor: isDarkMode ? AppColor.screendart : AppColor.screenlight,
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
             child: Container(
-              decoration: const BoxDecoration(
-                color: AppColor.screenlight1,
-                borderRadius: BorderRadius.only(
+              decoration: BoxDecoration(
+                color: isDarkMode ? AppColor.screendart : AppColor.screenlight,
+                borderRadius: const BorderRadius.only(
                   bottomRight: Radius.circular(60),
                 ),
               ),
@@ -56,7 +56,9 @@ class _BookCategoryOverviewState extends State<BookCategoryOverview> {
                             _firestore, kategory);
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
+                        backgroundColor: isDarkMode
+                            ? AppColor.buttondart
+                            : AppColor.buttonlight,
                       ),
                       child: const Text(
                         'Veriyi Gönder',
@@ -69,13 +71,13 @@ class _BookCategoryOverviewState extends State<BookCategoryOverview> {
           ),
           SliverFillRemaining(
             child: Container(
-              color: AppColor.screenlight1,
+              color: isDarkMode ? AppColor.screendart : AppColor.screenlight,
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius:
-                      BorderRadius.only(topLeft: Radius.circular(200)),
+                      const BorderRadius.only(topLeft: Radius.circular(200)),
                 ),
                 child: StreamBuilder<QuerySnapshot>(
                   stream: _firestore.collection('categories').snapshots(),
@@ -104,15 +106,28 @@ class _BookCategoryOverviewState extends State<BookCategoryOverview> {
                         final categoryData =
                             categories[index].data() as Map<String, dynamic>;
                         final title =
-                            categoryData['category_name'] ?? 'No Title';
+                            categoryData['categoryname'] ?? 'No Title';
                         final imageUrl =
-                            categoryData['image_url'] ?? AppImage.profil;
+                            categoryData['images'] ?? AppImage.profil;
                         final colorValues = List<int>.from(
                             categoryData['colors'] ??
                                 [Colors.grey.value]); // Default color
                         final color = Color(colorValues.isNotEmpty
                             ? colorValues[0]
                             : Colors.grey.value);
+                        final categoryModel = CategoryModel(
+                          categoryname: title,
+                          images: imageUrl,
+                          colors: colorValues.map((e) => Color(e)).toList(),
+                          classes:
+                              List<String>.from(categoryData['classes'] ?? []),
+                          types: List<String>.from(categoryData['types'] ?? []),
+                          subjects:
+                              List<String>.from(categoryData['subjects'] ?? []),
+                          durum: List<String>.from(categoryData['durum'] ?? []),
+                          history:
+                              List<String>.from(categoryData['history'] ?? []),
+                        );
 
                         return itemDashboard(
                           title,
@@ -123,7 +138,7 @@ class _BookCategoryOverviewState extends State<BookCategoryOverview> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      InformationFormScreen()),
+                                      Information(category: categoryModel)),
                             );
                           },
                         );

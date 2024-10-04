@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors_in_immutables
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/pages/misc/MyImage_slider.dart';
@@ -8,8 +6,7 @@ import 'package:kitap_al_ver/components/detail_app_bar.dart';
 import 'package:kitap_al_ver/models/post.dart';
 import 'package:kitap_al_ver/pages/product/addto_cart.dart';
 import 'package:kitap_al_ver/pages/product/items_detalis.dart';
-import 'package:kitap_al_ver/utils/color.dart'; // Assuming this is a widget
-//bak
+import 'package:kitap_al_ver/utils/color.dart';
 
 class DetailScreen extends StatefulWidget {
   final String postUid;
@@ -41,8 +38,9 @@ class _DetailScreenState extends State<DetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: Theme.of(context).brightness == Brightness.dark
+      backgroundColor: theme.brightness == Brightness.dark
           ? AppColor.screendart
           : AppColor.screenlight,
       floatingActionButton: AddToCart(
@@ -105,9 +103,12 @@ class _DetailScreenState extends State<DetailScreen> {
                   const SizedBox(height: 20),
                   Container(
                     width: double.infinity,
-                    decoration: const BoxDecoration(
-                      color: AppColor.userTitle,
-                      borderRadius: BorderRadius.only(
+                    decoration: BoxDecoration(
+                      color: theme.brightness == Brightness.dark
+                          ? AppColor.buttondart // Darker shade for dark theme
+                          : AppColor
+                              .buttonlight, // Original color for light theme
+                      borderRadius: const BorderRadius.only(
                         topRight: Radius.circular(40),
                         topLeft: Radius.circular(40),
                       ),
@@ -121,11 +122,9 @@ class _DetailScreenState extends State<DetailScreen> {
                           post: post,
                         ), // Assuming this is a widget that displays item details
                         const SizedBox(height: 20),
-
-                        const SizedBox(height: 20),
                         Description(
                           postUid: widget.postUid,
-                        )
+                        ),
                       ],
                     ),
                   ),
