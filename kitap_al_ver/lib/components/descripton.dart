@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/components/comment.dart';
 import 'package:kitap_al_ver/utils/color.dart';
 
+
 class Description extends StatelessWidget {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final String postUid; // Belge ID'sini alabilmek için
+  final String postUid;
 
-  Description(
-      {super.key, required this.postUid}); // Constructor'da belge ID'si alınır
+  Description({super.key, required this.postUid});
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +34,7 @@ class Description extends StatelessWidget {
                     fontSize: 16),
               ),
             ),
-            SizedBox(
-              width: 10,
-            ),
+            const SizedBox(width: 10),
             const Text(
               "Özellikler",
               style: TextStyle(
@@ -44,36 +42,19 @@ class Description extends StatelessWidget {
                   color: Colors.black54,
                   fontSize: 16),
             ),
-            const SizedBox(width: 10), // İki eleman arasına boşluk
-            GestureDetector(
-              onTap: () {
-                showBottomSheet(
-                  backgroundColor: Colors.transparent,
-                  context: context,
-                  builder: (context) {
-                    return Padding(
-                      padding: EdgeInsets.only(
-                        bottom: MediaQuery.of(context).viewInsets.bottom,
-                      ),
-                      child: DraggableScrollableSheet(
-                        maxChildSize: 0.6,
-                        initialChildSize: 0.6,
-                        minChildSize: 0.2,
-                        builder: (context, scrollController) {
-                          return Commentme(
-                              'post', postUid); // postUid kullanılıyor
-                        },
-                      ),
-                    );
-                  },
+            const SizedBox(width: 10),
+            const Spacer(),
+            IconButton(
+              icon: Icon(Icons.comment),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CommentScreen(postUid: postUid), // Yorum ekranına yönlendirme
+                  ),
                 );
               },
-              child: Image.asset(
-                'assets/images/comment.webp',
-                height: 28, // Yükseklik ayarlayın
-              ),
             ),
-            const Spacer(),
           ],
         ),
         const SizedBox(height: 20),
@@ -90,8 +71,7 @@ class Description extends StatelessWidget {
               return const Center(child: Text('No description found!'));
             }
 
-            final description = snapshot.data!.get('additionalInfo') ??
-                'No description available';
+            final description = snapshot.data!.get('additionalInfo') ?? 'No description available';
             return Text(
               description,
               style: const TextStyle(fontSize: 16, color: AppColor.black),

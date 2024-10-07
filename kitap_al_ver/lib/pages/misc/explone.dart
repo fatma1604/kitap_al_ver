@@ -55,7 +55,7 @@ class _ExploneState extends State<Explone> {
             _buildSearchBox(),
             if (_showGrid)
               StreamBuilder<QuerySnapshot>(
-                stream: _firebaseFirestore.collection('posts').snapshots(),
+                stream: _firebaseFirestore.collection('post').snapshots(),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
                     return const SliverToBoxAdapter(

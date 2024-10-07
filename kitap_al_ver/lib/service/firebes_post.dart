@@ -18,7 +18,7 @@ class FirebasePostServis {
     try {
       DateTime now = DateTime.now();
       Usermodel user = await getUser();
-      await _firebaseFirestore.collection('posts').add({
+      await _firebaseFirestore.collection('post').add({
         'username': user.username,
         'profileImage': user.profile,
         'caption': caption,
@@ -83,31 +83,7 @@ class FirebasePostServis {
     }
   }
 
-  Future<bool> Comments({
-    required String comment,
-    required String type,
-    required String uidd,
-  }) async {
-    try {
-      var uid = const Uuid().v4();
-      Usermodel user = await getUser();
-      await _firebaseFirestore
-          .collection(type)
-          .doc(uidd)
-          .collection('comments')
-          .doc(uid)
-          .set({
-        'comment': comment,
-        'username': user.username,
-        'profileImage': user.profile,
-        'CommentUid': uid,
-      });
-      return true;
-    } catch (e) {
-      print('Error in Comments: $e');
-      return false;
-    }
-  }
+
 
   Future<void> flollow({
     required String uid,
