@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+
 import 'package:kitap_al_ver/components/comment.dart';
 import 'package:kitap_al_ver/utils/color.dart';
-
 
 class Description extends StatelessWidget {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -45,12 +45,15 @@ class Description extends StatelessWidget {
             const SizedBox(width: 10),
             const Spacer(),
             IconButton(
+              //1
               icon: Icon(Icons.comment),
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => CommentScreen(postUid: postUid), // Yorum ekranına yönlendirme
+                    builder: (context) => CommentScreen(
+                           postUid: postUid
+                        ), // Yorum ekranına yönlendirme
                   ),
                 );
               },
@@ -71,7 +74,8 @@ class Description extends StatelessWidget {
               return const Center(child: Text('No description found!'));
             }
 
-            final description = snapshot.data!.get('additionalInfo') ?? 'No description available';
+            final description = snapshot.data!.get('additionalInfo') ??
+                'No description available';
             return Text(
               description,
               style: const TextStyle(fontSize: 16, color: AppColor.black),
