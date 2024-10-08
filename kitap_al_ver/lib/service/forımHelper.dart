@@ -24,59 +24,61 @@ class FormHelpers {
     }
   }
 
-  // Submit the form data to Firestore
-  static Future<void> submitForm({
-    required BuildContext context,
-    required GlobalKey<FormState> formKey,
-    required String title,
-    required String? selectedClass,
-    required String? selectedUsageStatus,
-    required String? selectedType,
-    required String? selectedSubject,
-    required String additionalInfo,
-    required String description,
-    required List<String>? postImages,
-    required List<String> like,
-    required FirebaseAuth auth,
-    required FirebaseFirestore firestore,
-  }) async {
-    if (formKey.currentState!.validate()) {
-      try {
-        User? currentUser = auth.currentUser;
-        String username = currentUser?.displayName ?? 'Bilgi Yok';
-        String uid = Uuid().v4();
+  // form_helpers.dart
+static Future<void> submitForm({
+  required BuildContext context,
+  required GlobalKey<FormState> formKey,
+  required String title,
+  required String? selectedClass,
+  required String? selectedUsageStatus,
+  required String? selectedType,
+  required String? selectedSubject,
+  required String additionalInfo,
+  required String description,
+  required List<String>? postImages,
+  required List<String> like,
+  required FirebaseAuth auth,
+  required FirebaseFirestore firestore,
+  required String profilePhotoUrl, // Profil fotoğrafı URL'si parametresi eklendi
+}) async {
+  if (formKey.currentState!.validate()) {
+    try {
+      User? currentUser = auth.currentUser;
+      String username = currentUser?.displayName ?? 'Bilgi Yok';
+      String uid = Uuid().v4();
 
-        await firestore.collection('post').doc(uid).set({
-          'title': title.isNotEmpty ? title : 'Başlık Yok',
-          'class': selectedClass,
-          'usageStatus': selectedUsageStatus,
-          'type': selectedType,
-          'subject': selectedSubject,
-          'additionalInfo':
-              additionalInfo.isNotEmpty ? additionalInfo : 'Ek Bilgi Yok',
-          'createdAt': FieldValue.serverTimestamp(),
-          'user_uid': auth.currentUser!.uid,
-          'post_uid': uid,
-          'postImages': postImages,
-          'like': like,
-          'username': username,
-          'description': description,
-        });
+      await firestore.collection('post').doc(uid).set({
+        'title': title.isNotEmpty ? title : 'Başlık Yok',
+        'class': selectedClass,
+        'usageStatus': selectedUsageStatus,
+        'type': selectedType,
+        'subject': selectedSubject,
+        'additionalInfo': additionalInfo.isNotEmpty ? additionalInfo : 'Ek Bilgi Yok',
+        'createdAt': FieldValue.serverTimestamp(),
+        'user_uid': auth.currentUser!.uid,
+        'post_uid': uid,
+        'postImages': postImages,
+        'like': like,
+        'username': username,
+        'description': description,
+        'profilePhotoUrl': profilePhotoUrl, // Profil fotoğrafı URL'sini ekliyoruz
+      });
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Bilgiler başarıyla kaydedildi!')),
-        );
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Bilgiler başarıyla kaydedildi!')),
+      );
 
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => LiquidTabBar()));
-      } catch (e) {
-        print('Error saving information: $e');
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Bilgileri kaydederken bir hata oluştu!')),
-        );
-      }
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => LiquidTabBar()));
+    } catch (e) {
+      print('Error saving information: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Bilgileri kaydederken bir hata oluştu!')),
+      );
     }
   }
+}
+
 
   // Check if the user has the 'coder' role
   static Future<void> checkUserRole(FirebaseAuth auth,

@@ -1,17 +1,26 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart'; // Firebase Authentication'ı ekleyin
 import 'package:flutter/material.dart';
-
 import 'package:kitap_al_ver/components/comment.dart';
 import 'package:kitap_al_ver/utils/color.dart';
 
 class Description extends StatelessWidget {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final String postUid;
+  final String postUid; // Belge ID'sini alabilmek için
 
-  Description({super.key, required this.postUid});
+  Description(
+      {super.key, required this.postUid}); // Constructor'da belge ID'si alınır
 
   @override
   Widget build(BuildContext context) {
+    // Mevcut kullanıcıyı al
+    User? currentUser = FirebaseAuth.instance.currentUser;
+
+    // Kullanıcı mevcut değilse bir mesaj göster
+    if (currentUser == null) {
+      return Center(child: Text('Kullanıcı giriş yapmadı.'));
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -43,21 +52,41 @@ class Description extends StatelessWidget {
                   fontSize: 16),
             ),
             const SizedBox(width: 10),
-            const Spacer(),
-            IconButton(
-              //1
-              icon: Icon(Icons.comment),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => CommentScreen(
-                           postUid: postUid
-                        ), // Yorum ekranına yönlendirme
-                  ),
+            GestureDetector(
+              onTap: () {
+                showBottomSheet(
+                  backgroundColor: Colors.transparent,
+                  context: context,
+                  builder: (context) {
+                    return Padding(
+                      padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).viewInsets.bottom,
+                      ),
+                      child: DraggableScrollableSheet(
+                        maxChildSize: 0.6,
+                        initialChildSize: 0.6,
+                        minChildSize: 0.2,
+                        builder: (context, scrollController) {
+                          return Comment(
+                            type: 'post', 
+                            uid: postUid, 
+                            username: currentUser.displayName ??
+                                'Kullanıcı Adı', 
+                            profilePhotoUrl: currentUser.photoURL ??
+                                'Profil Resmi URL', 
+                          );
+                        },
+                      ),
+                    );
+                  },
                 );
               },
+              child: Image.asset(
+                'assets/images/comment.webp',
+                height: 28,
+              ),
             ),
+            const Spacer(),
           ],
         ),
         const SizedBox(height: 20),

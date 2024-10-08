@@ -137,21 +137,21 @@ class _MenuPageState extends State<Information> {
 
   DropdownButtonFormField<String> _buildDropdownField(String label,
       String? value, List<String> items, ValueChanged<String?>? onChanged) {
-        final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return DropdownButtonFormField<String>(
       decoration: InputDecoration(
         labelText: label,
         border: OutlineInputBorder(
           borderSide: BorderSide(
-              color:isDarkMode? AppColor.screendart1:AppColor.screenlight1 ), // Change this to your desired color
+              color: isDarkMode ? AppColor.screendart1 : AppColor.screenlight1),
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-              color:isDarkMode? AppColor.black:AppColor.white), // Change this to your desired color
+              color: isDarkMode ? AppColor.black : AppColor.white),
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-              color:isDarkMode? AppColor.black:AppColor.white), // Change this to your desired color
+              color: isDarkMode ? AppColor.black : AppColor.white),
         ),
       ),
       value: value,
@@ -161,9 +161,10 @@ class _MenuPageState extends State<Information> {
           .toList(),
       onChanged: onChanged,
       style: TextStyle(
-          color:isDarkMode? AppColor.yazidart:AppColor.yazilight), // Change this to your desired text color
-      dropdownColor:isDarkMode? AppColor
-          .screendart1:AppColor.screenlight1, // Change this to your desired dropdown background color
+          color: isDarkMode ? AppColor.yazidart : AppColor.yazilight),
+      dropdownColor: isDarkMode
+          ? AppColor.screendart1
+          : AppColor.screenlight1,
     );
   }
 
@@ -179,6 +180,9 @@ class _MenuPageState extends State<Information> {
   ElevatedButton _buildSaveButton() {
     return ElevatedButton(
       onPressed: () {
+        User? currentUser = FirebaseAuth.instance.currentUser;
+        String profilePhotoUrl = currentUser?.photoURL ?? '';
+
         FormHelpers.submitForm(
           context: context,
           formKey: _formKey,
@@ -193,6 +197,7 @@ class _MenuPageState extends State<Information> {
           like: _like,
           auth: FirebaseAuth.instance,
           firestore: _firestore,
+         profilePhotoUrl: profilePhotoUrl, // Profil fotoğrafı URL'sini gönder
         );
       },
       child: Text("Kaydet"),

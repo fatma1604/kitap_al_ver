@@ -1,115 +1,146 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:kitap_al_ver/pages/misc/image_cached.dart';
+import 'package:kitap_al_ver/utils/color.dart';
 
-class CommentScreen extends StatefulWidget {
-  final String postUid;
+class Comment extends StatefulWidget {
+  final String type;
+  final String uid;
+  final String username;
+  final String profilePhotoUrl;
 
-  CommentScreen({Key? key, required this.postUid}) : super(key: key);
+  const Comment({
+    Key? key,
+    required this.type,
+    required this.uid,
+    required this.username,
+    required this.profilePhotoUrl,
+  }) : super(key: key);
 
   @override
-  _CommentScreenState createState() => _CommentScreenState();
+  State<Comment> createState() => _CommentState();
 }
 
-class _CommentScreenState extends State<CommentScreen> {
+class _CommentState extends State<Comment> {
   final TextEditingController _commentController = TextEditingController();
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  bool _isLoading = false;
 
-  Future<void> _submitComment() async {
-    if (_commentController.text.isNotEmpty) {
-      setState(() {
-        _isLoading = true;
-      });
-      await _firestore
-          .collection('post')
-          .doc(widget.postUid)
-          .collection('comments')
-          .add({
-        'text': _commentController.text,
-        'createdAt': Timestamp.now(),
-      });
-      _commentController.clear();
-      setState(() {
-        _isLoading = false;
-      });
+  Future<void> _sendComment() async {
+    String comment = _commentController.text.trim();
+    if (comment.isNotEmpty) {
+      try {
+        await FirebaseFirestore.instance
+            .collection(widget.type)
+            .doc(widget.uid)
+            .collection('comments')
+            .add({
+          'comment': comment,
+          'username': widget.username,
+          'profileImage': widget.profilePhotoUrl,
+          'timestamp': FieldValue.serverTimestamp(),
+        });
+
+        _commentController.clear();
+      } catch (e) {
+        print('Error sending comment: $e');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Could not send comment. Please try again.')),
+        );
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('You cannot send an empty comment.')),
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return ClipRRect(
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(25.r),
         topRight: Radius.circular(25.r),
       ),
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Yorumlar'),
-        ),
-        body: Column(
+      child: Container(
+        color: isDarkMode ? AppColor.onbordingdark : AppColor.onbordinglight,
+        height: 400.h,
+        child: Stack(
           children: [
-            Expanded(
-              child: StreamBuilder<QuerySnapshot>(
-                stream: _firestore
-                    .collection('post')
-                    .doc(widget.postUid)
-                    .collection('comments')
-                    .orderBy('createdAt', descending: true)
-                    .snapshots(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
-                  }
-                  if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                    return const Center(child: Text('Henüz yorum yok!'));
-                  }
-
-                  final comments = snapshot.data!.docs;
-
-                  return Padding(
-                    padding: EdgeInsets.symmetric(vertical: 20.h),
-                    child: ListView.builder(
-                      itemCount: comments.length,
-                      itemBuilder: (context, index) {
-                        return _commentItem(comments[index]);
-                      },
-                    ),
-                  );
-                },
+            Positioned(
+              top: 8.h,
+              left: 140.w,
+              child: Container(
+                width: 100.w,
+                height: 3.h,
+                color: Colors.black,
               ),
             ),
-            Container(
-              height: 60.h,
-              width: double.infinity,
-              color: Colors.white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  SizedBox(
-                    height: 45.h,
-                    width: 260.w,
-                    child: TextField(
-                      controller: _commentController,
-                      maxLines: 4,
-                      decoration: const InputDecoration(
-                        hintText: 'Yorumunuzu yazın...',
-                        border: InputBorder.none,
+            Column(
+              children: [
+                Expanded(
+                  child: StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance
+                        .collection(widget.type)
+                        .doc(widget.uid)
+                        .collection('comments')
+                        .orderBy('timestamp', descending: true)
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(child: CircularProgressIndicator());
+                      }
+                      if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                        return Center(child: Text('No comments yet.'));
+                      }
+
+                      return ListView.builder(
+                        itemBuilder: (context, index) {
+                          return commentItem(snapshot.data!.docs[index].data());
+                        },
+                        itemCount: snapshot.data!.docs.length,
+                      );
+                    },
+                  ),
+                ),
+                Container(
+                  height: 60.h,
+                  width: double.infinity,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      SizedBox(
+                        height: 45.h,
+                        width: 200.w,
+                        child: TextField(
+                          controller: _commentController,
+                          maxLines: 1,
+                          decoration: InputDecoration(
+                            hintText: 'Add a comment',
+                            border: InputBorder.none,
+                            hintStyle: TextStyle(
+                              color: isDarkMode
+                                  ? AppColor.textDark
+                                  : AppColor.textLight,
+                            ),
+                          ),
+                          onTap: () {
+                            // Close the keyboard if needed
+                            SystemChannels.textInput
+                                .invokeMethod('TextInput.hide');
+                          },
+                        ),
                       ),
-                    ),
+                      IconButton(
+                        icon: Icon(Icons.send, color: AppColor.white),
+                        onPressed: _sendComment,
+                      ),
+                    ],
                   ),
-                  GestureDetector(
-                    onTap: _submitComment,
-                    child: _isLoading
-                        ? SizedBox(
-                            width: 20.w,
-                            height: 20.h,
-                            child: const CircularProgressIndicator(),
-                          )
-                        : const Icon(Icons.send),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ],
         ),
@@ -117,30 +148,30 @@ class _CommentScreenState extends State<CommentScreen> {
     );
   }
 
-  Widget _commentItem(QueryDocumentSnapshot comment) {
+  Widget commentItem(final snapshot) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return ListTile(
       leading: ClipOval(
         child: SizedBox(
           height: 35.h,
           width: 35.w,
-          child: // Replace this with your method for getting the user's profile image
-              Image.network(comment['profileImage']),
+          child: CachedImage(snapshot['profileImage']),
         ),
       ),
       title: Text(
-        comment[
-            'username'], // You may need to adjust the key to match your Firestore structure
+        snapshot['username'],
         style: TextStyle(
           fontSize: 13.sp,
           fontWeight: FontWeight.bold,
-          color: Colors.black,
+          color: isDarkMode ? AppColor.textDark : AppColor.textLight,
         ),
       ),
       subtitle: Text(
-        comment['text'],
+        snapshot['comment'],
         style: TextStyle(
           fontSize: 13.sp,
-          color: Colors.black,
+          color: isDarkMode ? AppColor.textDark : AppColor.textLight,
         ),
       ),
     );

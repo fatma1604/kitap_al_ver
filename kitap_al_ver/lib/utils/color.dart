@@ -49,4 +49,9 @@ final class AppColor {
   static const Color liquliht = Color.fromARGB(255, 247, 100, 100);
 
   static const Color icon = Color.fromARGB(214, 233, 224, 224);
+
+   static const Color textLight = Color.fromARGB(244, 148, 80, 108);
+  static const Color textDark = Color.fromARGB(221, 219, 216, 216);
+
+  
 }
