@@ -1,11 +1,9 @@
 // ignore_for_file: use_key_in_widget_constructors, avoid_unnecessary_containers
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kitap_al_ver/pages/widget/core/newrow.dart';
 import 'package:kitap_al_ver/pages/widget/theme/text_them.dart';
-import 'package:kitap_al_ver/post.dart';
 import 'package:kitap_al_ver/utils/color.dart';
 
 class DrawerScreen extends StatefulWidget {
@@ -64,13 +62,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
               children: <Widget>[
                 NewRow(
                   onPressed: () async {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            PostsPage(category:  "TYT",), // Pass the fetched posts
-                      ),
-                    );
+                 
                   },
                   text: 'Tyt Kitap',
                   icon: Icons.home,
@@ -79,13 +71,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 const SizedBox(height: 20),
                 NewRow(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            PostsPage(category: "TUS",), // Pass the fetched posts
-                      ),
-                    );
+                    
                   },
                   text: 'AYT kİTTAP',
                   icon: Icons.person_outline,

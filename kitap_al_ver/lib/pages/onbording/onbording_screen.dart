@@ -25,33 +25,33 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       imagePath: AppImage.onbording1,
       lightGradient: LinearGradient(
         begin: Alignment.topCenter,
-        colors: [AppColor.onbordinglight, AppColor.onbordinglight1],
+       colors: [AppColor.onbordinglight, AppColor.onboardingLightAccent],
       ),
       darkGradient: LinearGradient(
         begin: Alignment.topCenter,
-        colors: [AppColor.onbordingdark, AppColor.onbordingdark1],
+       colors: [AppColor.onbordingdark, AppColor.onboardingDarkAccent],
       ),
     ),
     const IntroPage(
       imagePath: AppImage.onbording2,
       lightGradient: LinearGradient(
         begin: Alignment.topCenter,
-      colors: [AppColor.onbordinglight, AppColor.onbordinglight1],
+      colors: [AppColor.onbordinglight, AppColor.onboardingLightAccent],
       ),
       darkGradient: LinearGradient(
         begin: Alignment.topCenter,
-        colors: [AppColor.onbordingdark, AppColor.onbordingdark1],
+        colors: [AppColor.onbordingdark, AppColor.onboardingDarkAccent],
       ),
     ),
     const IntroPage(
       imagePath: AppImage.onbording3,
       lightGradient: LinearGradient(
         begin: Alignment.topCenter,
-        colors: [AppColor.onbordinglight, AppColor.onbordinglight1],
+         colors: [AppColor.onbordinglight, AppColor.onboardingLightAccent],
       ),
       darkGradient: LinearGradient(
         begin: Alignment.topCenter,
-        colors: [AppColor.onbordingdark, AppColor.onbordingdark1],
+         colors: [AppColor.onbordingdark, AppColor.onboardingDarkAccent],
       ),
     ),
   ];

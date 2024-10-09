@@ -22,7 +22,7 @@ showAlertDialog({
           TextButton(
             onPressed: () => Navigator.pop(context),
             child: Text(
-              btnText ?? "OK",
+              btnText ?? "Tammam",
               style: const TextStyle(color: Colors.black),
             ),
           ),

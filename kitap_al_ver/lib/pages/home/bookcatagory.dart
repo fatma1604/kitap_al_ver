@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:kitap_al_ver/categry.dart';
+import 'package:kitap_al_ver/service/categry.dart';
 import 'package:kitap_al_ver/pages/auth/information.dart';
 import 'package:kitap_al_ver/service/for%C4%B1mHelper.dart';
 import 'package:kitap_al_ver/utils/color.dart';

@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:kitap_al_ver/categry.dart';
+import 'package:kitap_al_ver/service/categry.dart';
 
 
-class Kats extends StatelessWidget {
-  const Kats({super.key});
+class CategoryAdmin extends StatelessWidget {
+  const CategoryAdmin({super.key});
 
   Future<void> addCategoryToFirestore(CategoryModel category) async {
     final FirebaseFirestore firestore = FirebaseFirestore.instance;

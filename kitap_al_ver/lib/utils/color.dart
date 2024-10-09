@@ -8,10 +8,10 @@ final class AppColor {
   static const Color darttBg = Color.fromARGB(200, 134, 90, 90);
 
   static const Color onbordinglight = Color.fromARGB(255, 255, 172, 166);
-  static const Color onbordinglight1 = Color.fromARGB(255, 247, 118, 108);
+  static const Color  onboardingLightAccent = Color.fromARGB(255, 247, 118, 108);
 
   static const Color onbordingdark = Color.fromARGB(255, 119, 68, 65);
-  static const Color onbordingdark1 = Color.fromARGB(230, 184, 118, 111);
+  static const Color onboardingDarkAccent = Color.fromARGB(230, 184, 118, 111);
 //login-register-foget
   static const Color screenlight = Color.fromARGB(230, 199, 134, 130);
   static const Color screendart = Color.fromARGB(255, 95, 52, 50);
