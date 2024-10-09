@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print, prefer_final_fields, use_super_parameters
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -68,34 +70,34 @@ class _MenuPageState extends State<Information> {
           child: ListView(
             children: [
               _buildTitleField(),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               _buildDropdownField("Sınıf Seçin", selectedClass, menuItems,
                   (value) => setState(() => selectedClass = value)),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               _buildDropdownField(
                   "Tür Seçin",
                   selectedType,
                   widget.category.types,
                   (value) => setState(() => selectedType = value)),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               _buildDropdownField(
                   "Konu Başlığı Seçin",
                   selectedSubject,
                   widget.category.subjects,
                   (value) => setState(() => selectedSubject = value)),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               _buildDropdownField(
                   "Durum Seçin",
                   selectedDurum,
                   widget.category.durum,
                   (value) => setState(() => selectedDurum = value)),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               _buildDropdownField(
                   "Geçmiş Seçin",
                   selectedHistory,
                   widget.category.history,
                   (value) => setState(() => selectedHistory = value)),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               _buildAdditionalInfoField(),
               SizedBox(height: 32.h),
               _buildSaveButton(),
@@ -109,7 +111,7 @@ class _MenuPageState extends State<Information> {
   AppBar _buildAppBar() {
     return AppBar(
       leading: IconButton(
-        icon: Icon(Icons.arrow_back),
+        icon: const Icon(Icons.arrow_back),
         onPressed: () => Navigator.push(
             context, MaterialPageRoute(builder: (context) => LiquidTabBar())),
       ),
@@ -206,7 +208,7 @@ class _MenuPageState extends State<Information> {
           category: widget.category.categoryname, // Pass the selected category
         );
       },
-      child: Text("Kaydet"),
+      child: const Text("Kaydet"),
     );
   }
 }

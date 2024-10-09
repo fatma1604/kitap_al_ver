@@ -1,4 +1,6 @@
 // ProductCard.dart
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/models/post.dart';
 import 'package:kitap_al_ver/pages/product/deail_screen.dart';
@@ -69,7 +71,7 @@ class ProductCard extends StatelessWidget {
           const SizedBox(height: 5),
           Center(
             child: ClipRRect(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
               child: photoUrl.isNotEmpty
                   ? Image.network(
                       photoUrl,

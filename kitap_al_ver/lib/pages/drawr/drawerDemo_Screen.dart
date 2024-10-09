@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors, file_names
+
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/pages/drawr/animatedDrawer.dart';
 import 'package:kitap_al_ver/pages/drawr/drawer_screen.dart';

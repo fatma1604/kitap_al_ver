@@ -18,7 +18,7 @@ class Description extends StatelessWidget {
 
     // Kullanıcı mevcut değilse bir mesaj göster
     if (currentUser == null) {
-      return Center(child: Text('Kullanıcı giriş yapmadı.'));
+      return const Center(child: Text('Kullanıcı giriş yapmadı.'));
     }
 
     return Column(

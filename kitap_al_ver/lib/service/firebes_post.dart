@@ -41,7 +41,7 @@ class FirebasePostServis {
     required String uidd,//7
   }) async {
     try {
-      var uid = Uuid().v4();
+      var uid = const Uuid().v4();
       Usermodel user = await getUser();
       await _firebaseFirestore
           .collection(type)

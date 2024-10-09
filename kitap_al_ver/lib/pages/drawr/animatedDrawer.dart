@@ -1,5 +1,6 @@
+// ignore_for_file: use_super_parameters, file_names
+
 import 'package:flutter/material.dart';
-import 'package:kitap_al_ver/components/admin_buton/categoriAdmin.dart';
 import 'package:kitap_al_ver/pages/home/books_home.dart';
 import 'package:kitap_al_ver/pages/search/mySearc.dart';
 import 'package:kitap_al_ver/utils/color.dart';

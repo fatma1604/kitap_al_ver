@@ -2,6 +2,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:kitap_al_ver/ks.dart';
 import 'package:kitap_al_ver/pages/widget/core/newrow.dart';
 import 'package:kitap_al_ver/pages/widget/theme/text_them.dart';
 import 'package:kitap_al_ver/utils/color.dart';
@@ -61,8 +62,13 @@ class _DrawerScreenState extends State<DrawerScreen> {
             Column(
               children: <Widget>[
                 NewRow(
-                  onPressed: () async {
-                 
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            PostsScreen(bookTitle: 'Tyt Kitap'),
+                      ),
+                    );
                   },
                   text: 'Tyt Kitap',
                   icon: Icons.home,
@@ -71,29 +77,54 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 const SizedBox(height: 20),
                 NewRow(
                   onPressed: () {
-                    
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            PostsScreen(bookTitle: 'AYT kitap'),
+                      ),
+                    );
                   },
-                  text: 'AYT kİTTAP',
+                  text: 'AYT kitap',
                   icon: Icons.person_outline,
                   textColor: textColor,
                 ),
                 const SizedBox(height: 20),
                 NewRow(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            PostsScreen(bookTitle: 'Lgs kitap'),
+                      ),
+                    );
+                  },
                   text: 'Lgs kitap',
                   icon: Icons.settings_brightness_rounded,
                   textColor: textColor,
                 ),
                 const SizedBox(height: 20),
                 NewRow(
-                  onPressed: () {},
-                  text: 'Tus kitap ',
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => PostsScreen(bookTitle: 'TUS'),
+                      ),
+                    );
+                  },
+                  text: 'Tus kitap',
                   icon: Icons.ac_unit_rounded,
                   textColor: textColor,
                 ),
                 const SizedBox(height: 20),
                 NewRow(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            PostsScreen(bookTitle: 'Paylaşalım'),
+                      ),
+                    );
+                  },
                   text: 'Paylaşalım',
                   icon: Icons.access_alarm_outlined,
                   textColor: textColor,

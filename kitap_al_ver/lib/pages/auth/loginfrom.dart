@@ -9,7 +9,7 @@ import 'package:kitap_al_ver/pages/widget/theme/text_them.dart';
 import 'package:kitap_al_ver/service/firebes_auth.dart';
 import 'package:kitap_al_ver/pages/auth/auth_Page.dart';
 import 'package:kitap_al_ver/pages/auth/forget_page.dart';
-import 'package:kitap_al_ver/pages/widget/loginorregister/lodiverder.dart';
+import 'package:kitap_al_ver/pages/auth/lodiverder.dart';
 import 'package:kitap_al_ver/utils/images.dart';
 
 

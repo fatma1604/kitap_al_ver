@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -74,10 +76,10 @@ class _BookCategoryOverviewState extends State<BookCategoryOverview> {
               color: isDarkMode ? AppColor.screendart : AppColor.screenlight,
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius:
-                      const BorderRadius.only(topLeft: Radius.circular(200)),
+                      BorderRadius.only(topLeft: Radius.circular(200)),
                 ),
                 child: StreamBuilder<QuerySnapshot>(
                   stream: _firestore.collection('categories').snapshots(),

@@ -124,7 +124,7 @@ class _ExploneState extends State<Explone> {
                                     SizedBox(width: 15.w),
                                     Text(
                                       snap['username'],
-                                      style: TextStyle(color: AppColor.icon),
+                                      style: const TextStyle(color: AppColor.icon),
                                     ),
                                   ],
                                 ),

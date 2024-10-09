@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
@@ -62,16 +64,16 @@ class _AdminState extends State<Admin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Admin Panel')),
+      appBar: AppBar(title: const Text('Admin Panel')),
       body: Column(
         children: [
           ElevatedButton(
             onPressed: _loadImages,
-            child: Text('Görüntüleri Yükle'),
+            child: const Text('Görüntüleri Yükle'),
           ),
           ElevatedButton(
             onPressed: _uploadImage,
-            child: Text('Fotoğraf Yükle'),
+            child: const Text('Fotoğraf Yükle'),
           ),
           Expanded(
             child: ListView.builder(

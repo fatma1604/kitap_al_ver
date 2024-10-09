@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/components/tabbar/liquidTabbar.dart';
 import 'package:kitap_al_ver/pages/widget/core/user_title.dart';
-import 'package:kitap_al_ver/pages/chat/chat_page.dart';
 import 'package:kitap_al_ver/service/chat_service.dart';
 import 'package:kitap_al_ver/service/firebes_auth.dart';
 import 'package:kitap_al_ver/utils/aprouta.dart';
@@ -24,7 +23,7 @@ class ChatHome extends StatelessWidget {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => LiquidTabBar()));
             },
-            icon: Icon(Icons.arrow_back)),
+            icon: const Icon(Icons.arrow_back)),
       ),
       backgroundColor: Theme.of(context).brightness == Brightness.dark
           ? AppColor.screendart

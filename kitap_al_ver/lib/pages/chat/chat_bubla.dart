@@ -1,8 +1,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/pages/widget/theme/tehm_provider.dart';
-
-
 import 'package:provider/provider.dart';
 
 // ThemeProvider'ı ekledim, isDarkMode değişkenini almak için

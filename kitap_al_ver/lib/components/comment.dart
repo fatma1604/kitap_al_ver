@@ -3,7 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:kitap_al_ver/pages/misc/image_cached.dart';
+import 'package:kitap_al_ver/pages/widget/theme/text_them.dart';
 import 'package:kitap_al_ver/utils/color.dart';
+
 
 class Comment extends StatefulWidget {
   final String type;
@@ -45,12 +47,13 @@ class _CommentState extends State<Comment> {
       } catch (e) {
         print('Error sending comment: $e');
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Could not send comment. Please try again.')),
+          const SnackBar(
+              content: Text('Could not send comment. Please try again.')),
         );
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('You cannot send an empty comment.')),
+        const SnackBar(content: Text('You cannot send an empty comment.')),
       );
     }
   }
@@ -90,10 +93,10 @@ class _CommentState extends State<Comment> {
                         .snapshots(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(child: CircularProgressIndicator());
+                        return const Center(child: CircularProgressIndicator());
                       }
                       if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                        return Center(child: Text('No comments yet.'));
+                        return const Center(child: Text('No comments yet.'));
                       }
 
                       return ListView.builder(
@@ -120,21 +123,15 @@ class _CommentState extends State<Comment> {
                           decoration: InputDecoration(
                             hintText: 'Add a comment',
                             border: InputBorder.none,
-                            hintStyle: TextStyle(
-                              color: isDarkMode
-                                  ? AppColor.textDark
-                                  : AppColor.textLight,
-                            ),
+                            hintStyle: AppTextTheme.comment(context), // Güncellendi
                           ),
                           onTap: () {
-                            // Close the keyboard if needed
-                            SystemChannels.textInput
-                                .invokeMethod('TextInput.hide');
+                            SystemChannels.textInput.invokeMethod('TextInput.hide');
                           },
                         ),
                       ),
                       IconButton(
-                        icon: Icon(Icons.send, color: AppColor.white),
+                        icon: const Icon(Icons.send, color: AppColor.white),
                         onPressed: _sendComment,
                       ),
                     ],
@@ -149,8 +146,6 @@ class _CommentState extends State<Comment> {
   }
 
   Widget commentItem(final snapshot) {
-    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-
     return ListTile(
       leading: ClipOval(
         child: SizedBox(
@@ -161,18 +156,11 @@ class _CommentState extends State<Comment> {
       ),
       title: Text(
         snapshot['username'],
-        style: TextStyle(
-          fontSize: 13.sp,
-          fontWeight: FontWeight.bold,
-          color: isDarkMode ? AppColor.textDark : AppColor.textLight,
-        ),
+        style: AppTextTheme.comment(context), // Stil güncellendi
       ),
       subtitle: Text(
         snapshot['comment'],
-        style: TextStyle(
-          fontSize: 13.sp,
-          color: isDarkMode ? AppColor.textDark : AppColor.textLight,
-        ),
+        style: AppTextTheme.comment(context), // Stil güncellendi
       ),
     );
   }

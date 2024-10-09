@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_declarations
+
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/components/tabbar/liquidTabbar.dart';
 import 'package:kitap_al_ver/pages/chat/chat_page.dart';
@@ -22,7 +24,8 @@ final class AppRoute {
     booksHome: (context, {userData}) => const Books_Home(),
     liquidTab: (context, {userData}) => LiquidTabBar(),
     chat: (context, {userData}) {
-      final onboard = OnboardingScreen();
+      // ignore: unused_local_variable
+      final onboard = const OnboardingScreen();
       // userData'nın null olup olmadığını kontrol et
       final email = userData?["email"] ??
           "default@example.com"; // Varsayılan değer ekleyebilirsin
@@ -33,6 +36,6 @@ final class AppRoute {
         receiverId: uid,
       );
     },
-    explone: (context, {userData}) => Explone(),
+    explone: (context, {userData}) => const Explone(),
   };
 }

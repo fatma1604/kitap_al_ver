@@ -1,12 +1,9 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/utils/color.dart';
 
 class AppTheme {
   AppTheme._();
 
-  /* ------------- Light Theme ------------- */
   static ThemeData get lightMode {
     const ColorScheme colorScheme = ColorScheme.light();
 
@@ -30,7 +27,6 @@ class AppTheme {
     );
   }
 
-  /* ------------- Dark Theme ------------- */
   static ThemeData get darkMode {
     const ColorScheme colorScheme = ColorScheme.dark();
 
@@ -68,5 +64,18 @@ class AppTheme {
         ),
       ),
     );
+  }
+}
+
+class ThemeProvider with ChangeNotifier {
+  bool _isDarkMode = false;
+
+  bool get isDarkMode => _isDarkMode;
+
+  ThemeData get currentTheme => _isDarkMode ? AppTheme.darkMode : AppTheme.lightMode;
+
+  void toggleTheme() {
+    _isDarkMode = !_isDarkMode;
+    notifyListeners();
   }
 }

@@ -1,4 +1,4 @@
-// ignore_for_file: library_private_types_in_public_api
+// ignore_for_file: library_private_types_in_public_api, use_super_parameters
 
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/utils/color.dart';
@@ -42,7 +42,7 @@ class _UserTitleState extends State<UserTitle> {
             const SizedBox(width: 16), // Boşluk ekliyoruz
             Text(
               widget.text,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 18, // Yazı boyutunu ayarlayabilirsiniz
                 fontWeight: FontWeight.bold, // Yazı kalınlığı
               ),

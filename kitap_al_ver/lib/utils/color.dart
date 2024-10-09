@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_import
+
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -8,7 +10,7 @@ final class AppColor {
   static const Color darttBg = Color.fromARGB(200, 134, 90, 90);
 
   static const Color onbordinglight = Color.fromARGB(255, 255, 172, 166);
-  static const Color  onboardingLightAccent = Color.fromARGB(255, 247, 118, 108);
+  static const Color onboardingLightAccent = Color.fromARGB(255, 247, 118, 108);
 
   static const Color onbordingdark = Color.fromARGB(255, 119, 68, 65);
   static const Color onboardingDarkAccent = Color.fromARGB(230, 184, 118, 111);
@@ -20,8 +22,6 @@ final class AppColor {
   static const Color fromdart = Color.fromARGB(103, 77, 24, 21);
 
   static const Color forget = Color.fromARGB(255, 197, 121, 115);
-  static const Color forget1 = Color.fromARGB(255, 244, 54, 70);
-  static const Color forget2 = Color.fromARGB(255, 143, 61, 57);
 
 //yazı
   static const Color yazilight = Color.fromARGB(244, 148, 80, 108);
@@ -50,10 +50,5 @@ final class AppColor {
 
   static const Color icon = Color.fromARGB(214, 233, 224, 224);
 
-   static const Color textLight = Color.fromARGB(244, 148, 80, 108);
-  static const Color textDark = Color.fromARGB(221, 219, 216, 216);
 
-  
-
-  
 }
