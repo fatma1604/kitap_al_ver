@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kitap_al_ver/components/admin_buton/admin.dart';
 import 'package:kitap_al_ver/kats.dart';
-
 import 'package:kitap_al_ver/pages/home/books_home.dart';
 import 'package:kitap_al_ver/pages/search/mySearc.dart';
 import 'package:kitap_al_ver/utils/color.dart';
@@ -77,7 +75,7 @@ class _DrawerfState extends State<AnimatedDrawer> {
                               isDrawerOpen = true;
                             });
                           },
-                        ),  
+                        ),
                   Expanded(
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -93,15 +91,16 @@ class _DrawerfState extends State<AnimatedDrawer> {
                             icon: const Icon(Icons.add_location_outlined),
                             color: AppColor.icon,
                             onPressed: () {
-                             
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Kats()));
                             },
                           ),
                           IconButton(
                             icon: const Icon(Icons.add_alert_outlined),
                             color: AppColor.icon,
-                            onPressed: () {
-                            
-                            },
+                            onPressed: () {},
                           ),
                         ],
                       ),

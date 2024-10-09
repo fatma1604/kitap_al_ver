@@ -143,15 +143,21 @@ class _MenuPageState extends State<Information> {
         labelText: label,
         border: OutlineInputBorder(
           borderSide: BorderSide(
-              color: isDarkMode ? AppColor.screendart1 : AppColor.screenlight1),
+              color: isDarkMode
+                  ? AppColor.screendart1
+                  : AppColor.screenlight1), // Change this to your desired color
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-              color: isDarkMode ? AppColor.black : AppColor.white),
+              color: isDarkMode
+                  ? AppColor.black
+                  : AppColor.white), // Change this to your desired color
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-              color: isDarkMode ? AppColor.black : AppColor.white),
+              color: isDarkMode
+                  ? AppColor.black
+                  : AppColor.white), // Change this to your desired color
         ),
       ),
       value: value,
@@ -161,10 +167,13 @@ class _MenuPageState extends State<Information> {
           .toList(),
       onChanged: onChanged,
       style: TextStyle(
-          color: isDarkMode ? AppColor.yazidart : AppColor.yazilight),
+          color: isDarkMode
+              ? AppColor.yazidart
+              : AppColor.yazilight), // Change this to your desired text color
       dropdownColor: isDarkMode
           ? AppColor.screendart1
-          : AppColor.screenlight1,
+          : AppColor
+              .screenlight1, // Change this to your desired dropdown background color
     );
   }
 
@@ -180,9 +189,6 @@ class _MenuPageState extends State<Information> {
   ElevatedButton _buildSaveButton() {
     return ElevatedButton(
       onPressed: () {
-        User? currentUser = FirebaseAuth.instance.currentUser;
-        String profilePhotoUrl = currentUser?.photoURL ?? '';
-
         FormHelpers.submitForm(
           context: context,
           formKey: _formKey,
@@ -197,7 +203,7 @@ class _MenuPageState extends State<Information> {
           like: _like,
           auth: FirebaseAuth.instance,
           firestore: _firestore,
-         profilePhotoUrl: profilePhotoUrl, // Profil fotoğrafı URL'sini gönder
+          category: widget.category.categoryname, // Pass the selected category
         );
       },
       child: Text("Kaydet"),

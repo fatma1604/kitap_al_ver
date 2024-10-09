@@ -43,7 +43,8 @@ final List<CategoryModel> kategory = [
       subjects: [
         'BİYOLOJİ',
         'COĞRAFYA',
-        'EDEBİYAT-DİLBİLGİSİ',
+        'EDEBİYAT',
+        'DİLBİLGİSİ',
         'FELSEFE',
         'FİZİK',
         'GEOMETRİ',
@@ -84,7 +85,8 @@ final List<CategoryModel> kategory = [
       subjects: [
         'BİYOLOJİ',
         'COĞRAFYA',
-        'EDEBİYAT-DİLBİLGİSİ',
+        'EDEBİYAT',
+        'DİLBİLGİSİ',
         'FELSEFE',
         'FİZİK',
         'GEOMETRİ',
@@ -151,7 +153,8 @@ final List<CategoryModel> kategory = [
         Colors.purple
       ],
       classes: [
-        "ORTA ÖĞRETİM,ÖNLİSANAS"
+        "ORTA ÖĞRETİM"
+        ,"ÖNLİSANAS"
       ],
       types: [
         'DENEME',
@@ -187,7 +190,7 @@ final List<CategoryModel> kategory = [
         Colors.purple
       ],
       classes: [
-        "ORTA ÖĞRETİM,ÖNLİSANAS"
+        "ORTA ÖĞRETİM","ÖNLİSANAS"
       ],
       types: [
         'DENEME',
@@ -259,7 +262,7 @@ final List<CategoryModel> kategory = [
         Colors.purple
       ],
       classes: [
-        "ORTA ÖĞRETİM,ÖNLİSANAS"
+        "ORTA ÖĞRETİM","ÖNLİSANAS"
       ],
       types: [
         'DENEME',

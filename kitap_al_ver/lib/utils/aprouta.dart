@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/components/tabbar/liquidTabbar.dart';
 import 'package:kitap_al_ver/pages/chat/chat_page.dart';
 import 'package:kitap_al_ver/pages/home/books_home.dart';
+import 'package:kitap_al_ver/pages/misc/explone.dart';
 import 'package:kitap_al_ver/pages/onbording/onbording_screen.dart';
 
 typedef AppRouteMapFunction = Widget Function(BuildContext context,
@@ -14,6 +15,7 @@ final class AppRoute {
   static const String booksHome = "/booksHome";
   static const String liquidTab = "/liquidTab";
   static const String chat = "/chatPage";
+  static const String explone = "/explone ";
 
   static Map<String, AppRouteMapFunction> routes = {
     onboard: (context, {userData}) => const OnboardingScreen(),
@@ -31,5 +33,6 @@ final class AppRoute {
         receiverId: uid,
       );
     },
+    explone: (context, {userData}) => Explone(),
   };
 }

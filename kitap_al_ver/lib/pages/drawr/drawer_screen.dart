@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kitap_al_ver/pages/widget/core/newrow.dart';
 import 'package:kitap_al_ver/pages/widget/theme/text_them.dart';
+import 'package:kitap_al_ver/post.dart';
 import 'package:kitap_al_ver/utils/color.dart';
 
 class DrawerScreen extends StatefulWidget {
@@ -37,11 +38,11 @@ class _DrawerScreenState extends State<DrawerScreen> {
         theme.brightness == Brightness.dark ? AppColor.white : AppColor.black;
 
     final backgroundColor = theme.brightness == Brightness.dark
-        ? AppColor.screendart // Background color for dark mode
-        : AppColor.screenlight; // Background color for light mode
+        ? AppColor.screendart
+        : AppColor.screenlight;
 
     return Container(
-      color: backgroundColor, // Set background color
+      color: backgroundColor,
       child: Padding(
         padding: const EdgeInsets.only(top: 50, left: 40, bottom: 70),
         child: Column(
@@ -62,29 +63,45 @@ class _DrawerScreenState extends State<DrawerScreen> {
             Column(
               children: <Widget>[
                 NewRow(
-                  onPressed: () {},
-                  text: 'Anasayfa',
+                  onPressed: () async {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            PostsPage(category:  "TYT",), // Pass the fetched posts
+                      ),
+                    );
+                  },
+                  text: 'Tyt Kitap',
                   icon: Icons.home,
                   textColor: textColor,
                 ),
                 const SizedBox(height: 20),
                 NewRow(
-                  onPressed: () {},
-                  text: 'Profil',
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            PostsPage(category: "TUS",), // Pass the fetched posts
+                      ),
+                    );
+                  },
+                  text: 'AYT kİTTAP',
                   icon: Icons.person_outline,
                   textColor: textColor,
                 ),
                 const SizedBox(height: 20),
                 NewRow(
                   onPressed: () {},
-                  text: 'Ayarlar',
+                  text: 'Lgs kitap',
                   icon: Icons.settings_brightness_rounded,
                   textColor: textColor,
                 ),
                 const SizedBox(height: 20),
                 NewRow(
                   onPressed: () {},
-                  text: 'Alışverişlerim',
+                  text: 'Tus kitap ',
                   icon: Icons.ac_unit_rounded,
                   textColor: textColor,
                 ),
@@ -95,15 +112,6 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   icon: Icons.access_alarm_outlined,
                   textColor: textColor,
                 ),
-              ],
-            ),
-            Row(
-              children: <Widget>[
-                Icon(
-                  Icons.cancel,
-                  color: textColor,
-                ),
-                const SizedBox(width: 10),
               ],
             ),
           ],

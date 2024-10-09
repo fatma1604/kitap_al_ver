@@ -14,7 +14,7 @@ class Books_Home extends StatefulWidget {
 }
 
 class _Books_HomeState extends State<Books_Home> {
-  List<String> _imageUrls = []; // Firebase'den alınan fotoğraf URL'leri
+  List<String> _imageUrls = []; 
 
   @override
   void initState() {
@@ -59,14 +59,14 @@ class _Books_HomeState extends State<Books_Home> {
             } else if (snapshot.hasData) {
               final photoDataList = snapshot.data!;
               if (photoDataList.isEmpty) {
-                // Eğer veri yoksa, varsayılan içeriği göster
+                
                 return SliverToBoxAdapter(
                   child: Center(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Image.asset(
-                          AppImage.books, // Varsayılan resim
+                          AppImage.books, 
                           width: 200,
                           height: 200,
                         ),

@@ -54,4 +54,6 @@ final class AppColor {
   static const Color textDark = Color.fromARGB(221, 219, 216, 216);
 
   
+
+  
 }

@@ -7,7 +7,7 @@ class Posts {
   final List<String> likes;
   final String category;
   final String rating;
-  final String userName; // Add this line
+  final String userName;
 
   Posts({
     required this.title,
@@ -16,7 +16,7 @@ class Posts {
     required this.category,
     required this.rating,
     this.likes = const [],
-    required this.userName, // Add this line
+    required this.userName,
   });
 
   factory Posts.fromFirestore(DocumentSnapshot doc) {
@@ -27,9 +27,9 @@ class Posts {
       postId: doc.id,
       imageUrls: List<String>.from(data['postImages'] ?? []),
       likes: List<String>.from(data['like'] ?? []),
-      category: data['class'] ?? 'cat',
-      rating: data['usageStatus'] ?? 'cat',
-      userName: data['username'] ?? 'defaultUser', // Add this line
+      category: data['category'] ?? 'uncategorized', // Change to 'category'
+      rating: data['usageStatus'] ?? 'unknown', // Adjusted default value
+      userName: data['username'] ?? 'defaultUser',
     );
   }
 }

@@ -24,7 +24,7 @@ class FormHelpers {
     }
   }
 
-  // form_helpers.dart
+  // Submit the form data to Firestore
 static Future<void> submitForm({
   required BuildContext context,
   required GlobalKey<FormState> formKey,
@@ -39,12 +39,13 @@ static Future<void> submitForm({
   required List<String> like,
   required FirebaseAuth auth,
   required FirebaseFirestore firestore,
-  required String profilePhotoUrl, // Profil fotoğrafı URL'si parametresi eklendi
+  required String category, // New parameter for category
 }) async {
   if (formKey.currentState!.validate()) {
     try {
       User? currentUser = auth.currentUser;
       String username = currentUser?.displayName ?? 'Bilgi Yok';
+      String profilePhotoUrl = currentUser?.photoURL ?? '';
       String uid = Uuid().v4();
 
       await firestore.collection('post').doc(uid).set({
@@ -61,15 +62,15 @@ static Future<void> submitForm({
         'like': like,
         'username': username,
         'description': description,
-        'profilePhotoUrl': profilePhotoUrl, // Profil fotoğrafı URL'sini ekliyoruz
+        'profilePhotoUrl': profilePhotoUrl,
+        'category': category, // Save the selected category
       });
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Bilgiler başarıyla kaydedildi!')),
       );
 
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => LiquidTabBar()));
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => LiquidTabBar()));
     } catch (e) {
       print('Error saving information: $e');
       ScaffoldMessenger.of(context).showSnackBar(
@@ -97,42 +98,7 @@ static Future<void> submitForm({
   }
 
   // Fetch data from Firestore collections
-  static Future<void> fetchData({
-    required FirebaseFirestore firestore,
-    required Function(List<String>) onClassesFetched,
-    required Function(List<String>) onUsageStatusesFetched,
-    required Function(List<String>) onTypesFetched,
-    required Function(List<String>) onSubjectsFetched,
-  }) async {
-    try {
-      final classSnapshot = await firestore.collection('Class').get();
-      onClassesFetched(classSnapshot.docs
-          .expand((doc) =>
-              (doc['category_name'] as List<dynamic>).map((e) => e.toString()))
-          .toList());
 
-      final usageStatusSnapshot = await firestore.collection('Case').get();
-      onUsageStatusesFetched(usageStatusSnapshot.docs
-          .expand(
-              (doc) => (doc['durum'] as List<dynamic>).map((e) => e.toString()))
-          .toList());
-
-      final typeSnapshot = await firestore.collection('Type').get();
-      onTypesFetched(typeSnapshot.docs
-          .expand(
-              (doc) => (doc['type'] as List<dynamic>).map((e) => e.toString()))
-          .toList());
-
-      final subjectSnapshot = await firestore.collection('Lesson').get();
-      onSubjectsFetched(subjectSnapshot.docs
-          .expand((doc) =>
-              (doc['lesons'] as List<dynamic>).map((e) => e.toString()))
-          .toList());
-    } catch (e) {
-      print('Error fetching data: $e');
-      // Handle error as needed
-    }
-  }
 
   // Check and send data to Firestore if not already present
   static Future<void> checkAndSendDataToFirestore(
