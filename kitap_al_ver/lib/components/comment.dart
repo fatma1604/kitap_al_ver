@@ -1,3 +1,5 @@
+// ignore_for_file: use_super_parameters, avoid_print, use_build_context_synchronously, sized_box_for_whitespace
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

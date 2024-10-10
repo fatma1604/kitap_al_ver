@@ -1,7 +1,8 @@
-// ignore_for_file: use_key_in_widget_constructors, avoid_unnecessary_containers
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:kitap_al_ver/fk.dart';
 import 'package:kitap_al_ver/ks.dart';
 import 'package:kitap_al_ver/pages/widget/core/newrow.dart';
 import 'package:kitap_al_ver/pages/widget/theme/text_them.dart';
@@ -14,11 +15,14 @@ class DrawerScreen extends StatefulWidget {
 
 class _DrawerScreenState extends State<DrawerScreen> {
   String _userName = '';
+  List<String> _categories = []; // List to hold categories
+  Map<String, dynamic>? photoData; // Define photoData
 
   @override
   void initState() {
     super.initState();
     _loadUserName();
+    _fetchCategories(); // Fetch categories
   }
 
   Future<void> _loadUserName() async {
@@ -30,15 +34,41 @@ class _DrawerScreenState extends State<DrawerScreen> {
     }
   }
 
+  Future<void> _fetchCategories() async {
+    try {
+      QuerySnapshot snapshot =
+          await FirebaseFirestore.instance.collection('categories').get();
+      setState(() {
+        _categories = snapshot.docs
+            .map((doc) => doc['categoryname'] as String)
+            .toList(); // Get category names
+      });
+    } catch (e) {
+      print('Error fetching categories: $e');
+    }
+  }
+
+  // Fetch photo data if needed, or set it directly here for demo purposes
+  void _setPhotoData() {
+    photoData = {
+      'postImage': 'https://example.com/image.jpg', // Example image URL
+      'title': 'Sample Title',
+      'type': 'Sample Genre',
+      'postUid': 'samplePostUid',
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textColor =
         theme.brightness == Brightness.dark ? AppColor.white : AppColor.black;
-
     final backgroundColor = theme.brightness == Brightness.dark
         ? AppColor.screendart
         : AppColor.screenlight;
+
+    // Set the photo data here for demonstration purposes
+    _setPhotoData();
 
     return Container(
       color: backgroundColor,
@@ -60,76 +90,29 @@ class _DrawerScreenState extends State<DrawerScreen> {
               ],
             ),
             Column(
-              children: <Widget>[
-                NewRow(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            PostsScreen(bookTitle: 'Tyt Kitap'),
-                      ),
-                    );
-                  },
-                  text: 'Tyt Kitap',
-                  icon: Icons.home,
-                  textColor: textColor,
-                ),
-                const SizedBox(height: 20),
-                NewRow(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            PostsScreen(bookTitle: 'AYT kitap'),
-                      ),
-                    );
-                  },
-                  text: 'AYT kitap',
-                  icon: Icons.person_outline,
-                  textColor: textColor,
-                ),
-                const SizedBox(height: 20),
-                NewRow(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            PostsScreen(bookTitle: 'Lgs kitap'),
-                      ),
-                    );
-                  },
-                  text: 'Lgs kitap',
-                  icon: Icons.settings_brightness_rounded,
-                  textColor: textColor,
-                ),
-                const SizedBox(height: 20),
-                NewRow(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => PostsScreen(bookTitle: 'TUS'),
-                      ),
-                    );
-                  },
-                  text: 'Tus kitap',
-                  icon: Icons.ac_unit_rounded,
-                  textColor: textColor,
-                ),
-                const SizedBox(height: 20),
-                NewRow(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            PostsScreen(bookTitle: 'Paylaşalım'),
-                      ),
-                    );
-                  },
-                  text: 'Paylaşalım',
-                  icon: Icons.access_alarm_outlined,
-                  textColor: textColor,
-                ),
-              ],
+              children: _categories.map((category) {
+                return Column(
+                  children: <Widget>[
+                    NewRow(
+                      onPressed: () {
+                        if (photoData != null) {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => BooksScreen(   categoryTitle: category,),
+                             
+                            
+                            ),
+                          );
+                        }
+                      },
+                      text: category, // Category name
+                      icon: Icons.category, // Icon
+                      textColor: textColor,
+                    ),
+                    const SizedBox(height: 20),
+                  ],
+                );
+              }).toList(),
             ),
           ],
         ),

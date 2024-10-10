@@ -86,28 +86,7 @@ class FirebasePostServis {
   }
   
 
-  Future<String> like({
-    required List like,
-    required String type,
-    required String uid,
-    required String postId,
-  }) async {
-    try {
-      if (like.contains(uid)) {
-        await _firebaseFirestore.collection(type).doc(postId).update({
-          'like': FieldValue.arrayRemove([uid]),
-        });
-      } else {
-        await _firebaseFirestore.collection(type).doc(postId).update({
-          'like': FieldValue.arrayUnion([uid]),
-        });
-      }
-      return 'Success';
-    } catch (e) {
-      print('Error in like: $e');
-      return 'Error: $e';
-    }
-  }
+
 
 
 

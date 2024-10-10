@@ -67,15 +67,4 @@ class AppTheme {
   }
 }
 
-class ThemeProvider with ChangeNotifier {
-  bool _isDarkMode = false;
 
-  bool get isDarkMode => _isDarkMode;
-
-  ThemeData get currentTheme => _isDarkMode ? AppTheme.darkMode : AppTheme.lightMode;
-
-  void toggleTheme() {
-    _isDarkMode = !_isDarkMode;
-    notifyListeners();
-  }
-}
