@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:kitap_al_ver/fk.dart';
 import 'package:kitap_al_ver/ks.dart';
 import 'package:kitap_al_ver/pages/widget/core/newrow.dart';
 import 'package:kitap_al_ver/pages/widget/theme/text_them.dart';

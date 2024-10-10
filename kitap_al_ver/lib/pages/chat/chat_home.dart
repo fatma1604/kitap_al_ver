@@ -57,17 +57,16 @@ class ChatHome extends StatelessWidget {
     if (userData["email"] != _authService.getCurrentUser()!.email) {
       return UserTitle(
         text: userData["username"],
-
         profileImageUrl: userData["profile"],
         onTap: () {
           Navigator.pushNamed(
-  context,
-  AppRoute.chat,
-  arguments: {
-    "email": userData["email"],
-    "uid": userData["uid"],
-  },
-);
+            context,
+            AppRoute.chat,
+            arguments: {
+              "email": userData["email"],
+              "uid": userData["uid"],
+            },
+          );
         },
       );
     } else {

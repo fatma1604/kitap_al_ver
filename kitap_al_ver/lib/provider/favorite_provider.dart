@@ -1,6 +1,5 @@
-// favorite_provider.dart
 import 'package:flutter/material.dart';
-import 'package:kitap_al_ver/models/post.dart';
+import 'package:kitap_al_ver/models/post.dart'; // Adjust import as necessary
 
 class FavoriteProvider with ChangeNotifier {
   final Set<String> _likedPostIds = {};
@@ -15,8 +14,14 @@ class FavoriteProvider with ChangeNotifier {
     } else {
       _likedPostIds.add(post.postId);
     }
+    notifyListeners(); // Notify listeners to update the UI
+  }
+
+  // Optionally, you can load existing liked posts from Firestore or other sources here
+  void loadLikedPosts(Set<String> likedPosts) {
+    _likedPostIds.addAll(likedPosts);
     notifyListeners();
   }
 
-  // You can initialize _likedPostIds with data from Firestore here if needed
+  Set<String> get likedPostIds => _likedPostIds; // Expose liked posts if needed
 }

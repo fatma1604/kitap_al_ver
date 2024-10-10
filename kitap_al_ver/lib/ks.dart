@@ -69,7 +69,7 @@ class _BooksScreenState extends State<BooksScreen> {
     }
   }
 
-  String? getCurrentUserId() {
+    String? getCurrentUserId() {
     final User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       return user.uid;
