@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kitap_al_ver/components/tabbar/liquidTabbar.dart';
 import 'package:kitap_al_ver/models/post.dart';
-
-import 'package:kitap_al_ver/pages/product/cartPage.dart';
 import 'package:kitap_al_ver/provider/favorite_provider.dart';
 import 'package:kitap_al_ver/utils/color.dart';
 import 'package:provider/provider.dart';
@@ -26,12 +23,9 @@ class DetailAppBar extends StatelessWidget {
                   padding: const EdgeInsets.all(15),
                 ),
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => LiquidTabBar(),
-                    ),
-                  );
+                
+               Navigator.pushNamed(context, '/liquidTab');
+
                 },
                 icon: const Icon(
                   Icons.arrow_back_ios,
@@ -46,12 +40,7 @@ class DetailAppBar extends StatelessWidget {
                   padding: const EdgeInsets.all(15),
                 ),
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const CartPage(),
-                    ),
-                  );
+                   Navigator.pushNamed(context, '/card');
                 },
                 icon: const Icon(
                   Icons.add_shopping_cart_rounded,

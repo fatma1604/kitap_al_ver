@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kitap_al_ver/components/tabbar/liquidTabbar.dart';
 import 'package:kitap_al_ver/pages/chat/chat_page.dart';
 import 'package:kitap_al_ver/pages/widget/core/user_title.dart';
 import 'package:kitap_al_ver/service/chat_service.dart';
@@ -18,8 +17,7 @@ class ChatHome extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => LiquidTabBar()));
+            Navigator.pushNamed(context, '/liquidTab');
           },
           icon: const Icon(Icons.arrow_back),
         ),
@@ -54,9 +52,12 @@ class ChatHome extends StatelessWidget {
   Widget _buildUserListItem(
       Map<String, dynamic> userData, BuildContext context) {
     if (userData["email"] != _authService.getCurrentUser()!.email) {
+      String userName = userData["username"] ?? "Unknown User"; // Null kontrolü
+
       return UserTitle(
-        text: userData["email"],
-        profileImageUrl: userData["profile"],
+        text: userName, // E-posta yerine kullanıcı adını kullan
+        profileImageUrl:
+            userData["profile"] ?? "", // Profil resmi için de null kontrolü
         onTap: () {
           Navigator.push(
               context,

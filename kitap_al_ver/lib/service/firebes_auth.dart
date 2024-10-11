@@ -52,11 +52,8 @@ class FirebaseAuthService {
 
       // Store user information in Firestore
       await _storeUserInfo(userCredential.user!.uid, email);
-
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => LiquidTabBar()),
-      );
+Navigator.pushNamed(context, '/liquidTab');
+     
     } on FirebaseAuthException catch (e) {
       _handleAuthError(context, e);
     }
@@ -107,10 +104,7 @@ Future<void> registerUser({
       const SnackBar(content: Text(AppText.registrationSuccessful)),
     );
 
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => LiquidTabBar()),
-    );
+   Navigator.pushNamed(context, '/card');
   } on FirebaseAuthException catch (e) {
     _handleRegistrationError(context, e);
   } catch (e) {

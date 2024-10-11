@@ -8,7 +8,6 @@ import 'package:kitap_al_ver/pages/widget/theme/text.dart';
 import 'package:kitap_al_ver/pages/widget/theme/text_them.dart';
 import 'package:kitap_al_ver/service/firebes_auth.dart';
 import 'package:kitap_al_ver/pages/auth/auth_Page.dart';
-import 'package:kitap_al_ver/pages/auth/forget_page.dart';
 import 'package:kitap_al_ver/pages/auth/lodiverder.dart';
 import 'package:kitap_al_ver/utils/images.dart';
 
@@ -85,10 +84,7 @@ class _LoginFormState extends State<LoginForm> {
             children: [
               TextButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const ForgetPage()),
-                  );
+                   Navigator.pushNamed(context, '/forget');
                 },
                 child: Text(
                   AppText.forgetText,

@@ -1,11 +1,17 @@
+// ignore_for_file: use_super_parameters, prefer_final_fields
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:kitap_al_ver/service/firebes_post.dart';
+import 'package:kitap_al_ver/utils/images.dart';
+
 
 class DrawerCategoryScreen extends StatefulWidget {
   final String categoryTitle;
 
-  const DrawerCategoryScreen({Key? key, required this.categoryTitle}) : super(key: key);
+  const DrawerCategoryScreen({Key? key, required this.categoryTitle})
+      : super(key: key);
 
   @override
   _DrawerCategoryScreenState createState() => _DrawerCategoryScreenState();
@@ -14,67 +20,31 @@ class DrawerCategoryScreen extends StatefulWidget {
 class _DrawerCategoryScreenState extends State<DrawerCategoryScreen> {
   List<DocumentSnapshot> _posts = [];
   List<String> _likedPostIds = [];
+  final FirebasePostServis _firebasePostServis = FirebasePostServis();
   String? currentUserId;
 
   @override
   void initState() {
     super.initState();
     currentUserId = getCurrentUserId();
-    _fetchPost();
-  }
-
-  Future<void> _fetchPost() async {
-    try {
-      QuerySnapshot snapshot = await FirebaseFirestore.instance
-          .collection('post')
-          .where('category', isEqualTo: widget.categoryTitle)
-          .get();
-
-      setState(() {
-        _posts = snapshot.docs;
-        _likedPostIds = snapshot.docs
-            .where((post) =>
-                (post['like'] as List<dynamic>?)?.contains(currentUserId) ?? false)
-            .map((post) => post.id)
-            .toList();
-      });
-    } catch (e) {
-      print('Error fetching posts: $e');
-    }
+   
   }
 
   Future<void> _toggleLike(String postId) async {
-    try {
-      final postRef = FirebaseFirestore.instance.collection('post').doc(postId);
-      bool isLiked = _likedPostIds.contains(postId);
+    await _firebasePostServis.toggleLike(postId, currentUserId);
 
-      if (isLiked) {
-        await postRef.update({
-          'like': FieldValue.arrayRemove([currentUserId]),
-        });
-        setState(() {
-          _likedPostIds.remove(postId);
-        });
+    setState(() {
+      if (_likedPostIds.contains(postId)) {
+        _likedPostIds.remove(postId);
       } else {
-        await postRef.update({
-          'like': FieldValue.arrayUnion([currentUserId]),
-        });
-        setState(() {
-          _likedPostIds.add(postId);
-        });
+        _likedPostIds.add(postId);
       }
-    } catch (e) {
-      print('Error updating like status: $e');
-    }
+    });
   }
 
   String? getCurrentUserId() {
     final User? user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      return user.uid;
-    } else {
-      return null;
-    }
+    return user?.uid;
   }
 
   @override
@@ -84,9 +54,25 @@ class _DrawerCategoryScreenState extends State<DrawerCategoryScreen> {
         title: Text(widget.categoryTitle),
       ),
       body: _posts.isEmpty
-          ? Center(child: CircularProgressIndicator())
+          ? Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Image.asset(
+                    AppImage.books,
+                    width: 200,
+                    height: 200,
+                  ),
+                  const SizedBox(height: 10),
+                  const Text(
+                    'RESİM ATMAYA NE DERSİN ',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ],
+              ),
+            )
           : GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 childAspectRatio: 0.75,
                 crossAxisSpacing: 8.0,
@@ -115,51 +101,15 @@ class _DrawerCategoryScreenState extends State<DrawerCategoryScreen> {
                           Center(
                             child: ClipRRect(
                               borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
-                              child: photoUrl.isNotEmpty
-                                  ? Image.network(
-                                      photoUrl,
-                                      width: double.infinity,
-                                      height: 150,
-                                      fit: BoxFit.cover,
-                                      errorBuilder: (context, error, stackTrace) {
-                                        return SliverToBoxAdapter(
-                                          child: Center(
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                Image.asset(
-                                                  'assets/default_image.png',
-                                                  width: 200,
-                                                  height: 200,
-                                                ),
-                                                const SizedBox(height: 10),
-                                                const Text(
-                                                  'RESİM ATMAYA NE DERSİN',
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    )
-                                  : SliverToBoxAdapter(
-                                      child: Center(
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Image.asset(
-                                              'assets/default_image.png',
-                                              width: 200,
-                                              height: 200,
-                                            ),
-                                            const SizedBox(height: 10),
-                                            const Text(
-                                              'RESİM ATMAYA NE DERSİN',
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
+                              child: Image.network(
+                                photoUrl,
+                                width: double.infinity,
+                                height: 150,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return const Center();
+                                },
+                              ),
                             ),
                           ),
                           const SizedBox(height: 10),

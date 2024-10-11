@@ -1,7 +1,6 @@
 // ignore_for_file: use_key_in_widget_constructors, file_names
 
 import 'package:flutter/material.dart';
-import 'package:kitap_al_ver/pages/misc/explone.dart';
 import 'package:kitap_al_ver/utils/color.dart';
 
 class MySearchWidget extends StatelessWidget {
@@ -25,8 +24,7 @@ class MySearchWidget extends StatelessWidget {
         children: [
           IconButton(
             onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => const Explone()));
+             Navigator.pushNamed(context, '/explone');
             },
             icon: const Icon(Icons.search, color: AppColor.white),
           ),

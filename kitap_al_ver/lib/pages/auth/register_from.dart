@@ -112,7 +112,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ? CircleAvatar(
                           radius: 34.r,
                           backgroundImage:
-                              const AssetImage('assets/images/person.png'),
+                              AssetImage(AppImage.avatar),
                           backgroundColor: Colors.grey.shade200,
                         )
                       : CircleAvatar(

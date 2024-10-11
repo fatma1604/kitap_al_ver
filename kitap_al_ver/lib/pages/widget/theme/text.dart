@@ -1,10 +1,6 @@
 class AppText {
   AppText._();
-//home
-  static const String myName = "Adınız Soyadınız";
-  static const String myBirthDate = "01.01.2024";
-  static const String myPhone = "05556661212";
-  static const String myEmail = "email@gmail.com";
+
 //gooogle
   static const String google = " Google ile giriş yapılamadı";
   static const String error = " Bir hata oluştu.";
@@ -85,6 +81,17 @@ static const String noDescriptionFound = 'Açıklama bulunamadı!';
 static const String noDescriptionAvailable = 'Açıklama mevcut değil'; // or any other suitable string
 static const String defaultUsername = 'Kullanıcı Adı'; // Default username
 static const String defaultProfilePhotoUrl = 'Profil Resmi URL'; // Default profile photo URL
+
+  static const String classSelect = "Sınıf Seçin";
+  static const String typeSelect = "Tür Seçin";
+  static const String subjectSelect = "Konu Başlığı Seçin";
+  static const String statusSelect = "Durum Seçin";
+  static const String historySelect = "Geçmiş Seçin";
+  static const String additionalInfo = "Ek Bilgi";
+  static const String title = 'İlan Başlığı';
+  static const String fieldRequired = 'Bu alan zorunludur';
+  static const String addInformation = 'Bilgi Ekleme';
+  static const String save = "Kaydet";
 
 
 

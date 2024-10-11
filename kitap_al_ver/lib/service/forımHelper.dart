@@ -68,7 +68,7 @@ static Future<void> submitForm({
         SnackBar(content: Text('Bilgiler başarıyla kaydedildi!')),
       );
 
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) => LiquidTabBar()));
+      Navigator.pushNamed(context, '/liquidTab');
     } catch (e) {
       print('Error saving information: $e');
       ScaffoldMessenger.of(context).showSnackBar(

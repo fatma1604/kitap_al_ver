@@ -217,5 +217,22 @@ Future<void> toggleLike(String postId, String? currentUserId) async {
   }
   
 
+  Future<String> loadUserName() async {
+    User? user = _auth.currentUser;
+    return user?.displayName ?? 'User';
+  }
+
+  Future<List<String>> fetchCategories() async {
+    List<String> categories = [];
+    try {
+      QuerySnapshot snapshot = await _firebaseFirestore.collection('categories').get();
+      categories = snapshot.docs
+          .map((doc) => doc['categoryname'] as String)
+          .toList();
+    } catch (e) {
+      print('Error fetching categories: $e');
+    }
+    return categories;
+  }
   
 }
