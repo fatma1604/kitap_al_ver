@@ -1,5 +1,3 @@
-// ignore_for_file: body_might_complete_normally_nullable, unused_local_variable, use_super_parameters, library_private_types_in_public_api
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,7 +5,6 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:kitap_al_ver/pages/search/searchisyory.dart';
 import 'package:kitap_al_ver/pages/profile/profil_screen.dart';
 import 'package:kitap_al_ver/utils/color.dart';
-// Import the search history helper
 
 class Explone extends StatefulWidget {
   const Explone({Key? key}) : super(key: key);
@@ -44,8 +41,9 @@ class _ExploneState extends State<Explone> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final backgroundColor = theme.brightness == Brightness.dark
-        ? AppColor.screendart // Dark mode background
+        ? AppColor.screendart
         : AppColor.screenlight;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: backgroundColor,
@@ -66,6 +64,8 @@ class _ExploneState extends State<Explone> {
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {
                         final snap = documents[index];
+                        // Add your grid item building logic here
+                       
                       },
                       childCount: documents.length,
                     ),
@@ -104,6 +104,7 @@ class _ExploneState extends State<Explone> {
                       delegate: SliverChildBuilderDelegate(
                         (context, index) {
                           final snap = documents[index];
+                          final userData = snap.data() as Map<String, dynamic>?; // null safety için
                           return Column(
                             children: [
                               SizedBox(height: 10.h),
@@ -118,12 +119,16 @@ class _ExploneState extends State<Explone> {
                                   children: [
                                     CircleAvatar(
                                       radius: 23.r,
-                                      backgroundImage:
-                                          NetworkImage(snap['profile']),
+                                      backgroundImage: 
+                                        userData != null && userData.containsKey('profile') 
+                                          ? NetworkImage(userData['profile']) 
+                                          : AssetImage('path/to/default/image.png') as ImageProvider,
                                     ),
                                     SizedBox(width: 15.w),
                                     Text(
-                                      snap['username'],
+                                      userData != null && userData.containsKey('username') 
+                                          ? userData['username'] 
+                                          : 'Unknown User',
                                       style: const TextStyle(color: AppColor.icon),
                                     ),
                                   ],
@@ -177,11 +182,11 @@ class _ExploneState extends State<Explone> {
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
         child: Container(
-          width: double.infinity, // Make sure it takes full width
+          width: double.infinity,
           height: 45.h,
           decoration: BoxDecoration(
             color: Theme.of(context).brightness == Brightness.dark
-                ? const Color.fromARGB(255, 139, 81, 81) // Dark mode colory
+                ? const Color.fromARGB(255, 139, 81, 81)
                 : const Color.fromARGB(255, 243, 157, 157),
             borderRadius: BorderRadius.circular(20.0.r),
           ),

@@ -1,11 +1,9 @@
-// ignore_for_file: avoid_print
-
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/components/tabbar/liquidTabbar.dart';
+import 'package:kitap_al_ver/pages/chat/chat_page.dart';
 import 'package:kitap_al_ver/pages/widget/core/user_title.dart';
 import 'package:kitap_al_ver/service/chat_service.dart';
 import 'package:kitap_al_ver/service/firebes_auth.dart';
-import 'package:kitap_al_ver/utils/aprouta.dart';
 import 'package:kitap_al_ver/utils/color.dart';
 
 class ChatHome extends StatelessWidget {
@@ -19,11 +17,12 @@ class ChatHome extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => LiquidTabBar()));
-            },
-            icon: const Icon(Icons.arrow_back)),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => LiquidTabBar()));
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
       ),
       backgroundColor: Theme.of(context).brightness == Brightness.dark
           ? AppColor.screendart
@@ -56,17 +55,16 @@ class ChatHome extends StatelessWidget {
       Map<String, dynamic> userData, BuildContext context) {
     if (userData["email"] != _authService.getCurrentUser()!.email) {
       return UserTitle(
-        text: userData["username"],
+        text: userData["email"],
         profileImageUrl: userData["profile"],
         onTap: () {
-          Navigator.pushNamed(
-            context,
-            AppRoute.chat,
-            arguments: {
-              "email": userData["email"],
-              "uid": userData["uid"],
-            },
-          );
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ChatPage(
+                        receiverEmail: userData["email"],
+                        receiverId: userData["uid"],
+                      )));
         },
       );
     } else {

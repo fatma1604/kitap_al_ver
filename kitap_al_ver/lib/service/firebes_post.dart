@@ -70,6 +70,7 @@ class FirebasePostServis {
       if (userDoc.exists) {
         final userData = userDoc.data()!;
         return Usermodel(
+          email: userData['email'],
           username: userData['username'],
           profile: userData['profile'],
           bio: userData['bio'],

@@ -1,30 +1,31 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Usermodel {
-  String username;
-  String profile;
-  String bio;
-  List followers;
-  List following;
+  final String username;
+  final String bio;
+  final String profile;
+  final String email; // Email alanını ekleyin
+  final List followers;
+  final List following;
 
   Usermodel({
     required this.username,
-    required this.profile,
     required this.bio,
+    required this.profile,
+    required this.email, // Constructor'a ekleyin
     required this.followers,
     required this.following,
   });
 
-  factory Usermodel.fromFirestore(DocumentSnapshot doc) {
-    var data = doc.data() as Map<String, dynamic>;
+  factory Usermodel.fromFirestore(DocumentSnapshot snapshot) {
+    final data = snapshot.data() as Map<String, dynamic>;
     return Usermodel(
       username: data['username'] ?? '',
-      profile: data['profile'] ?? 'default_profile_url', // Varsayılan profil fotoğrafı URL'si
       bio: data['bio'] ?? '',
+      profile: data['profile'] ?? '',
+      email: data['email'] ?? '', // Firestore'dan email'i al
       followers: data['followers'] ?? [],
       following: data['following'] ?? [],
     );
   }
-
- 
 }

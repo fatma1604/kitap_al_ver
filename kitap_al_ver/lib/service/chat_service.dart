@@ -1,10 +1,7 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/models/message.dart';
-
-
 
 class ChatService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -15,7 +12,7 @@ class ChatService {
     String message,
     TextEditingController messageController,
   ) async {
-    if (message.isNotEmpty) {
+    if (message.isNotEmpty && receiverID.isNotEmpty) {
       final String currentUserID = _auth.currentUser!.uid;
       final String currentUserEmail = _auth.currentUser!.email!;
       final Timestamp timestamp = Timestamp.now();
@@ -23,7 +20,7 @@ class ChatService {
       Mesage newMessage = Mesage(
         senderID: currentUserID,
         senderEmail: currentUserEmail,
-        receiverId: receiverID,
+        receiverId: receiverID, // receiverID burada kullanılıyor
         message: message,
         timestamp: timestamp,
       );
@@ -38,8 +35,10 @@ class ChatService {
           .collection("messages")
           .add(newMessage.toMap());
 
-      // Clear the message controller after sending the message
+      // Mesaj gönderildikten sonra mesaj alanını temizle
       messageController.clear();
+    } else {
+      print("Mesaj veya alıcı kimliği boş olamaz.");
     }
   }
 
@@ -64,6 +63,4 @@ class ChatService {
       }).toList();
     });
   }
-
-  
 }

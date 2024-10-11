@@ -1,9 +1,8 @@
-// ignore_for_file: use_key_in_widget_constructors
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kitap_al_ver/pages/chat/chat_page.dart';
 import 'package:kitap_al_ver/pages/misc/image_cached.dart';
 import 'package:kitap_al_ver/pages/profile/post_screen.dart';
 import 'package:kitap_al_ver/service/firebes_post.dart';
@@ -220,9 +219,15 @@ class _ProfilScreenState extends State<ProfilScreen> {
                   Expanded(
                     child: GestureDetector(
                       onTap: () {
-                        Navigator.pushNamed(
+                        // Burada user email ve ID'yi geçiyoruz
+                        Navigator.push(
                           context,
-                          AppRoute.chat,
+                          MaterialPageRoute(
+                            builder: (context) => ChatPage(
+                              receiverEmail: user.email, // Kullanıcı emaili
+                              receiverId: widget.userId, // Kullanıcı ID'si
+                            ),
+                          ),
                         );
                       },
                       child: Container(
