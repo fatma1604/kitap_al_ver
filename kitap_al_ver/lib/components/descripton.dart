@@ -1,24 +1,25 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart'; // Firebase Authentication'ı ekleyin
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/components/comment.dart';
+import 'package:kitap_al_ver/pages/widget/theme/text.dart';
+import 'package:kitap_al_ver/pages/widget/theme/text_them.dart';
 import 'package:kitap_al_ver/utils/color.dart';
+import 'package:kitap_al_ver/utils/images.dart';
+
 
 class Description extends StatelessWidget {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final String postUid; // Belge ID'sini alabilmek için
+  final String postUid; 
 
-  Description(
-      {super.key, required this.postUid}); // Constructor'da belge ID'si alınır
+  Description({super.key, required this.postUid});
 
   @override
   Widget build(BuildContext context) {
-    // Mevcut kullanıcıyı al
     User? currentUser = FirebaseAuth.instance.currentUser;
 
-    // Kullanıcı mevcut değilse bir mesaj göster
     if (currentUser == null) {
-      return const Center(child: Text('Kullanıcı giriş yapmadı.'));
+      return const Center(child: Text(AppText.generalError)); // Updated message
     }
 
     return Column(
@@ -35,21 +36,15 @@ class Description extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
               ),
               alignment: Alignment.center,
-              child: const Text(
-                "Açıklama",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black54,
-                    fontSize: 16),
+              child: Text(
+                AppText.description, // Use AppText for description
+                style: AppTextTheme.description(context),
               ),
             ),
             const SizedBox(width: 10),
-            const Text(
-              "Özellikler",
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black54,
-                  fontSize: 16),
+            Text(
+              AppText.features, // Use AppText for features
+              style: AppTextTheme.description(context),
             ),
             const SizedBox(width: 10),
             GestureDetector(
@@ -68,12 +63,10 @@ class Description extends StatelessWidget {
                         minChildSize: 0.2,
                         builder: (context, scrollController) {
                           return Comment(
-                            type: 'post', 
-                            uid: postUid, 
-                            username: currentUser.displayName ??
-                                'Kullanıcı Adı', 
-                            profilePhotoUrl: currentUser.photoURL ??
-                                'Profil Resmi URL', 
+                            type: 'post',
+                            uid: postUid,
+                            username: currentUser.displayName ?? AppText.defaultUsername,
+                            profilePhotoUrl: currentUser.photoURL ?? AppText.defaultProfilePhotoUrl,
                           );
                         },
                       ),
@@ -82,7 +75,7 @@ class Description extends StatelessWidget {
                 );
               },
               child: Image.asset(
-                'assets/images/comment.webp',
+            AppImage.comment,
                 height: 28,
               ),
             ),
@@ -97,14 +90,13 @@ class Description extends StatelessWidget {
               return const Center(child: CircularProgressIndicator());
             }
             if (snapshot.hasError) {
-              return const Center(child: Text('Something went wrong!'));
+              return const Center(child: Text(AppText.generalError)); // Updated error message
             }
             if (!snapshot.hasData || !snapshot.data!.exists) {
-              return const Center(child: Text('No description found!'));
+              return const Center(child: Text(AppText.noDescriptionFound)); // Use AppText for no description
             }
 
-            final description = snapshot.data!.get('additionalInfo') ??
-                'No description available';
+            final description = snapshot.data!.get('additionalInfo') ?? AppText.noDescriptionAvailable;
             return Text(
               description,
               style: const TextStyle(fontSize: 16, color: AppColor.black),

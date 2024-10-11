@@ -51,6 +51,18 @@ class AppTextTheme {
       
     );
   }
+ static TextStyle description(BuildContext context) {
+   
+    return const TextStyle(
+     
+      color:Colors.black54,
+      fontWeight: FontWeight.bold,
+      fontSize: 16
+      
+    );
+  }
+
+
 
   
 }

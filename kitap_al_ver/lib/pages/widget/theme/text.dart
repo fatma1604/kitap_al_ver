@@ -77,4 +77,15 @@ class AppText {
   static const String wrongPassword = 'Şifreniz hatalı. Lütfen tekrar deneyin.';
   static const String wrongEmail =
       'Böyle bir kullanıcı bulunamadı. Lütfen kayıt olun.';
+
+
+static const String description = "Açıklama";
+static const String features = "Özellikler";
+static const String noDescriptionFound = 'Açıklama bulunamadı!';
+static const String noDescriptionAvailable = 'Açıklama mevcut değil'; // or any other suitable string
+static const String defaultUsername = 'Kullanıcı Adı'; // Default username
+static const String defaultProfilePhotoUrl = 'Profil Resmi URL'; // Default profile photo URL
+
+
+
 }

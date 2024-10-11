@@ -122,34 +122,38 @@ class ProductCard extends StatelessWidget {
     );
   }
 
-  Widget _buildFavoriteButton(FavoriteProvider provider, Posts post) {
-    return Positioned(
-      child: Align(
-        alignment: Alignment.topRight,
-        child: GestureDetector(
-          onTap: () async {
-            provider.toggleFavorite(post);
-            final firebaseService = FirebasePostServis();
-            firebaseService.addLikeToPost(post.postId);
-          },
-          child: Container(
-            height: 40,
-            width: 40,
-            decoration: const BoxDecoration(
-              color: Colors.transparent,
-              borderRadius: BorderRadius.only(
-                topRight: Radius.circular(20),
-                bottomLeft: Radius.circular(10),
-              ),
+Widget _buildFavoriteButton(FavoriteProvider provider, Posts post) {
+  return Positioned(
+    child: Align(
+      alignment: Alignment.topRight,
+      child: GestureDetector(
+        onTap: () async {
+          provider.toggleFavorite(post);
+          final firebaseService = FirebasePostServis();
+          final currentUserId = firebaseService.getCurrentUserId(); // Kullanıcının ID'sini al
+          
+          // toggleLike fonksiyonuna iki argüman gönder
+          await firebaseService.toggleLike(post.postId, currentUserId); 
+        },
+        child: Container(
+          height: 40,
+          width: 40,
+          decoration: const BoxDecoration(
+            color: Colors.transparent,
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(20),
+              bottomLeft: Radius.circular(10),
             ),
-            child: Icon(
-              provider.isExist(post) ? Icons.favorite : Icons.favorite_border,
-              color: Colors.red,
-              size: 22,
-            ),
+          ),
+          child: Icon(
+            provider.isExist(post) ? Icons.favorite : Icons.favorite_border,
+            color: Colors.red,
+            size: 22,
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
+}
+
 }

@@ -126,19 +126,35 @@ class FirebasePostServis {
     }
   }
 
-  Future<void> addLikeToPost(String postId) async {
-    try {
-      final postRef = FirebaseFirestore.instance.collection('post').doc(postId);
-
-      await postRef.update({
-        'like': FieldValue.arrayUnion([getCurrentUserId()]),
-      });
-
-      print('Like successfully added to the post.');
-    } catch (e) {
-      print('Error adding like: $e');
-    }
+Future<void> toggleLike(String postId, String? currentUserId) async {
+  if (currentUserId == null) {
+    print('User is not logged in.');
+    return;
   }
+
+  try {
+    final postRef = _firebaseFirestore.collection('post').doc(postId); // Düzeltildi
+    final postSnapshot = await postRef.get();
+    final isLiked = postSnapshot.data()?['like']?.contains(currentUserId) ?? false;
+
+    if (isLiked) {
+      // Kullanıcı zaten beğenmiş, beğeniyi kaldır
+      await postRef.update({
+        'like': FieldValue.arrayRemove([currentUserId]),
+      });
+      print('Like removed from the post.');
+    } else {
+      // Kullanıcı beğenmemiş, beğeni ekle
+      await postRef.update({
+        'like': FieldValue.arrayUnion([currentUserId]),
+      });
+      print('Like successfully added to the post.');
+    }
+  } catch (e) {
+    print('Error updating like status: $e');
+  }
+}
+
 
   String? getCurrentUserId() {
     final User? user = FirebaseAuth.instance.currentUser;

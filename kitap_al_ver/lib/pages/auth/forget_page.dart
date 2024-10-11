@@ -1,7 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/utils/color.dart';
 import 'package:kitap_al_ver/pages/misc/forget.dart';
+import 'package:kitap_al_ver/utils/images.dart';
+
 class ForgetPage extends StatelessWidget {
   const ForgetPage({super.key});
 
@@ -22,9 +23,8 @@ class ForgetPage extends StatelessWidget {
               height: 400,
               decoration: BoxDecoration(
                 image: const DecorationImage(
-                  image: AssetImage(
-                    'assets/images/logo.jpeg',
-                  ),
+                  image: AssetImage(AppImage.logo), // Use AssetImage here
+                  fit: BoxFit.cover, // Optionally adjust the fit
                 ),
                 color: theme.brightness == Brightness.dark
                     ? AppColor.screendart

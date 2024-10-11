@@ -2,24 +2,24 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class BooksScreen extends StatefulWidget {
+class DrawerCategoryScreen extends StatefulWidget {
   final String categoryTitle;
 
-  const BooksScreen({Key? key, required this.categoryTitle}) : super(key: key);
+  const DrawerCategoryScreen({Key? key, required this.categoryTitle}) : super(key: key);
 
   @override
-  _BooksScreenState createState() => _BooksScreenState();
+  _DrawerCategoryScreenState createState() => _DrawerCategoryScreenState();
 }
 
-class _BooksScreenState extends State<BooksScreen> {
+class _DrawerCategoryScreenState extends State<DrawerCategoryScreen> {
   List<DocumentSnapshot> _posts = [];
-  List<String> _likedPostIds = []; // List to hold liked post IDs
-  String? currentUserId; // Placeholder for current user ID
+  List<String> _likedPostIds = [];
+  String? currentUserId;
 
   @override
   void initState() {
     super.initState();
-    currentUserId = getCurrentUserId(); // Get the current user ID
+    currentUserId = getCurrentUserId();
     _fetchPost();
   }
 
@@ -34,10 +34,9 @@ class _BooksScreenState extends State<BooksScreen> {
         _posts = snapshot.docs;
         _likedPostIds = snapshot.docs
             .where((post) =>
-                (post['like'] as List<dynamic>?)?.contains(currentUserId) ??
-                false)
+                (post['like'] as List<dynamic>?)?.contains(currentUserId) ?? false)
             .map((post) => post.id)
-            .toList(); // Initialize liked posts
+            .toList();
       });
     } catch (e) {
       print('Error fetching posts: $e');
@@ -54,14 +53,14 @@ class _BooksScreenState extends State<BooksScreen> {
           'like': FieldValue.arrayRemove([currentUserId]),
         });
         setState(() {
-          _likedPostIds.remove(postId); // Remove from liked list
+          _likedPostIds.remove(postId);
         });
       } else {
         await postRef.update({
           'like': FieldValue.arrayUnion([currentUserId]),
         });
         setState(() {
-          _likedPostIds.add(postId); // Add to liked list
+          _likedPostIds.add(postId);
         });
       }
     } catch (e) {
@@ -69,7 +68,7 @@ class _BooksScreenState extends State<BooksScreen> {
     }
   }
 
-    String? getCurrentUserId() {
+  String? getCurrentUserId() {
     final User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       return user.uid;
@@ -99,8 +98,7 @@ class _BooksScreenState extends State<BooksScreen> {
                 var images = post['postImages'] as List<dynamic>;
                 String photoUrl = images.isNotEmpty ? images[0] : '';
                 String title = post['title'] ?? 'No Title';
-                bool isLiked =
-                    _likedPostIds.contains(post.id); // Check if liked
+                bool isLiked = _likedPostIds.contains(post.id);
 
                 return Stack(
                   children: [
@@ -116,29 +114,51 @@ class _BooksScreenState extends State<BooksScreen> {
                           const SizedBox(height: 5),
                           Center(
                             child: ClipRRect(
-                              borderRadius: const BorderRadius.vertical(
-                                  top: Radius.circular(20)),
+                              borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
                               child: photoUrl.isNotEmpty
                                   ? Image.network(
                                       photoUrl,
                                       width: double.infinity,
                                       height: 150,
                                       fit: BoxFit.cover,
-                                      errorBuilder:
-                                          (context, error, stackTrace) {
-                                        return Image.asset(
-                                          'assets/default_image.png',
-                                          width: double.infinity,
-                                          height: 150,
-                                          fit: BoxFit.cover,
+                                      errorBuilder: (context, error, stackTrace) {
+                                        return SliverToBoxAdapter(
+                                          child: Center(
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Image.asset(
+                                                  'assets/default_image.png',
+                                                  width: 200,
+                                                  height: 200,
+                                                ),
+                                                const SizedBox(height: 10),
+                                                const Text(
+                                                  'RESİM ATMAYA NE DERSİN',
+                                                ),
+                                              ],
+                                            ),
+                                          ),
                                         );
                                       },
                                     )
-                                  : Image.asset(
-                                      'assets/default_image.png',
-                                      width: double.infinity,
-                                      height: 150,
-                                      fit: BoxFit.cover,
+                                  : SliverToBoxAdapter(
+                                      child: Center(
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Image.asset(
+                                              'assets/default_image.png',
+                                              width: 200,
+                                              height: 200,
+                                            ),
+                                            const SizedBox(height: 10),
+                                            const Text(
+                                              'RESİM ATMAYA NE DERSİN',
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                                     ),
                             ),
                           ),

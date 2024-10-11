@@ -1,5 +1,4 @@
-// form_helpers.dart
-// ignore_for_file: file_names, prefer_const_constructors, use_build_context_synchronously, avoid_print
+
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,7 +9,6 @@ import 'package:kitap_al_ver/pages/home/galleripage.dart';
 import 'package:uuid/uuid.dart';
 
 class FormHelpers {
-  // Navigate to gallery and get selected images
   static Future<void> navigateToGallery(
       BuildContext context, Function(List<String>) onImagesSelected) async {
     final result = await Navigator.of(context).push(
@@ -124,4 +122,6 @@ static Future<void> submitForm({
       print('Error: $e');
     }
   }
+
+  
 }
