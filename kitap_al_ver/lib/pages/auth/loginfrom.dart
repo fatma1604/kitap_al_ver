@@ -89,7 +89,7 @@ class _LoginFormState extends State<LoginForm> {
                 child: Text(
                   AppText.forgetText,
                   style: GoogleFonts.playfairDisplay(
-                      textStyle: AppTextTheme.login(context)),
+                      textStyle: AppTextTheme.heading(context)),
                 ),
               )
             ],
@@ -122,7 +122,7 @@ class _LoginFormState extends State<LoginForm> {
             child: Text(
               AppText.register,
               style: GoogleFonts.playfairDisplay(
-                  textStyle: AppTextTheme.login(context)),
+                  textStyle: AppTextTheme.heading(context)),
             ),
           )
         ],

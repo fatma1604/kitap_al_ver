@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:kitap_al_ver/pages/widget/theme/text_them.dart';
+import 'package:kitap_al_ver/utils/color.dart';
 
 showAlertDialog({
   required BuildContext context,
@@ -12,10 +14,7 @@ showAlertDialog({
         backgroundColor: const Color.fromARGB(255, 247, 100, 113),
         content: Text(
           message,
-          style: const TextStyle(
-            color: Colors.black,
-            fontSize: 15,
-          ),
+          style:AppTextTheme.body(context)
         ),
         contentPadding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
         actions: [
@@ -23,7 +22,7 @@ showAlertDialog({
             onPressed: () => Navigator.pop(context),
             child: Text(
               btnText ?? "Tammam",
-              style: const TextStyle(color: Colors.black),
+              style: const TextStyle(color:AppColor.black),
             ),
           ),
         ],

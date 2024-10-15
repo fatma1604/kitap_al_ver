@@ -1,296 +1,155 @@
 // ignore_for_file: unnecessary_import
 
-import 'dart:ui';
 
-import 'package:flutter/material.dart';
 
 class CategoryModel {
   final String categoryname;
   final String images;
   final List<String> durum;
-  final List<Color> colors;
-  final List<String> classes; // Yeni alan
-  final List<String> types; // Yeni alan
+ 
+  final List<String> classes; 
+  final List<String> types;
   final List<String> subjects;
   final List<String> history;
-  // Yeni alan
 
-  CategoryModel(
-      {required this.categoryname,
-      required this.images,
-      required this.colors,
-      required this.classes,
-      required this.types,
-      required this.subjects,
-      required this.durum,
-      required this.history});
+  CategoryModel({
+    required this.categoryname,
+    required this.images,
+  
+    required this.classes,
+    required this.types,
+    required this.subjects,
+    required this.durum,
+    required this.history,
+  });
 }
+
 
 final List<CategoryModel> kategory = [
   CategoryModel(
-      categoryname: 'TYT-KİTAP',
-      images: "assets/images/profile.png",
-      colors: [
-        Colors.deepOrange
-      ],
-      classes: [
-        'Sınıf 9',
-        'Sınıf 10'
-      ],
-      types: [
-        'DENEME',
-        'SET',
-        'TEST'
-      ],
-      subjects: [
-        'BİYOLOJİ',
-        'COĞRAFYA',
-        'EDEBİYAT',
-        'DİLBİLGİSİ',
-        'FELSEFE',
-        'FİZİK',
-        'GEOMETRİ',
-        'KİMYA',
-        'PARAGRAF',
-        'TARİH',
-        'TÜRKÇE'
-      ],
-      durum: [
-        'Az Kullanılmış',
-        'İkinci El',
-        'Yeni'
-      ],
-      history: [
-        "2024",
-        "2023",
-        "2022",
-        "2021",
-        "2020",
-        "2019",
-        "2018"
-      ]),
+    categoryname: 'TYT-KİTAP',
+    images: "assets/images/1.png",
+  
+    classes: ['Sınıf 9', 'Sınıf 10'],
+    types: ['DENEME', 'SET', 'TEST'],
+    subjects: [
+      'BİYOLOJİ',
+      'COĞRAFYA',
+      'EDEBİYAT',
+      'DİLBİLGİSİ',
+      'FELSEFE',
+      'FİZİK',
+      'GEOMETRİ',
+      'KİMYA',
+      'PARAGRAF',
+      'TARİH',
+      'TÜRKÇE'
+    ],
+    durum: ['Az Kullanılmış', 'İkinci El', 'Yeni'],
+    history: ["2024", "2023", "2022", "2021", "2020", "2019", "2018"],
+  ),
   CategoryModel(
-      categoryname: 'AYT-KİTAP',
-      images: "assets/images/profile.png",
-      colors: [
-        Colors.green
-      ],
-      classes: [
-        'Sınıf 11',
-        'Sınıf 12'
-      ],
-      types: [
-        'DENEME',
-        'SET',
-        'TEST'
-      ],
-      subjects: [
-        'BİYOLOJİ',
-        'COĞRAFYA',
-        'EDEBİYAT',
-        'DİLBİLGİSİ',
-        'FELSEFE',
-        'FİZİK',
-        'GEOMETRİ',
-        'KİMYA',
-        'PARAGRAF',
-        'TARİH',
-        'TÜRKÇE'
-      ],
-      durum: [
-        'Az Kullanılmış',
-        'İkinci El',
-        'Yeni'
-      ],
-      history: [
-        "2024",
-        "2023",
-        "2022",
-        "2021",
-        "2020",
-        "2019",
-        "2018"
-      ]),
+    categoryname: 'AYT-KİTAP',
+    images: "assets/images/1.png",
+   
+    classes: ['Sınıf 11', 'Sınıf 12'],
+    types: ['DENEME', 'SET', 'TEST'],
+    subjects: [
+      'BİYOLOJİ',
+      'COĞRAFYA',
+      'EDEBİYAT',
+      'DİLBİLGİSİ',
+      'FELSEFE',
+      'FİZİK',
+      'GEOMETRİ',
+      'KİMYA',
+      'PARAGRAF',
+      'TARİH',
+      'TÜRKÇE'
+    ],
+    durum: ['Az Kullanılmış', 'İkinci El', 'Yeni'],
+    history: ["2024", "2023", "2022", "2021", "2020", "2019", "2018"],
+  ),
   CategoryModel(
-      categoryname: 'LGS-KİTAP',
-      images: "assets/images/profile.png",
-      colors: [
-        Colors.purple
-      ],
-      classes: [
-        'Sınıf 8'
-      ],
-      types: [
-        'DENEME',
-        'SET',
-        'TEST',
-      ],
-      subjects: [
-        'DİN',
-        'TARİH',
-        'FEN',
-        'KİMYA',
-        'İNGİLİZCE',
-        'iNKİLAP',
-        'TÜRKÇE'
-      ],
-      durum: [
-        'Az Kullanılmış',
-        'İkinci El',
-        'Yeni'
-      ],
-      history: [
-        "2024",
-        "2023",
-        "2022",
-        "2021",
-        "2020",
-        "2019",
-        "2018"
-      ]),
+    categoryname: 'LGS-KİTAP',
+    images: "assets/images/1.png",
+
+    classes: ['Sınıf 8'],
+    types: ['DENEME', 'SET', 'TEST'],
+    subjects: [
+      'DİN',
+      'TARİH',
+      'FEN',
+      'KİMYA',
+      'İNGİLİZCE',
+      'İNKILAP',
+      'TÜRKÇE'
+    ],
+    durum: ['Az Kullanılmış', 'İkinci El', 'Yeni'],
+    history: ["2024", "2023", "2022", "2021", "2020", "2019", "2018"],
+  ),
   CategoryModel(
-      categoryname: 'KPPS ',
-      images: "assets/images/profile.png",
-      colors: [
-        Colors.purple
-      ],
-      classes: [
-        "ORTA ÖĞRETİM"
-        ,"ÖNLİSANAS"
-      ],
-      types: [
-        'DENEME',
-        'SET',
-        'TEST'
-      ],
-      subjects: [
-        "KPPS GENEL KÜTÜR",
-        "KPSS",
-        "ALS",
-        "YDS",
-        "KPSS ÖABT",
-        'VATANDAŞLIK',
-      ],
-      durum: [
-        'Az Kullanılmış',
-        'İkinci El',
-        'Yeni'
-      ],
-      history: [
-        "2024",
-        "2023",
-        "2022",
-        "2021",
-        "2020",
-        "2019",
-        "2018"
-      ]),
+    categoryname: 'KPSS',
+    images: "assets/images/1.png",
+
+    classes: ['ORTA ÖĞRETİM', 'ÖNLİSANS'],
+    types: ['DENEME', 'SET', 'TEST'],
+    subjects: [
+      'KPSS GENEL KÜLTÜR',
+      'KPSS',
+      'ALS',
+      'YDS',
+      'KPSS ÖABT',
+      'VATANDAŞLIK',
+    ],
+    durum: ['Az Kullanılmış', 'İkinci El', 'Yeni'],
+    history: ["2024", "2023", "2022", "2021", "2020", "2019", "2018"],
+  ),
   CategoryModel(
-      categoryname: 'ALES ',
-      images: "assets/images/profile.png",
-      colors: [
-        Colors.purple
-      ],
-      classes: [
-        "ORTA ÖĞRETİM","ÖNLİSANAS"
-      ],
-      types: [
-        'DENEME',
-        'SET',
-        'TEST'
-      ],
-      subjects: [
-        "als",
-        "KPSS",
-        "ALS",
-        "YDS",
-        "KPSS ÖABT",
-        'VATANDAŞLIK',
-      ],
-      durum: [
-        'Az Kullanılmış',
-        'İkinci El',
-        'Yeni'
-      ],
-      history: [
-        "2024",
-        "2023",
-        "2022",
-        "2021",
-        "2020",
-        "2019",
-        "2018"
-      ]),
+    categoryname: 'ALES',
+    images: "assets/images/1.png",
+   
+    classes: ['ORTA ÖĞRETİM', 'ÖNLİSANS'],
+    types: ['DENEME', 'SET', 'TEST'],
+    subjects: [
+      'SAYISAL',
+      'SÖZEL',
+    ],
+    durum: ['Az Kullanılmış', 'İkinci El', 'Yeni'],
+    history: ["2024", "2023", "2022", "2021", "2020", "2019", "2018"],
+  ),
   CategoryModel(
-      categoryname: 'TUS  ',
-      images: "assets/images/profile.png",
-      colors: [
-        Colors.purple
-      ],
-      classes: [
-        "ORTA ÖĞRETİM,ÖNLİSANAS"
-      ],
-      types: [
-        'DENEME',
-        'SET',
-        'TEST'
-      ],
-      subjects: [
-        "TUD",
-        "KPSS",
-        "ALS",
-        "YDS",
-        "KPSS ÖABT",
-        'VATANDAŞLIK',
-      ],
-      durum: [
-        'Az Kullanılmış',
-        'İkinci El',
-        'Yeni'
-      ],
-      history: [
-        "2024",
-        "2023",
-        "2022",
-        "2021",
-        "2020",
-        "2019",
-        "2018"
-      ]),
+    categoryname: 'TUS',
+    images: "assets/images/1.png",
+   
+    classes: ['Tıp Öğrencileri'],
+    types: ['DENEME', 'SET', 'TEST'],
+    subjects: [
+      'ANATOMİ',
+      'FİZYOLOJİ',
+      'PATOFİZYOLOJİ',
+      'FARMAKOLOJİ',
+      'KLINIK BILIMLER'
+    ],
+    durum: ['Az Kullanılmış', 'İkinci El', 'Yeni'],
+    history: ["2024", "2023", "2022", "2021", "2020", "2019", "2018"],
+  ),
   CategoryModel(
-      categoryname: 'TUS  ',
-      images: "assets/images/profile.png",
-      colors: [
-        Colors.purple
-      ],
-      classes: [
-        "ORTA ÖĞRETİM","ÖNLİSANAS"
-      ],
-      types: [
-        'DENEME',
-        'SET',
-        'TEST'
-      ],
-      subjects: [
-        "YDS ",
-        "KPSS",
-        "ALS",
-        "YDS",
-        "KPSS ÖABT",
-        'VATANDAŞLIK',
-      ],
-      durum: [
-        'Az Kullanılmış',
-        'İkinci El',
-        'Yeni'
-      ],
-      history: [
-        "2024",
-        "2023",
-        "2022",
-        "2021",
-        "2020",
-        "2019",
-        "2018"
-      ]),
+    categoryname: 'ROMAN KİTAPLARI',
+    images: "assets/images/2.png", 
+   
+    classes: ['Genel Okuma'],
+    types: ['Roman', 'Kısa Hikaye'],
+    subjects: [
+      'Klasikler',
+      'Modern Edebiyat',
+      'Bilim Kurgu',
+      'Aşk',
+      'Macera',
+      'Tarihî Roman',
+      'Fantastik',
+    ],
+    durum: ['Az Kullanılmış', 'İkinci El', 'Yeni'],
+    history: ["2024", "2023", "2022", "2021", "2020", "2019", "2018"],
+  ),
 ];

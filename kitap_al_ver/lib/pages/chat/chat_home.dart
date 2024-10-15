@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/pages/chat/chat_page.dart';
 import 'package:kitap_al_ver/pages/widget/core/user_title.dart';
@@ -13,8 +15,11 @@ class ChatHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
       appBar: AppBar(
+        backgroundColor:
+            isDarkMode ? AppColor.screendart : AppColor.screenlight,
         leading: IconButton(
           onPressed: () {
             Navigator.pushNamed(context, '/liquidTab');

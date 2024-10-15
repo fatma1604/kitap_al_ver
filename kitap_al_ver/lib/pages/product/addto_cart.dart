@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:kitap_al_ver/pages/widget/theme/text_them.dart';
 import 'package:kitap_al_ver/utils/color.dart';
 import 'package:uuid/uuid.dart';
 
@@ -38,22 +39,17 @@ class _AddToCartState extends State<AddToCart> {
       await _firestore.collection('sepet').doc(uid).set({
         'postuid': postUid,
         'userId': userId,
-        "cartud": uid,
-        // Unique cart ID
+        'cartud': uid, 
         'photoUrl': photoUrl,
       });
 
-      const snackBar = SnackBar(
+      final snackBar = SnackBar(
         backgroundColor: AppColor.darttBg,
         content: Text(
-          "Successfully added!",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 25,
-            color: AppColor.white,
-          ),
+          "Sepetinize ekledik !",
+          style: AppTextTheme.largeTitle(context),
         ),
-        duration: Duration(seconds: 1),
+        duration: const Duration(seconds: 1),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     } catch (e) {
@@ -86,18 +82,14 @@ class _AddToCartState extends State<AddToCart> {
               child: Container(
                 height: 55,
                 decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 63, 38, 38),
+                  color: AppColor.screendart2,
                   borderRadius: BorderRadius.circular(50),
                 ),
                 alignment: Alignment.center,
                 padding: const EdgeInsets.symmetric(horizontal: 50),
-                child: const Text(
+                child: Text(
                   "Sepete Ekle",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
+                  style: AppTextTheme.largeTitle(context), 
                 ),
               ),
             )

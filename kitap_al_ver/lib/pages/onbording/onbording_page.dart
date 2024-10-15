@@ -16,7 +16,7 @@ class OnboardPage extends StatelessWidget {
         margin: const EdgeInsets.all(16.0),
         child: Image.asset(
           page.url,
-          fit: BoxFit.cover, // Resmi genişletmek için BoxFit.cover kullan
+          fit: BoxFit.cover, 
         ),
       ),
     );

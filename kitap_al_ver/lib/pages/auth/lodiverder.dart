@@ -13,7 +13,7 @@ class LoginDivider extends StatelessWidget {
   Widget build(BuildContext context) {
     final MediaQueryData mediaQueryData = MediaQuery.of(context);
     final double mHeight = mediaQueryData.size.height;
-    // ignore: unused_local_variable
+   
     final ThemeData theme = Theme.of(context);
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: mHeight / 40),
@@ -26,9 +26,9 @@ class LoginDivider extends StatelessWidget {
             ),
           ),
           Padding(
-            // ignore: prefer_const_constructors
+          
             padding: EdgeInsets.symmetric(horizontal: 10),
-            child: Text(AppText.continueOn, style: AppTextTheme.login(context)),
+            child: Text(AppText.continueOn, style: AppTextTheme.heading(context)),
           ),
           Expanded(
             child: Divider(

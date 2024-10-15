@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/pages/widget/core/nebox.dart';
+import 'package:kitap_al_ver/utils/color.dart';
 
 class MyTextField extends StatefulWidget {
   final TextEditingController? controller;
@@ -72,14 +73,14 @@ class _MyTextFieldState extends State<MyTextField> {
             fillColor: Colors.transparent,
             hintText: widget.hintText,
             hintStyle: const TextStyle(
-              color: Color.fromARGB(255, 255, 255, 255),
-              shadows: [
-                BoxShadow(
-                  color: Color.fromARGB(255, 252, 248, 248),
-                  blurRadius: 3,
-                  offset: Offset(0, 0),
-                ),
-              ],
+              color: AppColor.white,
+             shadows: [
+    BoxShadow(
+      color: AppColor.white, 
+      blurRadius: 3, 
+      offset: Offset(0, 0), 
+    ),
+  ],
             ),
             prefixIcon: widget.prefixIcon,
             suffixIcon: widget.obscureText

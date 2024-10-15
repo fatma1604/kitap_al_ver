@@ -1,7 +1,5 @@
-//arka plan görünümü
 
-//Ama onbordingten sonra Authpage cahrılıyor
-//loginfrom  ile regidter burda
+
 
 // ignore_for_file: file_names
 

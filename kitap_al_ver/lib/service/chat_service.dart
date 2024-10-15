@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +22,7 @@ class ChatService {
       Mesage newMessage = Mesage(
         senderID: currentUserID,
         senderEmail: currentUserEmail,
-        receiverId: receiverID, // receiverID burada kullanılıyor
+        receiverId: receiverID, 
         message: message,
         timestamp: timestamp,
       );
@@ -35,7 +37,7 @@ class ChatService {
           .collection("messages")
           .add(newMessage.toMap());
 
-      // Mesaj gönderildikten sonra mesaj alanını temizle
+      
       messageController.clear();
     } else {
       print("Mesaj veya alıcı kimliği boş olamaz.");

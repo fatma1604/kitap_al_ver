@@ -55,9 +55,7 @@ class AppText {
   static const String forgetEmail = 'Lütfen bir e-posta adresi giriniz.';
   static const String trueEmail =
       'Şifre sıfırlama bağlantısı e-postanıza gönderildi.';
-  static const String approval = 'ŞİFREYİ RESETLE.';
-
-  static const String help = "Yardım";
+  static const String approval = 'Şireyi Resetle';
 
   static const String information = "BİLGİLERİM";
   static const String courseContent = "İçerik";
@@ -74,14 +72,24 @@ class AppText {
   static const String wrongEmail =
       'Böyle bir kullanıcı bulunamadı. Lütfen kayıt olun.';
 
+  static const String description = "Açıklama";
+  static const String features = "Özellikler";
+  static const String noDescriptionFound = 'Açıklama bulunamadı!';
+  static const String noDescriptionAvailable =
+      'Açıklama mevcut değil'; 
+  static const String defaultUsername = 'Kullanıcı Adı'; 
+  static const String defaultProfilePhotoUrl =
+      'Profil Resmi URL'; 
 
-static const String description = "Açıklama";
-static const String features = "Özellikler";
-static const String noDescriptionFound = 'Açıklama bulunamadı!';
-static const String noDescriptionAvailable = 'Açıklama mevcut değil'; // or any other suitable string
-static const String defaultUsername = 'Kullanıcı Adı'; // Default username
-static const String defaultProfilePhotoUrl = 'Profil Resmi URL'; // Default profile photo URL
-
+  // Profil Ekranı
+  static const String posts = 'Posts';
+  static const String followers = 'Followers';
+  static const String following = 'Following';
+  static const String editYourProfile = 'Profilinizi Düzenleyin';
+  static const String follow = 'Takip Et';
+  static const String unfollow = 'Takibi Bırak';
+  static const String message = 'Mesaj';
+  static const String userNotFound = 'Kullanıcı bulunamadı';
   static const String classSelect = "Sınıf Seçin";
   static const String typeSelect = "Tür Seçin";
   static const String subjectSelect = "Konu Başlığı Seçin";
@@ -93,6 +101,9 @@ static const String defaultProfilePhotoUrl = 'Profil Resmi URL'; // Default prof
   static const String addInformation = 'Bilgi Ekleme';
   static const String save = "Kaydet";
 
+  static const String searchHint = 'Arayalım';
+  static const String unknownUser = 'Unknown User';
 
 
+  static String editProfile = 'Edit Your Profile';
 }

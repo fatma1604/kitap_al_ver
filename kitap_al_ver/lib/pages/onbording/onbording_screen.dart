@@ -3,6 +3,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kitap_al_ver/mainpage.dart';
 import 'package:kitap_al_ver/pages/widget/core/onbordbutton.dart';
 import 'package:kitap_al_ver/utils/color.dart';
 import 'package:kitap_al_ver/pages/onbording/intopage.dart';
@@ -86,7 +87,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     } else {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => AuthPage(isLogin: true)),
+        MaterialPageRoute(builder: (context) => MainPage()),
       );
     }
   }

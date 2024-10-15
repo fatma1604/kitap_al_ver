@@ -3,6 +3,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:kitap_al_ver/pages/widget/theme/text_them.dart';
+import 'package:kitap_al_ver/utils/color.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
@@ -15,13 +17,20 @@ class _CartPageState extends State<CartPage> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  // Get current user ID
+ 
   String? get _currentUserId => _auth.currentUser?.uid;
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
     return Scaffold(
+      backgroundColor: theme.brightness == Brightness.dark
+          ? AppColor.screendart
+          : AppColor.screenlight,
       appBar: AppBar(
+        backgroundColor: Theme.of(context).brightness == Brightness.dark
+            ? AppColor.screendart
+            : AppColor.screenlight,
         title: const Text(
           "Sepet",
           style: TextStyle(fontWeight: FontWeight.bold),
@@ -31,7 +40,7 @@ class _CartPageState extends State<CartPage> {
       body: StreamBuilder<QuerySnapshot>(
         stream: _firestore
             .collection('sepet')
-            .where('userId', isEqualTo: _currentUserId) // Filter by current user
+            .where('userId', isEqualTo: _currentUserId)
             .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
@@ -48,7 +57,7 @@ class _CartPageState extends State<CartPage> {
             itemCount: cartItems.length,
             itemBuilder: (context, index) {
               final item = cartItems[index];
-              final postId = item['postuid']; // Get post ID to fetch details
+              final postId = item['postuid']; 
 
               return FutureBuilder<DocumentSnapshot>(
                 future: _firestore.collection('post').doc(postId).get(),
@@ -58,59 +67,106 @@ class _CartPageState extends State<CartPage> {
                   }
 
                   if (!postSnapshot.hasData || !postSnapshot.data!.exists) {
-                    return const Center(child: Text("Ürün bulunamadı."));
+                    return const Center(child: Text(""));
                   }
 
                   final post = postSnapshot.data!;
-                  final List<dynamic> postImages = post['postImages']; // Ensure this field exists
-                  final String photoUrl = postImages.isNotEmpty ? postImages[0] : ''; // Use first image
-                  final String title = post['title']; // Ensure this field exists
-                  final String price = post['usageStatus']; // Ensure this field exists and represents price
+                  final List<dynamic> postImages =
+                      post['postImages']; 
+                  final String photoUrl = postImages.isNotEmpty
+                      ? postImages[0]
+                      : ''; 
+                  final String title =
+                      post['title']; 
+                  final String addition =
+                      post['additionalInfo'];
 
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                    child: Container(
-                      height: 100,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.grey[200],
+                  return Dismissible(
+                    key: Key(item.id), 
+                    direction: DismissDirection.endToStart,
+                    background: Container(
+                      color: Colors.red,
+                      alignment: Alignment.centerRight,
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: const Icon(
+                        Icons.delete,
+                        color: Colors.white,
                       ),
-                      child: Row(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: Image.network(
-                              photoUrl.isNotEmpty ? photoUrl : 'default_image_url.png', // Handle empty image URL
-                              width: 100,
-                              height: 100,
-                              fit: BoxFit.cover,
+                    ),
+                    onDismissed: (direction) async {
+                      
+                      await _firestore
+                          .collection('sepet')
+                          .doc(item.id)
+                          .delete();
+
+                     
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text("$title sepetten silindi.")),
+                      );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 10),
+                      child: Container(
+                        height: 100,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: AppColor.buttonlight,
+                        ),
+                        child: Row(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Image.network(
+                                photoUrl.isNotEmpty
+                                    ? photoUrl
+                                    : 'default_image_url.png', 
+                                width: 100,
+                                height: 100,
+                                fit: BoxFit.cover,
+                              ),
                             ),
-                          ),
-                          const SizedBox(width: 10),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  title,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18,
-                                  ),
-                                ),
-                                const SizedBox(height: 5),
-                                Text(
-                                  "\$${price}", // Display price correctly
-                                  style: const TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ],
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                
+                                  Text("Ürün açıklaması",
+                                      style: AppTextTheme.emphasized(context)),
+                                  const SizedBox(height: 5),
+                                 
+                                  Text(title,
+                                      style: AppTextTheme.body(context)),
+                                  const SizedBox(height: 5),
+                               
+                                  Text(addition,
+                                      style: AppTextTheme.body(context)),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                            IconButton(
+                              icon: const Icon(Icons.delete,
+                                  color: AppColor.fromdart),
+                              onPressed: () async {
+                               
+                                await _firestore
+                                    .collection('sepet')
+                                    .doc(item.id)
+                                    .delete();
+
+                            
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content:
+                                          Text("$title sepetten silindi.")),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   );

@@ -29,7 +29,7 @@ class MyTexfild extends StatelessWidget {
           enabledBorder: OutlineInputBorder(
             borderSide:
                 BorderSide(color: Theme.of(context).colorScheme.tertiary),
-          ), //beyaz
+          ), 
           focusedBorder: const OutlineInputBorder(
             borderSide: BorderSide(
               color: Colors.white,

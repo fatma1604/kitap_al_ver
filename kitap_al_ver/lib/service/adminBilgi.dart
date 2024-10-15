@@ -4,10 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/models/info_model.dart';
 
-
-// FirebaseFirestore ve bilgi değişkenlerini tanımlayın
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-List<InfoModel> bilgi = []; // YourDataType uygun veri tipinizle değiştirilmelidir
+List<InfoModel> bilgi = []; 
 
 Future<void> _addDataToCollection(BuildContext context, String collectionName, Function(dynamic) mapFunction, String fieldName) async {
   try {

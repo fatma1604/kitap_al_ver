@@ -20,8 +20,8 @@ class NeuBox extends StatelessWidget {
       decoration: BoxDecoration(
         color: theme.brightness == Brightness.dark
             ? const Color.fromARGB(206, 190, 141, 141)
-            : const Color.fromARGB(178, 248, 201, 201), // Arka plan rengi
-        borderRadius: BorderRadius.circular(12), // Kenarlık yuvarlaklığı
+            : const Color.fromARGB(178, 248, 201, 201), 
+        borderRadius: BorderRadius.circular(12), 
       ),
       child: Center(
         child: child,

@@ -1,10 +1,11 @@
 
 
+// ignore_for_file: empty_catches, use_build_context_synchronously, file_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/service/categry.dart';
-import 'package:kitap_al_ver/components/tabbar/liquidTabbar.dart';
 import 'package:kitap_al_ver/pages/home/galleripage.dart';
 import 'package:uuid/uuid.dart';
 
@@ -13,16 +14,16 @@ class FormHelpers {
       BuildContext context, Function(List<String>) onImagesSelected) async {
     final result = await Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => Galleripage(initialImage: null),
+        builder: (context) => const Galleripage(initialImage: null),
       ),
     );
 
     if (result != null && result is List<String>) {
-      onImagesSelected(result); // Pass the selected images back
+      onImagesSelected(result); 
     }
   }
 
-  // Submit the form data to Firestore
+ 
 static Future<void> submitForm({
   required BuildContext context,
   required GlobalKey<FormState> formKey,
@@ -37,14 +38,14 @@ static Future<void> submitForm({
   required List<String> like,
   required FirebaseAuth auth,
   required FirebaseFirestore firestore,
-  required String category, // New parameter for category
+  required String category, 
 }) async {
   if (formKey.currentState!.validate()) {
     try {
       User? currentUser = auth.currentUser;
       String username = currentUser?.displayName ?? 'Bilgi Yok';
       String profilePhotoUrl = currentUser?.photoURL ?? '';
-      String uid = Uuid().v4();
+      String uid = const Uuid().v4();
 
       await firestore.collection('post').doc(uid).set({
         'title': title.isNotEmpty ? title : 'Başlık Yok',
@@ -61,25 +62,24 @@ static Future<void> submitForm({
         'username': username,
         'description': description,
         'profilePhotoUrl': profilePhotoUrl,
-        'category': category, // Save the selected category
+        'category': category, 
       });
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Bilgiler başarıyla kaydedildi!')),
+        const SnackBar(content: Text('Bilgiler başarıyla kaydedildi!')),
       );
 
       Navigator.pushNamed(context, '/liquidTab');
     } catch (e) {
-      print('Error saving information: $e');
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Bilgileri kaydederken bir hata oluştu!')),
+        const SnackBar(content: Text('Bilgileri kaydederken bir hata oluştu!')),
       );
     }
   }
 }
 
 
-  // Check if the user has the 'coder' role
+  
   static Future<void> checkUserRole(FirebaseAuth auth,
       FirebaseFirestore firestore, Function(bool) onRoleChecked) async {
     try {
@@ -88,17 +88,16 @@ static Future<void> submitForm({
         DocumentSnapshot userDoc =
             await firestore.collection('users').doc(user.uid).get();
         onRoleChecked(
-            userDoc['role'] == 'coder'); // Assuming 'role' field exists
+            userDoc['role'] == 'coder'); 
       }
     } catch (e) {
-      print('Error fetching user role: $e');
     }
   }
 
-  // Fetch data from Firestore collections
+ 
 
 
-  // Check and send data to Firestore if not already present
+
   static Future<void> checkAndSendDataToFirestore(
       FirebaseFirestore firestore, List<CategoryModel> kategory) async {
     try {
@@ -112,14 +111,11 @@ static Future<void> submitForm({
             'category_name': category.categoryname,
             'category_uid': docRef.id,
             'image_url': category.images,
-            'colors': category.colors
-                .map((color) => color.value)
-                .toList(), // Save colors as integers
+           
           });
         }
       }
     } catch (e) {
-      print('Error: $e');
     }
   }
 

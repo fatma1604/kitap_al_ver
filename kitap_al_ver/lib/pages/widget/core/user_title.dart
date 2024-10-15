@@ -1,7 +1,9 @@
 // ignore_for_file: library_private_types_in_public_api, use_super_parameters
 
 import 'package:flutter/material.dart';
+import 'package:kitap_al_ver/pages/widget/theme/text_them.dart';
 import 'package:kitap_al_ver/utils/color.dart';
+import 'package:kitap_al_ver/utils/images.dart';
 
 class UserTitle extends StatefulWidget {
   final String text;
@@ -36,16 +38,13 @@ class _UserTitleState extends State<UserTitle> {
             CircleAvatar(
               backgroundImage: widget.profileImageUrl != null
                   ? NetworkImage(widget.profileImageUrl!)
-                  : const AssetImage('assets/images/indir.png')
+                  : const AssetImage(AppImage.indir)
                       as ImageProvider,
             ),
-            const SizedBox(width: 16), // Boşluk ekliyoruz
+            const SizedBox(width: 16), 
             Text(
               widget.text,
-              style: const TextStyle(
-                fontSize: 18, // Yazı boyutunu ayarlayabilirsiniz
-                fontWeight: FontWeight.bold, // Yazı kalınlığı
-              ),
+              style:AppTextTheme.body(context)
             ),
           ],
         ),

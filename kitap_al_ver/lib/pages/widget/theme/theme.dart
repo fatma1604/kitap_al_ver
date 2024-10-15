@@ -35,31 +35,31 @@ class AppTheme {
       useMaterial3: true,
       colorScheme: colorScheme,
       textTheme: const TextTheme(
-        bodyLarge: TextStyle(color: AppColor.yazidart),
+        bodyLarge: TextStyle(color: AppColor.textDark),
         bodyMedium: TextStyle(color: AppColor.screendart),
-        displayLarge: TextStyle(color: AppColor.yazidart, fontSize: 32),
-        displayMedium: TextStyle(color: AppColor.yazidart, fontSize: 24),
-        displaySmall: TextStyle(color: AppColor.yazidart, fontSize: 18),
-        labelLarge: TextStyle(color: AppColor.yazidart),
+        displayLarge: TextStyle(color: AppColor.textDark, fontSize: 32),
+        displayMedium: TextStyle(color: AppColor.textDark, fontSize: 24),
+        displaySmall: TextStyle(color: AppColor.textDark, fontSize: 18),
+        labelLarge: TextStyle(color: AppColor.textDark),
       ),
       appBarTheme: const AppBarTheme(
         backgroundColor: AppColor.screendart,
-        foregroundColor: AppColor.yazidart,
+        foregroundColor: AppColor.textDark,
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColor.buttondart,
-          foregroundColor: AppColor.yazidart,
+          foregroundColor: AppColor.textDark,
         ),
       ),
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
-          foregroundColor: AppColor.yazidart,
+          foregroundColor: AppColor.textDark,
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-          foregroundColor: AppColor.yazidart,
+          foregroundColor: AppColor.textDark,
           side: const BorderSide(color: AppColor.buttondart),
         ),
       ),

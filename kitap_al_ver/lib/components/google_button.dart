@@ -1,6 +1,6 @@
 // ignore_for_file: use_build_context_synchronously, deprecated_member_use
 
-import 'package:cloud_firestore/cloud_firestore.dart'; // Import Firestore
+import 'package:cloud_firestore/cloud_firestore.dart'; 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,20 +26,20 @@ Future<void> signInWithGoogle(BuildContext context) async {
       User? user = userCredential.user;
 
       if (user != null) {
-        // Check if the user exists in Firestore
+       
         DocumentSnapshot userDoc = await FirebaseFirestore.instance
             .collection('Users')
             .doc(user.uid)
             .get();
 
-        String profileUrl = googleUser.photoUrl ?? ''; // Get profile URL
+        String profileUrl = googleUser.photoUrl ?? ''; 
 
         if (!userDoc.exists) {
           // User does not exist, create a new user record
           await FirebaseFirestore.instance.collection('Users').doc(user.uid).set({
             'uid': userCredential.user!.uid,
-            'email': user.email, // Use the user's email from the Google account
-            'username': user.displayName ?? 'User', // Use the user's name from the Google account
+            'email': user.email, 
+            'username': user.displayName ?? 'User',
             'followers': [],
             'following': [],
             'profile': profileUrl.isNotEmpty
@@ -48,11 +48,11 @@ Future<void> signInWithGoogle(BuildContext context) async {
           });
         }
 
-        // Navigate to home page after successful sign-in
+      
         navigateToHome(context);
       }
     } else {
-      // Google sign-in failed
+     
       _showErrorDialog(context, AppText.google, AppText.plaseconfigure);
     }
   } catch (error) {
@@ -94,7 +94,7 @@ class GoogleSignInButton extends StatelessWidget {
         signInWithGoogle(context);
       },
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent), // Set background color to transparent
+        backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent), 
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,

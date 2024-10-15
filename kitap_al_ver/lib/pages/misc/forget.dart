@@ -1,4 +1,3 @@
-
 // ignore_for_file: use_super_parameters
 
 import 'package:flutter/material.dart';
@@ -8,7 +7,6 @@ import 'package:kitap_al_ver/utils/color.dart';
 import 'package:kitap_al_ver/pages/widget/theme/text.dart';
 import 'package:kitap_al_ver/service/firebes_auth.dart';
 import 'package:kitap_al_ver/utils/images.dart';
-
 
 class Forget extends StatefulWidget {
   const Forget({Key? key}) : super(key: key);
@@ -20,7 +18,7 @@ class Forget extends StatefulWidget {
 class _ForgetState extends State<Forget> {
   final _emailController = TextEditingController();
   final FirebaseAuthService _authService =
-      FirebaseAuthService(); // FirebaseAuthService sınıfını burada başlatıyoruz
+      FirebaseAuthService(); 
 
   @override
   void dispose() {
@@ -55,8 +53,7 @@ class _ForgetState extends State<Forget> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 IconButton(
-                    onPressed: () {},
-                    icon: Image.asset(AppImage.profil)),
+                    onPressed: () {}, icon: Image.asset(AppImage.profil)),
                 MyTextField(
                   prefixIcon: Image.asset(AppImage.email),
                   hintText: AppText.email,

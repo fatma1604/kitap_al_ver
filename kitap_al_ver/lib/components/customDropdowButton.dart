@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kitap_al_ver/pages/widget/theme/text_them.dart';
+import 'package:kitap_al_ver/utils/color.dart';
 
 class CustomDropdownButtonFormField extends StatelessWidget {
   final String labelText;
@@ -25,13 +27,13 @@ class CustomDropdownButtonFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.grey[200], // Background color
-        borderRadius: BorderRadius.circular(8.0.r), // Rounded corners
+        color: AppColor.icon, 
+        borderRadius: BorderRadius.circular(8.0.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1), // Shadow color
-            offset: const Offset(0, 4), // Shadow position
-            blurRadius: 8.0, // Shadow blur radius
+            color: Colors.black.withOpacity(0.1),
+            offset: const Offset(0, 4), 
+            blurRadius: 8.0, 
           ),
         ],
       ),
@@ -39,13 +41,10 @@ class CustomDropdownButtonFormField extends StatelessWidget {
         decoration: InputDecoration(
           labelText: labelText,
           labelStyle: GoogleFonts.roboto(
-            textStyle: TextStyle(
-              color: Colors.black54, // Label color
-              fontSize: 16.sp,
-            ),
+            textStyle: AppTextTheme.body(context),
           ),
           border: const OutlineInputBorder(
-            borderSide: BorderSide.none, // Hide borders
+            borderSide: BorderSide.none, 
           ),
           contentPadding:
               EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 12.0.h),
@@ -57,10 +56,7 @@ class CustomDropdownButtonFormField extends StatelessWidget {
             child: Text(
               item,
               style: GoogleFonts.roboto(
-                textStyle: TextStyle(
-                  color: Colors.black87, // Option text color
-                  fontSize: 16.sp,
-                ),
+                textStyle: AppTextTheme.body(context),
               ),
             ),
           );

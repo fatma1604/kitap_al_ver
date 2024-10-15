@@ -20,19 +20,19 @@ class _ImageCarouselState extends State<ImageCarousel> {
   @override
   void initState() {
     super.initState();
-    // Start automatic slideshow
+   
     _startSlideshow();
   }
 
   @override
   void dispose() {
-    // Dispose timer when widget is disposed
+  
     _timer?.cancel();
     super.dispose();
   }
 
   void _startSlideshow() {
-    // Set up timer to change page every 5 seconds
+   
     _timer = Timer.periodic(const Duration(seconds: 5), (Timer timer) {
       if (_currentPageIndex < widget.imageUrls.length - 1) {
         _currentPageIndex++;

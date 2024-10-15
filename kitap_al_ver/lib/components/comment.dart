@@ -125,7 +125,7 @@ class _CommentState extends State<Comment> {
                           decoration: InputDecoration(
                             hintText: 'Add a comment',
                             border: InputBorder.none,
-                            hintStyle: AppTextTheme.comment(context), // Güncellendi
+                            hintStyle: AppTextTheme.subheading(context), 
                           ),
                           onTap: () {
                             SystemChannels.textInput.invokeMethod('TextInput.hide');
@@ -158,11 +158,11 @@ class _CommentState extends State<Comment> {
       ),
       title: Text(
         snapshot['username'],
-        style: AppTextTheme.comment(context), // Stil güncellendi
+        style: AppTextTheme.subheading(context), 
       ),
       subtitle: Text(
         snapshot['comment'],
-        style: AppTextTheme.comment(context), // Stil güncellendi
+        style: AppTextTheme.subheading(context),
       ),
     );
   }

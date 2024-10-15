@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:kitap_al_ver/pages/widget/theme/text_them.dart';
 import 'package:kitap_al_ver/utils/color.dart';
 
 class MyButton extends StatelessWidget {
@@ -11,7 +12,6 @@ class MyButton extends StatelessWidget {
     required this.buttonText,
     this.onTap,
   });
-// Color.fromARGB(255, 247, 95, 95)
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
@@ -21,7 +21,7 @@ class MyButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: theme.brightness == Brightness.dark
               ? AppColor.buttondart
-              : AppColor.buttonlight, //LİYAT
+              : AppColor.buttonlight, 
           borderRadius: BorderRadius.circular(8.0),
         ),
         padding: const EdgeInsets.symmetric(
@@ -30,24 +30,10 @@ class MyButton extends StatelessWidget {
         ),
         child: Text(
           buttonText,
-          style: TextStyle(
-            color: theme.brightness == Brightness.dark
-                ? AppColor.white
-                : AppColor.yazilight,
-            fontWeight: FontWeight.w900,
-            fontSize: 18,
-            shadows: const [
-              BoxShadow(
-                color: AppColor.shadow,
-                blurRadius: 3,
-                offset: Offset(0, 1), // Gölgelendirme yönü ve mesafesi
-              ),
-            ],
-          ),
+          style: AppTextTheme.heading(context),
         ),
       ),
     );
   }
 }
 
-//

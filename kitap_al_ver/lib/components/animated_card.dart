@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/models/post.dart';
+import 'package:kitap_al_ver/pages/widget/theme/text_them.dart';
 
 
 class AnimatedPostCard extends StatefulWidget {
   final Posts post;
-  final VoidCallback onDelete; // Callback to handle deletion
+  final VoidCallback onDelete;
 
   const AnimatedPostCard(
       {super.key, required this.post, required this.onDelete});
@@ -49,8 +50,8 @@ class _AnimatedPostCardState extends State<AnimatedPostCard>
   }
 
   void _handleDelete() async {
-    await _controller.forward(); // Start the animation
-    widget.onDelete(); // Trigger the delete callback after animation
+    await _controller.forward();
+    widget.onDelete(); 
   }
 
   @override
@@ -89,19 +90,12 @@ class _AnimatedPostCardState extends State<AnimatedPostCard>
                       children: [
                         Text(
                           widget.post.title,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
+                         style: AppTextTheme.caption(context)
                         ),
                         const SizedBox(height: 5),
                         Text(
-                          'Category', // Replace with actual category if available
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey.shade400,
-                            fontSize: 16,
-                          ),
+                          'Category',
+                          style: AppTextTheme.caption(context)
                         ),
                         const SizedBox(height: 10),
                       ],

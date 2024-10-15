@@ -5,8 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kitap_al_ver/pages/chat/chat_page.dart';
 import 'package:kitap_al_ver/pages/misc/image_cached.dart';
 import 'package:kitap_al_ver/pages/profile/post_screen.dart';
+import 'package:kitap_al_ver/pages/widget/theme/text.dart';
 import 'package:kitap_al_ver/service/firebes_post.dart';
-import 'package:kitap_al_ver/utils/aprouta.dart';
 import 'package:kitap_al_ver/utils/color.dart';
 import 'package:kitap_al_ver/models/usermodel.dart';
 
@@ -109,17 +109,17 @@ class _ProfilScreenState extends State<ProfilScreen> {
                     children: [
                       SizedBox(width: 30.w),
                       Text(
-                        'Posts',
+                        AppText.posts,
                         style: TextStyle(fontSize: 13.sp, color: Colors.white),
                       ),
                       SizedBox(width: 25.w),
                       Text(
-                        'Followers',
+                          AppText.followers,
                         style: TextStyle(fontSize: 13.sp, color: Colors.white),
                       ),
                       SizedBox(width: 19.w),
                       Text(
-                        'Following',
+                        AppText.following,
                         style: TextStyle(fontSize: 13.sp, color: Colors.white),
                       ),
                     ],
@@ -177,9 +177,9 @@ class _ProfilScreenState extends State<ProfilScreen> {
                             yourse ? Colors.grey.shade400 : AppColor.userTitle),
                   ),
                   child: yourse
-                      ? const Text('Edit Your Profile')
+                      ? const Text(AppText.editYourProfile)
                       : const Text(
-                          'Follow',
+                         AppText.follow,
                           style: TextStyle(color: Colors.white),
                         ),
                 ),
@@ -210,7 +210,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
                             border: Border.all(color: Colors.grey.shade200),
                           ),
                           child: const Text(
-                            'Unfollow',
+                            AppText.unfollow,
                             style: TextStyle(color: Colors.black),
                           )),
                     ),
@@ -219,13 +219,13 @@ class _ProfilScreenState extends State<ProfilScreen> {
                   Expanded(
                     child: GestureDetector(
                       onTap: () {
-                        // Burada user email ve ID'yi geçiyoruz
+                      
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => ChatPage(
-                              receiverEmail: user.email, // Kullanıcı emaili
-                              receiverId: widget.userId, // Kullanıcı ID'si
+                              receiverEmail: user.email, 
+                              receiverId: widget.userId, 
                             ),
                           ),
                         );
@@ -240,7 +240,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
                           border: Border.all(color: Colors.grey.shade200),
                         ),
                         child: const Text(
-                          'Message',
+                          AppText.message,
                           style: TextStyle(color: Colors.black),
                         ),
                       ),
@@ -275,7 +275,19 @@ class _ProfilScreenState extends State<ProfilScreen> {
                   ? AppColor.screendart
                   : AppColor.screenlight,
               appBar: AppBar(
-                title: Text(user.username),
+                leading: IconButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/liquidTab');
+                  },
+                  icon: const Icon(Icons.arrow_back),
+                ),
+                title: Text(
+                  user.username,
+                  style: TextStyle(color: AppColor.icon),
+                ),
+                backgroundColor: Theme.of(context).brightness == Brightness.dark
+                    ? AppColor.screendart
+                    : AppColor.screenlight,
               ),
               body: Column(
                 children: [

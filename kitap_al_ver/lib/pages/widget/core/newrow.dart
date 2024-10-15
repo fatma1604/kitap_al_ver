@@ -6,14 +6,14 @@ class NewRow extends StatelessWidget {
   final String text;
   final IconData icon;
   final VoidCallback onPressed;
-  final Color? textColor; // Yeni parametre ekleyin
+  final Color? textColor; 
 
   const NewRow({
     Key? key,
     required this.text,
     required this.icon,
     required this.onPressed,
-    this.textColor, // Yeni parametre için varsayılan değer
+    this.textColor, 
   }) : super(key: key);
 
   @override
@@ -22,11 +22,11 @@ class NewRow extends StatelessWidget {
       onPressed: onPressed,
       child: Row(
         children: [
-          Icon(icon, color: textColor), // İkon rengi
+          Icon(icon, color: textColor), 
           const SizedBox(width: 10),
           Text(
             text,
-            style: TextStyle(color: textColor), // Metin rengi
+            style: TextStyle(color: textColor), 
           ),
         ],
       ),

@@ -19,7 +19,7 @@ class Description extends StatelessWidget {
     User? currentUser = FirebaseAuth.instance.currentUser;
 
     if (currentUser == null) {
-      return const Center(child: Text(AppText.generalError)); // Updated message
+      return const Center(child: Text(AppText.generalError));
     }
 
     return Column(
@@ -37,14 +37,14 @@ class Description extends StatelessWidget {
               ),
               alignment: Alignment.center,
               child: Text(
-                AppText.description, // Use AppText for description
-                style: AppTextTheme.description(context),
+                AppText.description, 
+                style: AppTextTheme.body(context),
               ),
             ),
             const SizedBox(width: 10),
             Text(
-              AppText.features, // Use AppText for features
-              style: AppTextTheme.description(context),
+              AppText.features, 
+              style: AppTextTheme.body(context),
             ),
             const SizedBox(width: 10),
             GestureDetector(
@@ -90,10 +90,10 @@ class Description extends StatelessWidget {
               return const Center(child: CircularProgressIndicator());
             }
             if (snapshot.hasError) {
-              return const Center(child: Text(AppText.generalError)); // Updated error message
+              return const Center(child: Text(AppText.generalError));
             }
             if (!snapshot.hasData || !snapshot.data!.exists) {
-              return const Center(child: Text(AppText.noDescriptionFound)); // Use AppText for no description
+              return const Center(child: Text(AppText.noDescriptionFound)); 
             }
 
             final description = snapshot.data!.get('additionalInfo') ?? AppText.noDescriptionAvailable;

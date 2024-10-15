@@ -7,7 +7,7 @@ import 'package:kitap_al_ver/service/categry.dart';
 import 'package:kitap_al_ver/pages/auth/information.dart';
 import 'package:kitap_al_ver/service/for%C4%B1mHelper.dart';
 import 'package:kitap_al_ver/utils/color.dart';
-import 'package:kitap_al_ver/utils/images.dart';
+
 
 class BookCategoryOverview extends StatefulWidget {
   @override
@@ -17,8 +17,8 @@ class BookCategoryOverview extends StatefulWidget {
 class _BookCategoryOverviewState extends State<BookCategoryOverview> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  bool _isCoder = false; // Indicates if the user is a coder
-  final List<CategoryModel> kategory = []; // Add the actual initialization here
+  bool _isCoder = false; 
+  final List<CategoryModel> kategory = []; 
 
   @override
   void initState() {
@@ -51,7 +51,7 @@ class _BookCategoryOverviewState extends State<BookCategoryOverview> {
               child: Column(
                 children: [
                   const SizedBox(height: 80),
-                  if (_isCoder) // Conditionally show the button
+                  if (_isCoder) 
                     ElevatedButton(
                       onPressed: () {
                         FormHelpers.checkAndSendDataToFirestore(
@@ -110,17 +110,16 @@ class _BookCategoryOverviewState extends State<BookCategoryOverview> {
                         final title =
                             categoryData['categoryname'] ?? 'No Title';
                         final imageUrl =
-                            categoryData['images'] ?? AppImage.profil;
+                            categoryData['images'] ?? "assets/images/fatma.png";
                         final colorValues = List<int>.from(
                             categoryData['colors'] ??
-                                [Colors.grey.value]); // Default color
+                                [Colors.grey.value]);
                         final color = Color(colorValues.isNotEmpty
                             ? colorValues[0]
                             : Colors.grey.value);
                         final categoryModel = CategoryModel(
                           categoryname: title,
                           images: imageUrl,
-                          colors: colorValues.map((e) => Color(e)).toList(),
                           classes:
                               List<String>.from(categoryData['classes'] ?? []),
                           types: List<String>.from(categoryData['types'] ?? []),
@@ -174,13 +173,17 @@ class _BookCategoryOverviewState extends State<BookCategoryOverview> {
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: background,
+              
+              color: Colors.transparent,
               shape: BoxShape.circle,
             ),
-            child: Image.asset(
-              imagePath,
-              color: Colors.white,
-              fit: BoxFit.cover,
+            child: ClipOval(
+              child: Image.asset(
+                imagePath,
+                fit: BoxFit.cover,
+                width: 80,
+                height: 80, 
+              ),
             ),
           ),
           const SizedBox(height: 8),

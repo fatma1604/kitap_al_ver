@@ -1,14 +1,11 @@
-// ignore_for_file: avoid_print, prefer_final_fields, use_super_parameters
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kitap_al_ver/pages/widget/theme/text.dart';
 import 'package:kitap_al_ver/service/categry.dart';
-import 'package:kitap_al_ver/service/for%C4%B1mHelper.dart';
+import 'package:kitap_al_ver/service/forımHelper.dart';
 import 'package:kitap_al_ver/utils/color.dart';
-
 
 class Information extends StatefulWidget {
   final CategoryModel category;
@@ -110,7 +107,9 @@ class _MenuPageState extends State<Information> {
   }
 
   AppBar _buildAppBar() {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return AppBar(
+      backgroundColor: isDarkMode ? AppColor.darttBg : AppColor.lightBg,
       leading: IconButton(
         icon: const Icon(Icons.arrow_back),
         onPressed: () => Navigator.pushNamed(context, '/liquidTab'),
@@ -129,8 +128,17 @@ class _MenuPageState extends State<Information> {
 
   TextFormField _buildTitleField() {
     return TextFormField(
-      decoration: const InputDecoration(
-          labelText: AppText.title, border: OutlineInputBorder()),
+      decoration: InputDecoration(
+        labelText: AppText.title,
+        border: OutlineInputBorder(),
+        labelStyle: TextStyle(color: AppColor.icon),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: AppColor.black),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: AppColor.white),
+        ),
+      ),
       validator: (value) =>
           (value == null || value.isEmpty) ? AppText.fieldRequired : null,
       onChanged: (value) => setState(() => _title = value),
@@ -143,23 +151,13 @@ class _MenuPageState extends State<Information> {
     return DropdownButtonFormField<String>(
       decoration: InputDecoration(
         labelText: label,
-        border: OutlineInputBorder(
-          borderSide: BorderSide(
-              color: isDarkMode
-                  ? AppColor.screendart1
-                  : AppColor.screenlight1),
-        ),
+        border: OutlineInputBorder(),
+        labelStyle: TextStyle(color: AppColor.icon),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-              color: isDarkMode
-                  ? AppColor.black
-                  : AppColor.white),
+          borderSide: BorderSide(color: AppColor.black),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-              color: isDarkMode
-                  ? AppColor.black
-                  : AppColor.white),
+          borderSide: BorderSide(color: AppColor.white),
         ),
       ),
       value: value,
@@ -168,20 +166,24 @@ class _MenuPageState extends State<Information> {
               DropdownMenuItem<String>(value: item, child: Text(item)))
           .toList(),
       onChanged: onChanged,
-      style: TextStyle(
-          color: isDarkMode
-              ? AppColor.yazidart
-              : AppColor.yazilight),
-      dropdownColor: isDarkMode
-          ? AppColor.screendart1
-          : AppColor.screenlight1,
+      style: TextStyle(color: isDarkMode ? AppColor.textDark : AppColor.icon),
+      dropdownColor: isDarkMode ? AppColor.screendart1 : AppColor.screenlight2,
     );
   }
 
   TextFormField _buildAdditionalInfoField() {
     return TextFormField(
-      decoration: const InputDecoration(
-          labelText: AppText.additionalInfo, border: OutlineInputBorder()),
+      decoration: InputDecoration(
+        labelText: AppText.information,
+        border: OutlineInputBorder(),
+        labelStyle: TextStyle(color: AppColor.icon),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: AppColor.black),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: AppColor.white),
+        ),
+      ),
       maxLines: 3,
       onChanged: (value) => setState(() => _additionalInfo = value),
     );
@@ -189,6 +191,10 @@ class _MenuPageState extends State<Information> {
 
   ElevatedButton _buildSaveButton() {
     return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: AppColor.buttonlight,
+        foregroundColor: AppColor.black,
+      ),
       onPressed: () {
         FormHelpers.submitForm(
           context: context,
@@ -199,7 +205,7 @@ class _MenuPageState extends State<Information> {
           selectedType: selectedType,
           selectedSubject: selectedSubject,
           additionalInfo: _additionalInfo ?? '',
-          description: '', // Add logic to get description
+          description: '',
           postImages: _postImages,
           like: _like,
           auth: FirebaseAuth.instance,
@@ -207,7 +213,7 @@ class _MenuPageState extends State<Information> {
           category: widget.category.categoryname,
         );
       },
-      child: const Text(AppText.save),
+      child: const Text("Resimleri At"),
     );
   }
 }

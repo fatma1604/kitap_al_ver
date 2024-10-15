@@ -43,18 +43,18 @@ class _AdminState extends State<Admin> {
   Future<void> _uploadImage() async {
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
-      // Dosya adını belirle
+    
       final fileName = image.name;
 
-      // Firebase Storage'a yükle
+ 
       final storageRef = FirebaseStorage.instance.ref('deneme/$fileName');
       await storageRef.putFile(File(image.path));
 
-      // Yükleme tamamlandıktan sonra URL'yi al
+  
       final String downloadUrl = await storageRef.getDownloadURL();
       print('Yüklenen resmin URL\'si: $downloadUrl');
 
-      // Yeni URL'yi imageUrls listesine ekle
+   
       setState(() {
         imageUrls.add(downloadUrl);
       });

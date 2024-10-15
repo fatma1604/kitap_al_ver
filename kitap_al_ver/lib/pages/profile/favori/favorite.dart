@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:kitap_al_ver/components/animated_card.dart';
 import 'package:kitap_al_ver/models/post.dart';
+import 'package:kitap_al_ver/pages/widget/theme/text_them.dart';
 import 'package:kitap_al_ver/utils/color.dart';
 
 class Favorite extends StatefulWidget {
@@ -18,7 +19,6 @@ class _FavoriteState extends State<Favorite> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  // Get current user ID
   String? get _currentUserId => _auth.currentUser?.uid;
 
   @override
@@ -26,25 +26,31 @@ class _FavoriteState extends State<Favorite> {
     final theme = Theme.of(context);
     return Scaffold(
       backgroundColor: theme.brightness == Brightness.dark
-          ? AppColor.screendart // Use the dark theme color
-          : AppColor.screenlight, // Use the light theme color
+          ? AppColor.screendart
+          : AppColor.screenlight,
       appBar: AppBar(
-        title: const Text(
+         leading: IconButton(
+          onPressed: () {
+            Navigator.pushNamed(context, '/liquidTab');
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
+        title: Text(
+     
           "Favorite",
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: AppTextTheme.caption(context), 
         ),
         centerTitle: true,
-        // Optionally set the AppBar's background color based on theme as well
         backgroundColor: theme.brightness == Brightness.dark
-            ? AppColor.screendart // Define this color in your AppColor class
-            : AppColor.screenlight, // Define this color in your AppColor class
+            ? AppColor.screendart
+            : AppColor.screenlight,
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: _firestore
             .collection('post')
             .where('like',
                 arrayContains:
-                    _currentUserId) // Filter posts liked by current user
+                    _currentUserId) 
             .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
@@ -64,7 +70,7 @@ class _FavoriteState extends State<Favorite> {
                 key: Key(post.postId),
                 direction: DismissDirection.endToStart,
                 onDismissed: (direction) async {
-                  // Trigger deletion animation and remove the post
+                
                   await _deletePost(post.postId);
                 },
                 background: Container(

@@ -15,7 +15,6 @@ class CategoryAdmin extends StatelessWidget {
       await firestore.collection('categories').add({
         'categoryname': category.categoryname,
         'images': category.images,
-        'colors': category.colors.map((color) => color.value).toList(),
         'classes': category.classes,
         'types': category.types,
         'subjects': category.subjects,

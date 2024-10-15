@@ -27,8 +27,8 @@ class Posts {
       postId: doc.id,
       imageUrls: List<String>.from(data['postImages'] ?? []),
       likes: List<String>.from(data['like'] ?? []),
-      category: data['category'] ?? 'uncategorized', // Change to 'category'
-      rating: data['usageStatus'] ?? 'unknown', // Adjusted default value
+      category: data['category'] ?? 'uncategorized', 
+      rating: data['usageStatus'] ?? 'unknown', 
       userName: data['username'] ?? 'defaultUser',
     );
   }

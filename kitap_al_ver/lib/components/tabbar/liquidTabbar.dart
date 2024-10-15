@@ -284,12 +284,12 @@ class LiquidTabBarState extends State<LiquidTabBar>
                 children: List.generate(
                   5,
                   (index) => BGCircleWidget(
-                    currentIndex: index, // Define `currentIndex` as needed
+                    currentIndex: index, 
                     index: this.index,
                     bGCircleTransAni: bGCircleTransAni,
                     oneToZeroAnim: oneToZeroAnim,
                     color: listOfColors[
-                        currentColor], // Define `currentColor` as needed
+                        currentColor],
                     colorOpacity: tBColorOpacAni.value,
                     bottomLiquidAni1: bottomLiquidAni1,
                     bottomLiquidAni2: bottomLiquidAni2,
@@ -304,7 +304,7 @@ class LiquidTabBarState extends State<LiquidTabBar>
             decoration: BoxDecoration(
               color: Theme.of(context).brightness == Brightness.dark
                   ? AppColor.liqudart
-                  : AppColor.lightBg, // Light mode color
+                  : AppColor.lightBg, 
               borderRadius: BorderRadius.vertical(),
             ),
             child: Container(
@@ -324,7 +324,7 @@ class LiquidTabBarState extends State<LiquidTabBar>
                   5,
                   (index) => TBIcon(
                     currentIndex:
-                        index, // Provide the appropriate value for currentIndex
+                        index, 
                     index: index,
                     transAni: transAni,
                     oneToZeroAnim: oneToZeroAnim,

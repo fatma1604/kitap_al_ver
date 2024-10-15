@@ -23,7 +23,7 @@ class MyImageSlider extends StatelessWidget {
           return Hero(
             tag: imageUrls[index],
             child: Image.network(
-                imageUrls[index]), // Use the image URL from the list
+                imageUrls[index]), 
           );
         },
       ),

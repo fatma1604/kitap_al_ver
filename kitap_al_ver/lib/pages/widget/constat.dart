@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 
-//ikon
+
 List<IconData> listOfIcons = [
   CupertinoIcons.house_alt,
-  CupertinoIcons.chat_bubble_2, //cet bu kalıcak,
-  CupertinoIcons.add_circled, //cet bu kalıcak
+  CupertinoIcons.chat_bubble_2, 
+  CupertinoIcons.add_circled,
   CupertinoIcons.heart,
   CupertinoIcons.person,
 ];

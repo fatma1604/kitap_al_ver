@@ -1,14 +1,15 @@
 
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/pages/widget/theme/tehm_provider.dart';
+import 'package:kitap_al_ver/utils/color.dart';
 import 'package:provider/provider.dart';
 
-// ThemeProvider'ı ekledim, isDarkMode değişkenini almak için
+
 
 class ChatBubble extends StatelessWidget {
   final String message;
   final bool isCurrentUser;
-  // ignore: use_super_parameters
+
   const ChatBubble(
       {Key? key, required this.message, required this.isCurrentUser})
       : super(key: key);
@@ -16,7 +17,7 @@ class ChatBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isDarkMode = Provider.of<ThemProvider>(context)
-        .isDarkMode; // isDarkMode değişkenini alıyorum
+        .isDarkMode; 
 
     return Container(
       
@@ -30,7 +31,7 @@ class ChatBubble extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 2.5, horizontal: 25),
       child: Text(
         message,
-        style: const TextStyle(color: Colors.white),
+        style: const TextStyle(color: AppColor.white),
       ),
     );
   }

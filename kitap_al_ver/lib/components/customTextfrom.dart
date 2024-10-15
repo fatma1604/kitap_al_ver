@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kitap_al_ver/pages/widget/theme/text_them.dart';
 
 class CustomTextFormField extends StatelessWidget {
   final String labelText;
@@ -38,10 +39,7 @@ class CustomTextFormField extends StatelessWidget {
         decoration: InputDecoration(
           labelText: labelText,
           labelStyle: GoogleFonts.roboto(
-            textStyle: TextStyle(
-              color: Colors.black54,
-              fontSize: 16.sp,
-            ),
+            textStyle:AppTextTheme.body(context),
           ),
           border: const OutlineInputBorder(
             borderSide: BorderSide.none,
@@ -51,10 +49,7 @@ class CustomTextFormField extends StatelessWidget {
         validator: validator,
         onChanged: onChanged,
         style: GoogleFonts.roboto(
-          textStyle: TextStyle(
-            color: Colors.black87,
-            fontSize: 16.sp,
-          ),
+          textStyle: AppTextTheme.body(context),
         ),
       ),
     );

@@ -3,9 +3,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:kitap_al_ver/service/firebes_post.dart';
+import 'package:kitap_al_ver/pages/widget/theme/text_them.dart';
+import 'package:kitap_al_ver/utils/color.dart';
 import 'package:kitap_al_ver/utils/images.dart';
-
 
 class DrawerCategoryScreen extends StatefulWidget {
   final String categoryTitle;
@@ -20,37 +20,76 @@ class DrawerCategoryScreen extends StatefulWidget {
 class _DrawerCategoryScreenState extends State<DrawerCategoryScreen> {
   List<DocumentSnapshot> _posts = [];
   List<String> _likedPostIds = [];
-  final FirebasePostServis _firebasePostServis = FirebasePostServis();
   String? currentUserId;
-
   @override
   void initState() {
     super.initState();
     currentUserId = getCurrentUserId();
-   
+    _fetchPost();
+  }
+
+  Future<void> _fetchPost() async {
+    try {
+      QuerySnapshot snapshot = await FirebaseFirestore.instance
+          .collection('post')
+          .where('category', isEqualTo: widget.categoryTitle)
+          .get();
+
+      setState(() {
+        _posts = snapshot.docs;
+        _likedPostIds = snapshot.docs
+            .where((post) =>
+                (post['like'] as List<dynamic>?)?.contains(currentUserId) ??
+                false)
+            .map((post) => post.id)
+            .toList();
+      });
+    } catch (e) {
+      print('Error fetching posts: $e');
+    }
   }
 
   Future<void> _toggleLike(String postId) async {
-    await _firebasePostServis.toggleLike(postId, currentUserId);
+    try {
+      final postRef = FirebaseFirestore.instance.collection('post').doc(postId);
+      bool isLiked = _likedPostIds.contains(postId);
 
-    setState(() {
-      if (_likedPostIds.contains(postId)) {
-        _likedPostIds.remove(postId);
+      if (isLiked) {
+        await postRef.update({
+          'like': FieldValue.arrayRemove([currentUserId]),
+        });
+        setState(() {
+          _likedPostIds.remove(postId);
+        });
       } else {
-        _likedPostIds.add(postId);
+        await postRef.update({
+          'like': FieldValue.arrayUnion([currentUserId]),
+        });
+        setState(() {
+          _likedPostIds.add(postId);
+        });
       }
-    });
+    } catch (e) {
+      print('Error updating like status: $e');
+    }
   }
 
   String? getCurrentUserId() {
     final User? user = FirebaseAuth.instance.currentUser;
-    return user?.uid;
+    if (user != null) {
+      return user.uid;
+    } else {
+      return null;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
+      backgroundColor: isDarkMode ? AppColor.screendart : AppColor.screenlight,
       appBar: AppBar(
+        backgroundColor: isDarkMode ? AppColor.darttBg : AppColor.lightBg,
         title: Text(widget.categoryTitle),
       ),
       body: _posts.isEmpty
@@ -64,10 +103,12 @@ class _DrawerCategoryScreenState extends State<DrawerCategoryScreen> {
                     height: 200,
                   ),
                   const SizedBox(height: 10),
-                  const Text(
-                    'RESİM ATMAYA NE DERSİN ',
-                    style: TextStyle(fontSize: 16),
-                  ),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/bookscateg');
+                      },
+                      child: Text('RESİM ATMAYA NE DERSİN ',
+                          style: AppTextTheme.largeTitle(context))),
                 ],
               ),
             )
@@ -100,7 +141,8 @@ class _DrawerCategoryScreenState extends State<DrawerCategoryScreen> {
                           const SizedBox(height: 5),
                           Center(
                             child: ClipRRect(
-                              borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+                              borderRadius: const BorderRadius.vertical(
+                                  top: Radius.circular(20)),
                               child: Image.network(
                                 photoUrl,
                                 width: double.infinity,
@@ -115,13 +157,8 @@ class _DrawerCategoryScreenState extends State<DrawerCategoryScreen> {
                           const SizedBox(height: 10),
                           Padding(
                             padding: const EdgeInsets.only(left: 10),
-                            child: Text(
-                              title.isNotEmpty ? title : 'No Title',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
-                            ),
+                            child: Text(title.isNotEmpty ? title : 'No Title',
+                                style: AppTextTheme.emphasized(context)),
                           ),
                           const SizedBox(height: 10),
                         ],

@@ -133,18 +133,18 @@ Future<void> toggleLike(String postId, String? currentUserId) async {
   }
 
   try {
-    final postRef = _firebaseFirestore.collection('post').doc(postId); // Düzeltildi
+    final postRef = _firebaseFirestore.collection('post').doc(postId);
     final postSnapshot = await postRef.get();
     final isLiked = postSnapshot.data()?['like']?.contains(currentUserId) ?? false;
 
     if (isLiked) {
-      // Kullanıcı zaten beğenmiş, beğeniyi kaldır
+    
       await postRef.update({
         'like': FieldValue.arrayRemove([currentUserId]),
       });
       print('Like removed from the post.');
     } else {
-      // Kullanıcı beğenmemiş, beğeni ekle
+     
       await postRef.update({
         'like': FieldValue.arrayUnion([currentUserId]),
       });
@@ -175,10 +175,10 @@ Future<void> toggleLike(String postId, String? currentUserId) async {
           final data = doc.data() as Map<String, dynamic>;
           final postImages = data['postImages'] as List<dynamic>?;
 
-          // İlk resim URL'sini al (eğer liste boş değilse)
+      
           final url = postImages != null && postImages.isNotEmpty
               ? postImages[0] as String?
-              : 'assets/images/onbord1.jpeg'; // Fallback asset URL
+              : 'assets/images/onbord1.jpeg';
           final title = data['title'] as String? ?? 'No Title';
           final type = data['type'] as String? ?? 'No Genre';
           final postUid = data['post_uid'] as String? ?? 'No UID';
@@ -191,11 +191,11 @@ Future<void> toggleLike(String postId, String? currentUserId) async {
           };
         }).toList();
       } else {
-        return []; // No documents found
+        return []; 
       }
     } catch (e) {
       print('Error fetching photo URLs: $e');
-      return []; // Return an empty list in case of error
+      return []; 
     }
   }
 

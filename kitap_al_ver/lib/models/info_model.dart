@@ -18,8 +18,8 @@ final List<InfoModel> bilgi = [
   InfoModel(
     
     ['Sınıf 9', 'Sınıf 10','Sınıf 11','Sınıf 12'],
-    ['Az Kullanılmış', 'İkinci El','Yeni'], // Add appropriate values
-    ['DENEME', 'SET', 'TEST'], // Add appropriate colors
+    ['Az Kullanılmış', 'İkinci El','Yeni'],
+    ['DENEME', 'SET', 'TEST'], 
     [  'BİYOLOJİ',
                   'COĞRAFYA',
                   'EDEBİYAT-DİLBİLGİSİ',
@@ -29,6 +29,6 @@ final List<InfoModel> bilgi = [
                   'KİMYA',
                   'PARAGRAF',
                   'TARİH',
-                  'TÜRKÇE'], // Add appropriate values
+                  'TÜRKÇE'], 
   ),
 ];

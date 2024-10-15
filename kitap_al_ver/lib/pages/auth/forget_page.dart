@@ -23,8 +23,8 @@ class ForgetPage extends StatelessWidget {
               height: 400,
               decoration: BoxDecoration(
                 image: const DecorationImage(
-                  image: AssetImage(AppImage.logo), // Use AssetImage here
-                  fit: BoxFit.cover, // Optionally adjust the fit
+                  image: AssetImage(AppImage.logo), 
+                  fit: BoxFit.cover, 
                 ),
                 color: theme.brightness == Brightness.dark
                     ? AppColor.screendart
@@ -34,7 +34,7 @@ class ForgetPage extends StatelessWidget {
             Expanded(
               flex: 7,
               child: Transform.translate(
-                offset: const Offset(0, -140), // Adjust the value as needed
+                offset: const Offset(0, -140), 
                 child: const Forget(),
               ),
             ),

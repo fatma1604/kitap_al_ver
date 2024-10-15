@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/utils/show_alert_dialog.dart';
 import 'package:kitap_al_ver/pages/widget/theme/text.dart';
 import 'package:kitap_al_ver/utils/stroge.dart';
-import 'package:kitap_al_ver/components/tabbar/liquidTabbar.dart';
+
 
 
 class FirebaseAuthService {
@@ -50,7 +50,7 @@ class FirebaseAuthService {
         password: password.trim(),
       );
 
-      // Store user information in Firestore
+ 
       await _storeUserInfo(userCredential.user!.uid, email);
 Navigator.pushNamed(context, '/liquidTab');
      
@@ -66,13 +66,13 @@ Future<void> registerUser({
   required String username,
   required File profile,
 }) async {
-  // Check if any field is empty
+ 
   if (email.isEmpty || password.isEmpty || confirmPassword.isEmpty || username.isEmpty) {
-    showAlertDialog(context: context, message: AppText.allFieldsRequired);//tüm alanlar zorunlu 
+    showAlertDialog(context: context, message: AppText.allFieldsRequired);
     return;
   }
 
-  // Check if passwords match
+
   if (password != confirmPassword) {
     showAlertDialog(context: context, message: AppText.match);
     return;
@@ -166,11 +166,11 @@ Future<void> registerUser({
     await _firebaseFirestore.collection("Users").doc(uid).set({
       'uid': uid,
       'email': email,
-    }, SetOptions(merge: true)); // Merge option to prevent overwriting
+    }, SetOptions(merge: true)); 
   }
 
   void _handleAuthError(BuildContext context, FirebaseAuthException e) {
-    String errorMessage;//giriş
+    String errorMessage;
     switch (e.code) {
      case 'invalid-credential':
           errorMessage =

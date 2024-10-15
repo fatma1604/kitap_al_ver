@@ -11,8 +11,8 @@ class TBIconData extends StatelessWidget {
   const TBIconData({
     Key? key,
     required this.icon,
-    this.size = 1.0, // Default size multiplier
-    this.opacity = 1.0, // Default opacity
+    this.size = 1.0, 
+    this.opacity = 1.0, 
   }) : super(key: key);
 
   @override

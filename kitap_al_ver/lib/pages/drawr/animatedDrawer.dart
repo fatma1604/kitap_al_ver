@@ -1,6 +1,7 @@
 // ignore_for_file: use_super_parameters, file_names
 
 import 'package:flutter/material.dart';
+import 'package:kitap_al_ver/components/admin_buton/categoriAdmin.dart';
 import 'package:kitap_al_ver/pages/home/books_home.dart';
 import 'package:kitap_al_ver/pages/search/mySearc.dart';
 import 'package:kitap_al_ver/utils/color.dart';
@@ -28,10 +29,10 @@ class _DrawerfState extends State<AnimatedDrawer> {
     final theme = Theme.of(context);
     final backgroundColor = theme.brightness == Brightness.dark
         ? AppColor.screendart
-        : AppColor.screenlight; // Background color for light mode
+        : AppColor.screenlight; 
     final iconColor = theme.brightness == Brightness.dark
         ? Colors.white
-        : Colors.white; // Icon color
+        : Colors.white; 
 
     return AnimatedContainer(
       transform: Matrix4.translationValues(xOffset, yOffset, 0)
@@ -57,7 +58,7 @@ class _DrawerfState extends State<AnimatedDrawer> {
                   isDrawerOpen
                       ? GestureDetector(
                           child: Icon(Icons.arrow_back_ios,
-                              color: iconColor), // Icon color
+                              color: iconColor), 
                           onTap: () {
                             setState(() {
                               xOffset = 0;
@@ -68,7 +69,7 @@ class _DrawerfState extends State<AnimatedDrawer> {
                         )
                       : GestureDetector(
                           child:
-                              Icon(Icons.menu, color: iconColor), // Icon color
+                              Icon(Icons.menu, color: iconColor), 
                           onTap: () {
                             setState(() {
                               xOffset = 290;
@@ -92,7 +93,10 @@ class _DrawerfState extends State<AnimatedDrawer> {
                             icon: const Icon(Icons.add_location_outlined),
                             color: AppColor.icon,
                             onPressed: () {
-                             
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => CategoryAdmin()));
                             },
                           ),
                           IconButton(

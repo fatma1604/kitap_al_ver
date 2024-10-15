@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kitap_al_ver/utils/color.dart';
 
 class OnButton extends StatelessWidget {
   // ignore: use_super_parameters
@@ -28,13 +29,12 @@ class OnButton extends StatelessWidget {
     Color shadowColor;
 
     if (brightness == Brightness.dark) {
-      // Dark mod için renkler
-      buttonBackgroundColor = const Color.fromARGB(255, 49, 10, 7);
-      textColor = Colors.white;
-      shadowColor = Colors.white.withOpacity(0.5);
+      buttonBackgroundColor = AppColor.darttBg;
+      textColor = AppColor.white;
+      shadowColor = AppColor.white.withOpacity(0.5);
     } else {
-      // Light mod için renkler
-      buttonBackgroundColor = const Color.fromARGB(255, 247, 118, 108);
+     
+       buttonBackgroundColor = const Color.fromARGB(255, 247, 118, 108);
       textColor = const Color.fromARGB(237, 250, 249, 249);
       shadowColor = Colors.black.withOpacity(0.5);
     }

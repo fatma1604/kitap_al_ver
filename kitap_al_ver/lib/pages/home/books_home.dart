@@ -1,6 +1,6 @@
 // ignore_for_file: camel_case_types
 import 'package:flutter/material.dart';
-
+import 'package:kitap_al_ver/pages/widget/theme/text_them.dart';
 import 'package:kitap_al_ver/service/firebes_post.dart';
 import 'package:kitap_al_ver/pages/misc/imageCarousel.dart';
 import 'package:kitap_al_ver/pages/product/product_Card.dart';
@@ -14,7 +14,7 @@ class Books_Home extends StatefulWidget {
 }
 
 class _Books_HomeState extends State<Books_Home> {
-  List<String> _imageUrls = []; 
+  List<String> _imageUrls = [];
 
   @override
   void initState() {
@@ -59,21 +59,23 @@ class _Books_HomeState extends State<Books_Home> {
             } else if (snapshot.hasData) {
               final photoDataList = snapshot.data!;
               if (photoDataList.isEmpty) {
-                
                 return SliverToBoxAdapter(
                   child: Center(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Image.asset(
-                          AppImage.books, 
+                          AppImage.books,
                           width: 200,
                           height: 200,
                         ),
                         const SizedBox(height: 10),
-                        const Text(
-                          'RESİM ATMAYA NE DERSİN ',
-                        ),
+                        TextButton(
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/bookscateg');
+                            },
+                            child: Text('RESİM ATMAYA NE DERSİN ',
+                                style: AppTextTheme.largeTitle(context))),
                       ],
                     ),
                   ),
@@ -85,10 +87,11 @@ class _Books_HomeState extends State<Books_Home> {
                   (context, index) {
                     final photoData = photoDataList[index];
                     return ProductCard(
-                        photoUrl: photoData['postImage'],
-                        title: photoData['title'],
-                        genre: photoData['type'],
-                        postUid: photoData['postUid']);
+                      photoUrl: photoData['postImage'],
+                      title: photoData['title'],
+                      genre: photoData['type'],
+                      postUid: photoData['postUid'],
+                    );
                   },
                   childCount: photoDataList.length,
                 ),

@@ -62,7 +62,7 @@ class _RegisterPageState extends State<RegisterPage> {
       username: _usernameController.text,
 
       profile:
-          _imageFile ?? File(''), // Kullanıcı tarafından seçilen profil resmi
+          _imageFile ?? File(''), 
     );
   }
 
@@ -112,7 +112,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ? CircleAvatar(
                           radius: 34.r,
                           backgroundImage:
-                              AssetImage(AppImage.avatar),
+                              const AssetImage(AppImage.avatar),
                           backgroundColor: Colors.grey.shade200,
                         )
                       : CircleAvatar(
@@ -188,7 +188,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     child: Text(
                       AppText.logingo,
                       style: GoogleFonts.playfairDisplay(
-                          textStyle: AppTextTheme.login(context)),
+                          textStyle: AppTextTheme.heading(context)),
                     ),
                   ),
                 ],

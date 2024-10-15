@@ -2,7 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:kitap_al_ver/pages/misc/MyImage_slider.dart';
+import 'package:kitap_al_ver/pages/misc/myImage_slider.dart';
 import 'package:kitap_al_ver/components/descripton.dart';
 import 'package:kitap_al_ver/components/detail_app_bar.dart';
 import 'package:kitap_al_ver/models/post.dart';
@@ -107,9 +107,9 @@ class _DetailScreenState extends State<DetailScreen> {
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color: theme.brightness == Brightness.dark
-                          ? AppColor.buttondart // Darker shade for dark theme
+                          ? AppColor.buttondart 
                           : AppColor
-                              .buttonlight, // Original color for light theme
+                              .buttonlight, 
                       borderRadius: const BorderRadius.only(
                         topRight: Radius.circular(40),
                         topLeft: Radius.circular(40),
@@ -122,7 +122,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       children: [
                         ItemsDetails(
                           post: post,
-                        ), // Assuming this is a widget that displays item details
+                        ), 
                         const SizedBox(height: 20),
                         Description(
                           postUid: widget.postUid,

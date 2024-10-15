@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kitap_al_ver/pages/drawr/drawercategory.dart';
@@ -5,7 +7,6 @@ import 'package:kitap_al_ver/pages/widget/core/newrow.dart';
 import 'package:kitap_al_ver/pages/widget/theme/text_them.dart';
 import 'package:kitap_al_ver/service/firebes_post.dart';
 import 'package:kitap_al_ver/utils/color.dart';
-
 
 class DrawerScreen extends StatefulWidget {
   @override
@@ -17,7 +18,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
   List<String> _categories = [];
   Map<String, dynamic>? photoData;
 
-  final FirebasePostServis _firebaseService = FirebasePostServis(); // Create an instance of FirebaseService
+  final FirebasePostServis _firebaseService = FirebasePostServis();
 
   @override
   void initState() {
@@ -29,7 +30,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
   Future<void> _loadUserName() async {
     String? userName = await _firebaseService.loadUserName();
     setState(() {
-      _userName = userName ?? 'User';
+      _userName = userName;
     });
   }
 
@@ -52,10 +53,13 @@ class _DrawerScreenState extends State<DrawerScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final textColor = theme.brightness == Brightness.dark ? AppColor.white : AppColor.black;
-    final backgroundColor = theme.brightness == Brightness.dark ? AppColor.screendart : AppColor.screenlight;
+    final textColor =
+        theme.brightness == Brightness.dark ? AppColor.white : AppColor.black;
+    final backgroundColor = theme.brightness == Brightness.dark
+        ? AppColor.screendart
+        : AppColor.screenlight;
 
-    _setPhotoData(); // Set photo data for demo purposes
+    _setPhotoData();
 
     return Container(
       color: backgroundColor,
@@ -77,7 +81,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
         Text(
           _userName,
           style: GoogleFonts.playfairDisplay(
-            textStyle: AppTextTheme.login(context).copyWith(color: textColor),
+            textStyle: AppTextTheme.heading(context).copyWith(color: textColor),
           ),
         ),
       ],
@@ -94,13 +98,14 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 if (photoData != null) {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => DrawerCategoryScreen(categoryTitle: category),
+                      builder: (context) =>
+                          DrawerCategoryScreen(categoryTitle: category),
                     ),
                   );
                 }
               },
               text: category,
-              icon: Icons.category,
+              icon: Icons.import_contacts_rounded,
               textColor: textColor,
             ),
             const SizedBox(height: 20),

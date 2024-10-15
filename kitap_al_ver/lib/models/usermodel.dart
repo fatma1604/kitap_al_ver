@@ -4,7 +4,7 @@ class Usermodel {
   final String username;
   final String bio;
   final String profile;
-  final String email; // Email alanını ekleyin
+  final String email; 
   final List followers;
   final List following;
 
@@ -12,7 +12,7 @@ class Usermodel {
     required this.username,
     required this.bio,
     required this.profile,
-    required this.email, // Constructor'a ekleyin
+    required this.email, 
     required this.followers,
     required this.following,
   });
@@ -23,7 +23,7 @@ class Usermodel {
       username: data['username'] ?? '',
       bio: data['bio'] ?? '',
       profile: data['profile'] ?? '',
-      email: data['email'] ?? '', // Firestore'dan email'i al
+      email: data['email'] ?? '', 
       followers: data['followers'] ?? [],
       following: data['following'] ?? [],
     );

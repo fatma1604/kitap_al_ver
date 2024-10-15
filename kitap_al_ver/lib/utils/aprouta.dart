@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/components/tabbar/liquidTabbar.dart';
 import 'package:kitap_al_ver/pages/auth/forget_page.dart';
+import 'package:kitap_al_ver/pages/home/bookcatagory.dart';
 import 'package:kitap_al_ver/pages/home/books_home.dart';
 import 'package:kitap_al_ver/pages/misc/explone.dart';
 import 'package:kitap_al_ver/pages/onbording/onbording_screen.dart';
@@ -15,7 +16,8 @@ final class AppRoute {
   static const String liquidTab = "/liquidTab";
   static const String card = "/card";
   static const String forget = "/forget";
-  static const String explone = "/ezplone";
+  static const String explone = "/explone";
+   static const String bookscateg = "/bookscateg";
 
 
   static Map<String, WidgetBuilder> get routes => {
@@ -24,7 +26,8 @@ final class AppRoute {
     liquidTab: (context) =>  LiquidTabBar(),
     card: (context) => const CartPage(),
     forget: (context) => const ForgetPage(),
-     explone: (context) => const Explone()
-//  Navigator.pushNamed(context, '/card');
+     explone: (context) => const Explone(),
+      bookscateg: (context) =>  BookCategoryOverview()
+
   };
 }

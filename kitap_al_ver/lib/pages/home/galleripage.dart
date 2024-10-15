@@ -8,14 +8,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:kitap_al_ver/components/custom_icon_button.dart';
+import 'package:kitap_al_ver/pages/widget/theme/text_them.dart';
+import 'package:kitap_al_ver/utils/color.dart';
 
 import 'package:photo_manager/photo_manager.dart';
 import 'package:uuid/uuid.dart';
 
 class Galleripage extends StatefulWidget {
-  final File? initialImage; // Add this parameter
+  final File? initialImage;
 
-  const Galleripage({super.key, this.initialImage}); // Update constructor
+  const Galleripage({super.key, this.initialImage});
 
   @override
   State<Galleripage> createState() => _GalleripageState();
@@ -24,7 +26,7 @@ class Galleripage extends StatefulWidget {
 class _GalleripageState extends State<Galleripage> {
   final List<Widget> _mediaList = [];
   final List<File> _path = [];
-  final Set<File> _selectedFiles = {}; // Use Set to manage selected files
+  final Set<File> _selectedFiles = {};
   int _currentPage = 0;
   int? _lastPage;
 
@@ -43,23 +45,24 @@ class _GalleripageState extends State<Galleripage> {
     if (ps.isAuth) {
       List<AssetPathEntity> albums =
           await PhotoManager.getAssetPathList(type: RequestType.image);
-      if (albums.isEmpty) return; // Check if there are albums
+      if (albums.isEmpty) return;
 
       List<AssetEntity> media =
           await albums[0].getAssetListPaged(page: _currentPage, size: 60);
 
-      if (media.isEmpty) return; // Check if there are media assets
+      if (media.isEmpty) return;
 
       List<Widget> tempMediaList = [];
       for (var asset in media) {
         if (asset.type == AssetType.image) {
           final file = await asset.file;
           if (file != null) {
-            _path.add(file); // Add file to path list
+            _path.add(file);
           }
           tempMediaList.add(
             FutureBuilder(
-              future: asset.thumbnailDataWithSize(const ThumbnailSize(200, 200)),
+              future:
+                  asset.thumbnailDataWithSize(const ThumbnailSize(200, 200)),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
                   return GestureDetector(
@@ -94,7 +97,7 @@ class _GalleripageState extends State<Galleripage> {
                     ),
                   );
                 }
-                return Container(); // Placeholder while loading
+                return Container();
               },
             ),
           );
@@ -115,67 +118,68 @@ class _GalleripageState extends State<Galleripage> {
     _fetchNewMedia();
   }
 
- Future<void> _uploadImagesAndNavigate() async {
-  try {
-    final storage = FirebaseStorage.instance;
-    final auth = FirebaseAuth.instance;
-    final uid = const Uuid().v4(); // Unique identifier for each upload
-    List<String> downloadUrls = [];
+  Future<void> _uploadImagesAndNavigate() async {
+    try {
+      final storage = FirebaseStorage.instance;
+      final auth = FirebaseAuth.instance;
+      final uid = const Uuid().v4();
+      List<String> downloadUrls = [];
 
-    for (File file in _selectedFiles) {
-      final fileName = file.uri.pathSegments.last;
-      final ref = storage
-          .ref()
-          .child('post')
-          .child(auth.currentUser!.uid)
-          .child(uid)
-          .child(fileName);
+      for (File file in _selectedFiles) {
+        final fileName = file.uri.pathSegments.last;
+        final ref = storage
+            .ref()
+            .child('post')
+            .child(auth.currentUser!.uid)
+            .child(uid)
+            .child(fileName);
 
-      // Upload the file
-      UploadTask uploadTask = ref.putFile(file);
-      TaskSnapshot snapshot = await uploadTask;
+        UploadTask uploadTask = ref.putFile(file);
+        TaskSnapshot snapshot = await uploadTask;
 
-      // Retrieve the download URL
-      String downloadUrl = await snapshot.ref.getDownloadURL();
-      downloadUrls.add(downloadUrl); // Collect URLs
-    }
+        String downloadUrl = await snapshot.ref.getDownloadURL();
+        downloadUrls.add(downloadUrl);
+      }
 
-    if (downloadUrls.isNotEmpty) {
-      // Navigate back and pass the image URLs
-      Navigator.pop(context, downloadUrls);
-    } else {
+      if (downloadUrls.isNotEmpty) {
+        Navigator.pop(context, downloadUrls);
+      } else {
+        Fluttertoast.showToast(
+          msg: "No images selected.",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+        );
+      }
+    } catch (e) {
       Fluttertoast.showToast(
-        msg: "No images selected.",
+        msg: "Error uploading images.",
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
       );
+      print("Error uploading images: $e");
     }
-  } catch (e) {
-    Fluttertoast.showToast(
-      msg: "Error uploading images.",
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.CENTER,
-    );
-    print("Error uploading images: $e");
   }
-}
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
+      backgroundColor: isDarkMode ? AppColor.screendart : AppColor.screenlight,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: const Text(
-          'New Post',
-          style: TextStyle(color: Colors.black),
-        ),
-        centerTitle: false,
+        backgroundColor: isDarkMode
+            ? AppColor.screendart
+            : AppColor.screenlight, // Specify background color here
         leading: CustomIconButton(
           onPressed: () => Navigator.pop(context),
           icon: Icons.arrow_back,
         ),
+        elevation: 0,
+        title: const Text(
+          'New Post',
+          style: TextStyle(color: AppColor.black),
+        ),
+        centerTitle: false,
         actions: [
           Center(
             child: Padding(
@@ -188,7 +192,7 @@ class _GalleripageState extends State<Galleripage> {
                 },
                 child: Text(
                   'Next',
-                  style: TextStyle(fontSize: 15.sp, color: Colors.blue),
+                  style: AppTextTheme.emphasized(context),
                 ),
               ),
             ),
@@ -210,7 +214,7 @@ class _GalleripageState extends State<Galleripage> {
                     itemCount: _selectedFiles.length,
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3, // Show selected images in 3 columns
+                      crossAxisCount: 3,
                       mainAxisSpacing: 1,
                       crossAxisSpacing: 1,
                     ),
@@ -223,21 +227,20 @@ class _GalleripageState extends State<Galleripage> {
                     },
                   ),
                 ),
-                SizedBox(height: 10.h), // Adding some spacing
+                SizedBox(height: 10.h),
                 GridView.builder(
                   shrinkWrap: true,
-                  physics:
-                      const NeverScrollableScrollPhysics(), // Disable scrolling for inner GridView
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: _mediaList.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3, // 3 columns in the grid
+                    crossAxisCount: 3,
                     mainAxisSpacing: 1,
                     crossAxisSpacing: 2,
                   ),
                   itemBuilder: (context, index) {
                     return _mediaList.isNotEmpty
                         ? _mediaList[index]
-                        : Container(); // Ensure index is valid
+                        : Container();
                   },
                 ),
               ],

@@ -1,27 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:kitap_al_ver/models/post.dart'; // Adjust import as necessary
+import 'package:kitap_al_ver/models/post.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FavoriteProvider with ChangeNotifier {
-  final Set<String> _likedPostIds = {};
+  List<String> _favoritePosts = [];
 
-  bool isExist(Posts post) {
-    return _likedPostIds.contains(post.postId);
+  FavoriteProvider() {
+    _loadFavorites();
   }
 
-  void toggleFavorite(Posts post) {
-    if (isExist(post)) {
-      _likedPostIds.remove(post.postId);
-    } else {
-      _likedPostIds.add(post.postId);
-    }
-    notifyListeners(); // Notify listeners to update the UI
-  }
-
-  // Optionally, you can load existing liked posts from Firestore or other sources here
-  void loadLikedPosts(Set<String> likedPosts) {
-    _likedPostIds.addAll(likedPosts);
+  Future<void> _loadFavorites() async {
+    final prefs = await SharedPreferences.getInstance();
+    _favoritePosts = prefs.getStringList('favorites') ?? [];
     notifyListeners();
   }
 
-  Set<String> get likedPostIds => _likedPostIds; // Expose liked posts if needed
+  void toggleFavorite(Posts post) {
+    if (_favoritePosts.contains(post.postId)) {
+      _favoritePosts.remove(post.postId);
+    } else {
+      _favoritePosts.add(post.postId);
+    }
+    _saveFavorites();
+    notifyListeners();
+  }
+
+  Future<void> _saveFavorites() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setStringList('favorites', _favoritePosts);
+  }
+
+  bool isExist(Posts post) {
+    return _favoritePosts.contains(post.postId);
+  }
 }

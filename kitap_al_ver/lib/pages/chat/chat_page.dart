@@ -26,11 +26,13 @@ class ChatPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
       backgroundColor: Theme.of(context).brightness == Brightness.dark
           ? AppColor.darttBg
           : AppColor.lightBg,
       appBar: AppBar(
+        backgroundColor: isDarkMode ? AppColor.darttBg : AppColor.lightBg,
         title: FutureBuilder<DocumentSnapshot>(
           future: FirebaseFirestore.instance
               .collection("Users")

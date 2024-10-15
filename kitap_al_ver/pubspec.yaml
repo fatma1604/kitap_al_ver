@@ -48,6 +48,21 @@ dependencies:
   date_format: ^2.0.9
   shared_preferences: ^2.3.2
   carousel_slider: ^5.0.0
+  flutter_native_splash: ^2.4.1
+
+  
+flutter_native_splash:
+  color: "#FFFFFF"
+  color_dark: "#111B21"
+  image: assets/images/logo.jpeg
+  image_dark: assets/images/logo.jpeg
+  android_12:
+    color: "#FFFFFF"
+    color_dark: "#111B21"
+    image: assets/images/logo.jpeg
+    image_dark: assets/images/logo.jpeg
+    icon_background_color: "#FFFFFF"
+    icon_background_color_dark: "#111B21"
 
 
 dev_dependencies:

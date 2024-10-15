@@ -1,10 +1,14 @@
+// ignore_for_file: use_super_parameters, unused_local_variable, body_might_complete_normally_nullable
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:kitap_al_ver/pages/search/searchisyory.dart';
 import 'package:kitap_al_ver/pages/profile/profil_screen.dart';
+import 'package:kitap_al_ver/pages/widget/theme/text.dart';
 import 'package:kitap_al_ver/utils/color.dart';
+import 'package:kitap_al_ver/utils/images.dart';
 
 class Explone extends StatefulWidget {
   const Explone({Key? key}) : super(key: key);
@@ -64,7 +68,7 @@ class _ExploneState extends State<Explone> {
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {
                         final snap = documents[index];
-                        // Add your grid item building logic here
+                   
                        
                       },
                       childCount: documents.length,
@@ -104,7 +108,7 @@ class _ExploneState extends State<Explone> {
                       delegate: SliverChildBuilderDelegate(
                         (context, index) {
                           final snap = documents[index];
-                          final userData = snap.data() as Map<String, dynamic>?; // null safety için
+                          final userData = snap.data() as Map<String, dynamic>?;
                           return Column(
                             children: [
                               SizedBox(height: 10.h),
@@ -122,7 +126,7 @@ class _ExploneState extends State<Explone> {
                                       backgroundImage: 
                                         userData != null && userData.containsKey('profile') 
                                           ? NetworkImage(userData['profile']) 
-                                          : AssetImage('path/to/default/image.png') as ImageProvider,
+                                          : const AssetImage(AppImage.profil) as ImageProvider,
                                     ),
                                     SizedBox(width: 15.w),
                                     Text(
@@ -151,7 +155,7 @@ class _ExploneState extends State<Explone> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Recent Searches',
+                        AppText.searchHint,
                         style: TextStyle(
                             fontSize: 18.sp,
                             fontWeight: FontWeight.bold,
@@ -214,7 +218,7 @@ class _ExploneState extends State<Explone> {
                       }
                     },
                     decoration: const InputDecoration(
-                      hintText: 'Arayalım',
+                      hintText:     AppText.searchHint,
                       hintStyle: TextStyle(color: AppColor.icon),
                       enabledBorder: InputBorder.none,
                       focusedBorder: InputBorder.none,

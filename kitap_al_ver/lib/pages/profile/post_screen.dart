@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:kitap_al_ver/pages/product/deail_screen.dart';
 
 class PostScreen extends StatelessWidget {
-  final String postUid; // Gönderi UID'si
-  final String photoUrl; // Fotoğraf URL'si
+  final String postUid; 
+  final String photoUrl; 
 
-  // Constructor'da gerekli parametreleri alıyoruz
+  
   PostScreen({
     super.key,
     required this.postUid,

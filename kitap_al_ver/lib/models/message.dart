@@ -15,7 +15,7 @@ class Mesage {
     required this.timestamp,
   });
 
-  // fromMap methodunu ekliyoruz
+ 
   factory Mesage.fromMap(Map<String, dynamic> data) {
     return Mesage(
       senderID: data['senderID'] as String,
@@ -26,7 +26,6 @@ class Mesage {
     );
   }
 
-  // toMap methodu, veriyi Firestore'a eklemek için kullanılabilir
   Map<String, dynamic> toMap() {
     return {
       'senderID': senderID,
