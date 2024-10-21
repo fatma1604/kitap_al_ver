@@ -5,7 +5,7 @@
 ---
 
 
-Tobeto Eğitim Platformu, bilgiye erişimi kolaylaştırarak, öğrenmeyi her an her yerde mümkün kılmaya devam ediyor. Şimdi, bu misyonu bir adım daha ileri taşıyoruz! Tobeto Eğitim Platformu'nun mobil uygulaması, öğrencilere eğitim içeriklerini cebinde taşıma imkanı sunuyor.
+Kitap Evim, öğrenmeyi daha erişilebilir hale getirerek öğrencilerin bilgiye her an ulaşabilmesini sağlıyor. Mobil uygulamamız, kitap yardımlaşmasını kolaylaştırarak öğrencilerin ihtiyaç duydukları kaynakları ücretsiz olarak edinmelerine olanak tanıyor. Kitap Evim, eğitim sürecinizi destekleyen bir platform olarak yanınızda!
 
 
 -----
@@ -35,7 +35,7 @@ Tobeto Eğitim Platformu, bilgiye erişimi kolaylaştırarak, öğrenmeyi her an
 
 ## UI Gösterimi
 
-<img width="500" alt="login page" src=  "https://github.com/balciemirhan/TobetoApp/assets/103212238/0d92da95-5fee-4b47-9638-fdcc7e811f2c"><br/>
+<img width="500" alt="login page" src=  "https://github.com/user-attachments/assets/bd970cbe-ee09-48a8-ab65-9a45d23bf2d6"><br/>
 
 <img width="500" alt="login page" src=  "https://github.com/balciemirhan/TobetoApp/assets/103212238/4fee4ccb-0c1b-4988-8ba6-839d628cdd1b"><br/><br/>
 
