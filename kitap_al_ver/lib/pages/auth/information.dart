@@ -131,7 +131,7 @@ class _MenuPageState extends State<Information> {
       decoration: InputDecoration(
         labelText: AppText.title,
         border: OutlineInputBorder(),
-        labelStyle: TextStyle(color: AppColor.icon),
+        labelStyle: TextStyle(color: AppColor.icons),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: AppColor.black),
         ),
@@ -152,7 +152,7 @@ class _MenuPageState extends State<Information> {
       decoration: InputDecoration(
         labelText: label,
         border: OutlineInputBorder(),
-        labelStyle: TextStyle(color: AppColor.icon),
+        labelStyle: TextStyle(color: AppColor.icons),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: AppColor.black),
         ),
@@ -166,7 +166,7 @@ class _MenuPageState extends State<Information> {
               DropdownMenuItem<String>(value: item, child: Text(item)))
           .toList(),
       onChanged: onChanged,
-      style: TextStyle(color: isDarkMode ? AppColor.textDark : AppColor.icon),
+      style: TextStyle(color: isDarkMode ? AppColor.textDark : AppColor.icons),
       dropdownColor: isDarkMode ? AppColor.screendart1 : AppColor.screenlight2,
     );
   }
@@ -176,7 +176,7 @@ class _MenuPageState extends State<Information> {
       decoration: InputDecoration(
         labelText: AppText.information,
         border: OutlineInputBorder(),
-        labelStyle: TextStyle(color: AppColor.icon),
+        labelStyle: TextStyle(color: AppColor.icons),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: AppColor.black),
         ),

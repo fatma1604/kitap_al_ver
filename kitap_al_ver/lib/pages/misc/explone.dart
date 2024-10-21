@@ -133,7 +133,7 @@ class _ExploneState extends State<Explone> {
                                       userData != null && userData.containsKey('username') 
                                           ? userData['username'] 
                                           : 'Unknown User',
-                                      style: const TextStyle(color: AppColor.icon),
+                                      style: const TextStyle(color: AppColor.icons),
                                     ),
                                   ],
                                 ),
@@ -200,7 +200,7 @@ class _ExploneState extends State<Explone> {
               children: [
                 IconButton(
                   icon: const Icon(Icons.arrow_back_rounded,
-                      color: AppColor.icon),
+                      color: AppColor.icons),
                   onPressed: () {
                     Navigator.pushNamed(context, '/liquattab');
                   },
@@ -219,7 +219,7 @@ class _ExploneState extends State<Explone> {
                     },
                     decoration: const InputDecoration(
                       hintText:     AppText.searchHint,
-                      hintStyle: TextStyle(color: AppColor.icon),
+                      hintStyle: TextStyle(color: AppColor.icons),
                       enabledBorder: InputBorder.none,
                       focusedBorder: InputBorder.none,
                     ),

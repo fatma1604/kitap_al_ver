@@ -283,7 +283,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
                 ),
                 title: Text(
                   user.username,
-                  style: TextStyle(color: AppColor.icon),
+                  style: TextStyle(color: AppColor.icons),
                 ),
                 backgroundColor: Theme.of(context).brightness == Brightness.dark
                     ? AppColor.screendart

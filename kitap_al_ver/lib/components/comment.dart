@@ -8,7 +8,6 @@ import 'package:kitap_al_ver/pages/misc/image_cached.dart';
 import 'package:kitap_al_ver/pages/widget/theme/text_them.dart';
 import 'package:kitap_al_ver/utils/color.dart';
 
-
 class Comment extends StatefulWidget {
   final String type;
   final String uid;
@@ -125,10 +124,11 @@ class _CommentState extends State<Comment> {
                           decoration: InputDecoration(
                             hintText: 'Add a comment',
                             border: InputBorder.none,
-                            hintStyle: AppTextTheme.subheading(context), 
+                            hintStyle: AppTextTheme.emphasized(context),
                           ),
                           onTap: () {
-                            SystemChannels.textInput.invokeMethod('TextInput.hide');
+                            SystemChannels.textInput
+                                .invokeMethod('TextInput.hide');
                           },
                         ),
                       ),
@@ -158,11 +158,11 @@ class _CommentState extends State<Comment> {
       ),
       title: Text(
         snapshot['username'],
-        style: AppTextTheme.subheading(context), 
+        style: AppTextTheme.emphasized(context),
       ),
       subtitle: Text(
         snapshot['comment'],
-        style: AppTextTheme.subheading(context),
+        style: AppTextTheme.emphasized(context),
       ),
     );
   }

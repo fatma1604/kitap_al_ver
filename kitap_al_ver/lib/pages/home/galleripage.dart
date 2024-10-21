@@ -177,7 +177,7 @@ class _GalleripageState extends State<Galleripage> {
         elevation: 0,
         title: const Text(
           'New Post',
-          style: TextStyle(color: AppColor.black),
+          style: TextStyle(color: AppColor.white),
         ),
         centerTitle: false,
         actions: [
@@ -192,7 +192,7 @@ class _GalleripageState extends State<Galleripage> {
                 },
                 child: Text(
                   'Next',
-                  style: AppTextTheme.emphasized(context),
+                  style: AppTextTheme.caption(context),
                 ),
               ),
             ),

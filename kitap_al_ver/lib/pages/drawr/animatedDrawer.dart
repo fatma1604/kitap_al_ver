@@ -91,17 +91,14 @@ class _DrawerfState extends State<AnimatedDrawer> {
                           ),
                           IconButton(
                             icon: const Icon(Icons.add_location_outlined),
-                            color: AppColor.icon,
+                            color: AppColor.icons,
                             onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => CategoryAdmin()));
+                              
                             },
                           ),
                           IconButton(
                             icon: const Icon(Icons.add_alert_outlined),
-                            color: AppColor.icon,
+                            color: AppColor.icons,
                             onPressed: () {},
                           ),
                         ],
