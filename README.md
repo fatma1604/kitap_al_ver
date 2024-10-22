@@ -66,54 +66,41 @@ Provider ile uygulama, kullanıcı etkileşimlerine daha hızlı yanıt verebili
 
 
 
+### Ana Özellikler
+- **Drawer:** Kolay erişim için kitaplara hızlı ulaşım sağlar.
+- **Arama Butonu:** Kullanıcılar, istedikleri kitapları hızlıca arayabilir.
+- **Chat Sayfası:** Kullanıcılar arasında iletişim kurma imkanı.
+- **Profil Sayfası:** Kullanıcıların profillerini yönetebileceği alan.
+- **Sepet Sayfası:** Kullanıcıların seçtikleri kitapları görüntüleyip yönetebileceği sayfa.
+- **Detay Sayfası:** Kitapların detaylı bilgilerini görüntüleme.
+- **Yorum Sayfası:** Kullanıcıların kitaplar hakkında yorum yapabileceği alan.
+- **Kategoriler:** Kitapları çeşitli kategorilere ayırarak kolay erişim.
+- **İlan Detayları:** Kullanıcılar, ilanları detaylı bir şekilde paylaşabilir.
+- **Birden Fazla Fotoğraf Yükleme:** İlanlara birden fazla fotoğraf ekleme imkanı.
+- **Animasyonlu Tab Bar:** Kullanıcı deneyimini zenginleştiren animasyonlar.
+- **Karanlık ve Aydınlık Mod:** Kullanıcıların tercihine göre temayı değiştirme imkanı.
 
-
-
-
-### Klasörleme Yapısı
-## Drawer: Kolay erişim için kitaplara hızlı ulaşım sağlar.
-## Arama Butonu: Kullanıcılar, istedikleri kitapları hızlıca arayabilir.
-## Chat Sayfası: Kullanıcılar arasında iletişim kurma imkanı.
-## Profil Sayfası: Kullanıcıların profillerini yönetebileceği alan.
-## Sepet Sayfası: Kullanıcıların seçtikleri kitapları görüntüleyip yönetebileceği sayfa.
-## Detay Sayfası: Kitapların detaylı bilgilerini görüntüleme.
-## Yorum Sayfası: Kullanıcıların kitaplar hakkında yorum yapabileceği alan.
-## Kategoriler: Kitapları çeşitli kategorilere ayırarak kolay erişim.
-## İlan Detayları: Kullanıcılar, ilanları detaylı bir şekilde paylaşabilir.
-## Birden Fazla Fotoğraf Yükleme: İlanlara birden fazla fotoğraf ekleme imkanı.
-## Animasyonlu Tab Bar: Kullanıcı deneyimini zenginleştiren animasyonlar.
-## Karanlık ve Aydınlık Mod: Kullanıcıların tercihine göre temayı değiştirme imkanı.
 
 ## Kütüphaneler
-* cupertino_icons: ^1.0.2
-* lottie: ^2.7.0
-* google_fonts: ^6.1.0
-* flutter_advanced_drawer: ^1.3.5
-* intro_screen_onboarding_flutter: ^1.0.0
-* concentric_transition: ^1.0.3
-* curved_navigation_bar: ^1.0.3
-* firebase_core: ^2.24.2
+* cupertino_icons: ^1.0.8
+* google_fonts: ^6.2.1
+* google_sign_in: ^6.2.1 
+* flutter_screenutil: ^5.9.3
 * firebase_auth: ^4.16.0
-* google_sign_in: ^6.2.1
-* flutter_bloc: ^8.1.3
-*  cloud_firestore: ^4.15.3
-*  intl: ^0.19.0
-*  firebase_storage: ^11.6.5
-*  image_picker: ^1.0.7
-*  video_player: ^2.8.2
-*  visibility_detector: ^0.4.0+2
-*  flick_video_player: ^0.7.0
-*  flutter_neat_and_clean_calendar: ^0.3.16+36
-*  file_picker: ^5.2.10
-*  font_awesome_flutter: ^10.7.0
-*  carousel_slider: ^4.2.1
-*  url_launcher: ^6.2.5
-*  carousel_indicator: ^1.0.6
-*  open_file: ^3.3.2
-*  shared_preferences: ^2.2.2
-
-
-
+* cloud_firestore: ^4.14.0
+* firebase_storage: ^11.6.0
+* uuid: ^4.5.0
+* image_picker: ^1.1.2
+* photo_manager: ^3.3.0
+* firebase_core: ^2.24.2
+* provider: ^6.1.2 
+* fluttertoast: ^8.2.8
+* flutter_staggered_grid_view: ^0.7.0
+* cached_network_image: ^3.4.1
+* date_format: ^2.0.9 
+* shared_preferences: ^2.3.2 
+* carousel_slider: ^5.0.0
+* flutter_native_splash: ^2.4.1 
 
 # Geri Bildirim
 Uygulamamızın gelişimini desteklemek ve karşılaştığınız sorunların çözümü için bizimle iletişime geçebilirsiniz.
