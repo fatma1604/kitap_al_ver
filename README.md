@@ -43,7 +43,7 @@ Kitap Evim, öğrenmeyi daha erişilebilir hale getirerek öğrencilerin bilgiye
 
 
 ## Kısa Bir Bakış
-Tobeto Mobil Uygulaması, Tobeto Eğitim Platformu'nun mobil versiyonudur. Kullanıcıların yüksek kaliteli ve etkileşimli bir deneyimle eğitim içeriklerine ve Tobeto'nun diğer özelliklerine anında erişim sağlar.
+Kitap Evim , Kitap Yardımlaşma Uygulaması, öğrencilerin kitap paylaşımını kolaylaştırmak için geliştirilmiş bir platformdur. Kullanıcılar, uygulama üzerinden sınav kitaplarına hızlı erişim sağlar, arama yapabilir ve diğer kullanıcılarla iletişim kurabilir. Onboarding süreci, kullanıcıların kolayca giriş yapmalarını sağlar. Uygulama, çeşitli özellikleri ve kullanıcı dostu arayüzüyle, öğrencilerin akademik ihtiyaçlarını karşılamalarına yardımcı olmayı hedeflemektedir.
 ## Backers [![Backers on Open Collective](https://opencollective.com/git-point/backers/badge.svg)](#backers)
 
 
