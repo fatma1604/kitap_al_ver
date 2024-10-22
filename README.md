@@ -35,7 +35,7 @@ Kitap Evim, öğrenmeyi daha erişilebilir hale getirerek öğrencilerin bilgiye
 
 ## UI Gösterimi
 
-<img width="500" alt="login page" src=  "https://github.com/user-attachments/assets/bd970cbe-ee09-48a8-ab65-9a45d23bf2d6"><br/>
+<img width="500" alt="login page" src=  "https://github.com/user-attachments/assets/a3391ba9-ec40-4aaa-8592-4f286864b50c"><br/>
 
 <img width="500" alt="login page" src=  "https://github.com/balciemirhan/TobetoApp/assets/103212238/4fee4ccb-0c1b-4988-8ba6-839d628cdd1b"><br/><br/>
 
