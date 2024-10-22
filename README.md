@@ -25,10 +25,7 @@ Kitap Evim, öğrenmeyi daha erişilebilir hale getirerek öğrencilerin bilgiye
 - [UI Gösterimi](#ui-gösterimi)
 - [Kısa Bir Bakış](#kısa-bir-bakış)
 - [Kullanılan Teknolojiler](#kullanılan-teknolojiler)
-- [Özellikler](#özellikler)
-- [Bloc Pattern Klasörleme Yapısı](#bloc-pattern-klasörleme-yapısı)
 - [Kütüphaneler](#kütüphaneler)
-- [Katkıda Bulunanlar](#katkıda-bulunanlar)
 - [Geri Bildirim](#geri-bildirim)
 
 
@@ -51,36 +48,41 @@ Kitap Evim , Kitap Yardımlaşma Uygulaması, öğrencilerin kitap paylaşımın
 
 
 ## Kullanılan Teknolojiler
-### Bloc Pattern
-Flutter'da BLoC (Business Logic Component) deseni kullanarak veri yönetimi sağladım. Bu desen, uygulamanın iş mantığını, kullanıcı arayüzünden ve dış dünyadan ayrı olarak yönetmeme olanak tanır. BLoC, verileri akışlar halinde yönetir, bu da uygulamanın durumunu güncellemek ve verilerle etkileşimde bulunmak için etkili bir yol sağlar. Bu sayede, uygulama daha düzenli, ölçeklenebilir ve bakımı daha kolay hale gelir. BLoC desenini kullanarak, uygulamanın farklı bileşenleri arasında veri akışını sağlamak ve kullanıcı etkileşimlerine yanıt vermek için bir aracı olarak kullanıyorum.
+
 ### Firebase
-Firebase'i kullanarak uygulamada kullanıcı girişi ve hesap oluşturmayı Authentication (Kimlik Doğrulama) servisiyle yönetiyorum. Bu servis, kullanıcıların e-posta/şifre, telefon numarası, Google, Facebook gibi çeşitli kimlik doğrulama yöntemleriyle uygulamaya giriş yapmasını sağlar. Ayrıca, yeni kullanıcı hesapları oluşturmak için de bu servisi kullanıyorum.
+Firebase, uygulamanın temel altyapısını oluşturmak için kullanılan bir platformdur. Aşağıdaki özellikleri sunar:
 
-Verileri saklamak ve senkronize etmek için Firestore veritabanını kullanıyorum. Firestore, bulut tabanlı, NoSQL veritabanıdır ve gerçek zamanlı veri senkronizasyonunu destekler. Bu, uygulama kullanıcıları arasında anlık güncellemeler sağlar ve çevrimdışı kullanım için veri senkronizasyonunu kolaylaştırır.
+Kullanıcı Kimlik Doğrulama: Kullanıcıların güvenli bir şekilde giriş yapmalarını ve hesap oluşturmasını sağlar.
+Veri Depolama: Kullanıcı verileri ve kitap bilgileri için güvenli bir veri tabanı sunar.
+Gerçek Zamanlı Veri Senkronizasyonu: Kullanıcılar arasındaki etkileşimleri anlık olarak güncelleyerek, uygulamanın dinamik bir yapıda çalışmasını sağlar.
+Bu özellikler sayesinde, uygulamanın kullanıcı deneyimi ve performansı önemli ölçüde artırılmıştır.
 
-Firebase Storage, uygulamada kullanılan resimler gibi medya dosyalarını depolamak için kullanılan bir servistir. Bu servis, resimleri yüklemek, saklamak ve indirmek için kullanılır. Firebase Storage, yüksek performanslı, güvenli ve ölçeklenebilir bir şekilde medya dosyalarını yönetmeme olanak sağlar. Bu da uygulama içindeki resimlerin güvenli bir şekilde depolanmasını ve kullanıcıların ihtiyaç duyduğunda erişebilmesini sağlar.
+### Provider
+Provider, Flutter uygulamalarında durum yönetimi için kullanılan bir kütüphanedir. Sağladığı avantajlar şunlardır:
 
-
-
-## Özellikler
--  Dark mode özelliği ile göz yormayan tasarım
--  Kolay profil yönetimi
--  Duyuru ve anketlerden haberdar olmak
--  Eğitimleri inceleme ve katılma
--  Not sistemi
--  Video izleme sistemi
--  Takvim sistemi
--  Quiz sistemi
+Durum Yönetimi: Uygulamanın durumu, bileşenler arasında etkili bir şekilde yönetilir. Bu, uygulamanın daha sürdürülebilir ve okunabilir olmasını sağlar.
+Modülerlik: Farklı bileşenlerin bağımsız bir şekilde geliştirilmesine olanak tanır. Bu, bakım ve genişletme işlemlerini kolaylaştırır.
+Provider ile uygulama, kullanıcı etkileşimlerine daha hızlı yanıt verebilir ve genel performansı artırır.
 
 
-## Klasörleme Yapısı
-### Sayfa Yapısı
-![2024-03-01-removebg-preview](https://github.com/mehtapaygun/TobetoApp/assets/103212238/06cd42a8-f778-41df-942b-482e0cd87139)
 
 
-### Bloc Pattern 
-![Ekran Alıntısı](https://github.com/balciemirhan/TobetoApp/assets/120199233/e3abd3d7-2f0e-4b26-983a-5fad79fd5b20)
 
+
+
+### Klasörleme Yapısı
+## Drawer: Kolay erişim için kitaplara hızlı ulaşım sağlar.
+## Arama Butonu: Kullanıcılar, istedikleri kitapları hızlıca arayabilir.
+## Chat Sayfası: Kullanıcılar arasında iletişim kurma imkanı.
+## Profil Sayfası: Kullanıcıların profillerini yönetebileceği alan.
+## Sepet Sayfası: Kullanıcıların seçtikleri kitapları görüntüleyip yönetebileceği sayfa.
+## Detay Sayfası: Kitapların detaylı bilgilerini görüntüleme.
+## Yorum Sayfası: Kullanıcıların kitaplar hakkında yorum yapabileceği alan.
+## Kategoriler: Kitapları çeşitli kategorilere ayırarak kolay erişim.
+## İlan Detayları: Kullanıcılar, ilanları detaylı bir şekilde paylaşabilir.
+## Birden Fazla Fotoğraf Yükleme: İlanlara birden fazla fotoğraf ekleme imkanı.
+## Animasyonlu Tab Bar: Kullanıcı deneyimini zenginleştiren animasyonlar.
+## Karanlık ve Aydınlık Mod: Kullanıcıların tercihine göre temayı değiştirme imkanı.
 
 ## Kütüphaneler
 * cupertino_icons: ^1.0.2
@@ -111,14 +113,7 @@ Firebase Storage, uygulamada kullanılan resimler gibi medya dosyalarını depol
 *  shared_preferences: ^2.2.2
 
 
-## Katkıda Bulunanlar
-![Linkdein__1_-removebg-preview](https://github.com/balciemirhan/TobetoApp/assets/120199233/c4487d89-55ea-4743-8531-1dffed543ee6)
 
-* [Emirhan Balcı](https://github.com/balciemirhan)
-
-* [Mehtap Aygün](https://github.com/mehtapaygun)
-  
-* [Fatma Nur Kamış](https://github.com/fatma1604)
 
 # Geri Bildirim
 Uygulamamızın gelişimini desteklemek ve karşılaştığınız sorunların çözümü için bizimle iletişime geçebilirsiniz.
